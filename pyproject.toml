@@ -6,11 +6,33 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "beautifulsoup4>=4.15.0",
+    "langchain-text-splitters>=1.1.2",
+    "numpy>=2.5.1",
+    "openai>=2.46.0",
     "pypdf>=6.14.2",
     "python-dotenv>=1.2.2",
 ]
 
 [dependency-groups]
 dev = [
+    "mypy>=2.3.0",
+    "pre-commit>=4.6.0",
+    "pytest>=9.1.1",
     "reportlab>=5.0.0",
+    "ruff>=0.15.22",
 ]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true

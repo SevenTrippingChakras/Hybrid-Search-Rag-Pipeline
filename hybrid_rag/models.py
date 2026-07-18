@@ -18,3 +18,21 @@ class Segment:
     source: str
     heading: str | None = None
     page: int | None = None
+
+
+@dataclass
+class Chunk:
+    """A retrieval unit produced by a chunking strategy.
+
+    Carries the provenance a citation needs (source, heading, page) plus the
+    bookkeeping the index needs (chunk_index, strategy, char_count). ``strategy``
+    records which chunker made it so strategies can be compared (Phase 4.3).
+    """
+
+    text: str
+    source: str
+    chunk_index: int
+    strategy: str
+    char_count: int
+    heading: str | None = None
+    page: int | None = None
