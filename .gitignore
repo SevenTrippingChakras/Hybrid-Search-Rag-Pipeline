@@ -12,6 +12,9 @@ wheels/
 # Local walkthrough docs
 walkthrough/
 
+# Local planning docs (plan + progress)
+planning/
+
 # Generated ingest artifacts (regenerable from samples/)
 data/
 
