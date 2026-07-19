@@ -1,13 +1,8 @@
 """Swappable vector-store backends behind one interface.
 
 ``VectorStore`` is the port; ``ChromaStore``, ``PineconeStore``, ``MilvusStore``
-are the adapters. ``build_store`` selects one from the ``VECTOR_BACKEND`` env var,
-so the backend is a deployment choice, not a code change: Chroma (local, zero
-setup) for dev and tests, Pinecone or Milvus for production.
-
-Embeddings are computed upstream and handed in, so every backend stores the same
-``text-embedding-3-small`` vectors. Cosine similarity is used throughout; each
-adapter's ``query`` returns a ``score`` where higher means more similar.
+are the adapters, selected by ``build_store`` from the ``VECTOR_BACKEND`` env var.
+Embeddings are handed in; ``query`` returns a cosine ``score`` (higher is closer).
 """
 
 from __future__ import annotations

@@ -78,3 +78,37 @@ def test_dense_search_respects_k(tmp_path):
 def test_dense_search_empty_index_returns_nothing(tmp_path):
     _idx, retriever = _index_and_retriever(tmp_path)
     assert retriever.dense_search("anything") == []
+
+
+def test_sparse_search_ranks_by_keyword_overlap(tmp_path):
+    idx, retriever = _index_and_retriever(tmp_path)
+    idx.add([_chunk("restart the engine to clear error code E42", 0)])
+    idx.add([_chunk("the cat sat on the mat", 1)])
+    idx.add([_chunk("a dog ran across the yard", 2)])
+    idx.add([_chunk("birds fly south for winter", 3)])
+
+    hits = retriever.sparse_search("E42 error code", k=4)
+
+    assert hits[0].document == "restart the engine to clear error code E42"
+    assert hits[0].score > hits[1].score
+
+
+def test_sparse_search_returns_metadata(tmp_path):
+    idx, retriever = _index_and_retriever(tmp_path)
+    idx.add([_chunk("engine oil", 0)])
+
+    hit = retriever.sparse_search("engine", k=1)[0]
+    assert hit.metadata["source"] == "doc.md"
+    assert hit.metadata["strategy"] == "fixed"
+
+
+def test_sparse_search_respects_k(tmp_path):
+    idx, retriever = _index_and_retriever(tmp_path)
+    idx.add([_chunk(f"unique words number {n}", n) for n in range(5)])
+
+    assert len(retriever.sparse_search("words", k=3)) == 3
+
+
+def test_sparse_search_empty_index_returns_nothing(tmp_path):
+    _idx, retriever = _index_and_retriever(tmp_path)
+    assert retriever.sparse_search("anything") == []

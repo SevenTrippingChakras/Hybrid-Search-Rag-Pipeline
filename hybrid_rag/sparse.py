@@ -1,16 +1,8 @@
 """Sparse (BM25 keyword) store behind a small port.
 
-The dense side has a swappable ``VectorStore`` (:mod:`hybrid_rag.stores`); this
-is its sparse counterpart. ``SparseStore`` is the port, ``Bm25Store`` the only
-adapter for now — a local BM25 index over a JSON corpus sidecar. Keeping sparse
-behind a port, symmetric with the dense store, lets the indexer write both and
-the retriever read both without either depending on BM25 specifics. Phase 2.5
-retires this file when OpenSearch absorbs dense and sparse into one engine.
-
-BM25 matches exact keywords — function names, config keys, error codes — that
-semantic search can miss, so it complements dense retrieval rather than
-replacing it. Each entry keeps its text and metadata (like a dense hit) so a
-search result carries its own provenance.
+``SparseStore`` is the port, ``Bm25Store`` the adapter — a local BM25 index over
+a JSON corpus sidecar. Symmetric with the dense ``VectorStore`` so the indexer
+writes both and the retriever reads both.
 """
 
 from __future__ import annotations
@@ -47,10 +39,8 @@ class SparseStore(Protocol):
 class Bm25Store:
     """A local BM25 index persisted as a JSON corpus sidecar.
 
-    The BM25 index is held in memory and rebuilt from the corpus on every ``add``
-    and on load; stable ids make re-adding a chunk an upsert. ``query`` returns
-    ``QueryHit`` objects (the same type the dense store returns) so the retriever
-    can fuse dense and sparse results uniformly.
+    The index is held in memory and rebuilt from the corpus on every ``add`` and
+    on load; stable ids make re-adding a chunk an upsert.
     """
 
     def __init__(self, path: str = "data/index/bm25.json") -> None:

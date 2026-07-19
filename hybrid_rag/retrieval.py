@@ -1,14 +1,7 @@
 """Retrieval: the read path over the dense and sparse stores.
 
-Separate from indexing (:mod:`hybrid_rag.index`) on purpose — indexing writes the
-stores, retrieval reads them. The ``Retriever`` depends only on the store ports
-plus an ``embed_fn``, so it works across every dense backend and, once Phase 2.5
-lands, over OpenSearch with almost no change. The same store instances are shared
-with the ``Index``; by default both point at the same persisted paths.
-
-Phase 2 builds this up in points, each an additive method over the same two
-stores: dense search (2.1), sparse BM25 search (2.2), RRF fusion of the two
-(2.3), and a reranker (2.4).
+The ``Retriever`` depends only on the store ports plus an ``embed_fn`` and shares
+the store instances the ``Index`` writes to.
 """
 
 from __future__ import annotations
@@ -32,12 +25,14 @@ class Retriever:
         self._embed_fn = embed_fn
 
     def dense_search(self, query: str, k: int = 10) -> list[QueryHit]:
-        """Dense retrieval (Phase 2.1): embed the query, return top-k by cosine.
-
-        The query is embedded with the same ``embed_fn`` used at index time, then
-        handed to the dense store, which ranks chunks by cosine similarity. This
-        finds semantically related passages even when they share no keywords — the
-        sparse (BM25) half in Phase 2.2 covers the exact-term case.
-        """
+        """Embed the query and return the dense store's top-k chunks by cosine."""
         embedding = self._embed_fn([query])[0]
         return self._store.query(embedding, k=k)
+
+    def sparse_search(self, query: str, k: int = 10) -> list[QueryHit]:
+        """Return the BM25 store's top-k chunks by keyword-match score.
+
+        Catches exact terms — function names, config keys, error codes — that
+        dense search can miss.
+        """
+        return self._sparse.query(query, k=k)
