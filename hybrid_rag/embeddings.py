@@ -6,8 +6,9 @@ first use so importing this module never requires an API key.
 
 from __future__ import annotations
 
-from dotenv import load_dotenv
 from openai import OpenAI
+
+from hybrid_rag.config import settings
 
 EMBED_MODEL = "text-embedding-3-small"
 
@@ -17,8 +18,7 @@ _client: OpenAI | None = None
 def _get_client() -> OpenAI:
     global _client
     if _client is None:
-        load_dotenv()
-        _client = OpenAI()
+        _client = OpenAI(api_key=settings.openai_api_key)
     return _client
 
 
