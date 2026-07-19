@@ -1,4 +1,4 @@
-"""Tests for the dense + sparse index.
+"""Tests for the indexing write path (dense + sparse kept in sync).
 
 An injected fake embedder, a ChromaStore under tmp_path, and a tmp sparse sidecar
 keep the suite offline and isolated from the real ``data/index``.
@@ -6,8 +6,9 @@ keep the suite offline and isolated from the real ``data/index``.
 
 import hashlib
 
-from hybrid_rag.index import Index, _chunk_id, _tokenize
+from hybrid_rag.index import Index, _chunk_id
 from hybrid_rag.models import Chunk
+from hybrid_rag.sparse import Bm25Store
 from hybrid_rag.stores import ChromaStore
 
 _EMBED_DIM = 32
@@ -43,11 +44,8 @@ def _chunk(text, index, source="doc.md", strategy="fixed", heading=None, page=No
 
 def _index(tmp_path):
     store = ChromaStore(path=str(tmp_path / "index"))
-    return Index(
-        store=store,
-        sparse_path=str(tmp_path / "index" / "bm25.json"),
-        embed_fn=_fake_embed,
-    )
+    sparse = Bm25Store(path=str(tmp_path / "index" / "bm25.json"))
+    return Index(store=store, sparse=sparse, embed_fn=_fake_embed)
 
 
 def test_add_stores_chunks_with_metadata(tmp_path):
@@ -85,38 +83,25 @@ def test_reindexing_same_chunk_upserts(tmp_path):
     assert docs == ["first revised"]
 
 
-def test_sparse_index_stays_in_sync_with_dense(tmp_path):
+def test_sparse_store_stays_in_sync_with_dense(tmp_path):
     idx = _index(tmp_path)
     idx.add([_chunk("the cat sat on the mat", 0)])
     idx.add([_chunk("the dog chased the ball", 1)])
     idx.add([_chunk("the engine needs oil", 2)])
 
+    # both stores hold the same chunks
     assert idx.count == 3
-    assert idx._bm25 is not None
-    assert len(idx._ids) == 3
-    # BM25 corpus size tracks the dense store.
-    scores = idx._bm25.get_scores(_tokenize("engine oil"))
-    assert len(scores) == 3
-    # the engine chunk outscores the cat chunk on an engine query
-    engine_pos = idx._ids.index(_chunk_id(_chunk("the engine needs oil", 2)))
-    cat_pos = idx._ids.index(_chunk_id(_chunk("the cat sat on the mat", 0)))
-    assert scores[engine_pos] > scores[cat_pos]
-
-
-def test_sparse_corpus_persists_across_reopen(tmp_path):
-    idx = _index(tmp_path)
-    idx.add([_chunk("persisted body text", 0)])
-
-    reopened = _index(tmp_path)
-    assert reopened._ids == [_chunk_id(_chunk("persisted body text", 0))]
-    assert reopened._bm25 is not None
+    assert idx._sparse.count() == 3
+    # and the sparse store can find them by keyword
+    top = idx._sparse.query("engine oil", k=1)[0]
+    assert top.id == _chunk_id(_chunk("the engine needs oil", 2))
 
 
 def test_add_empty_is_noop(tmp_path):
     idx = _index(tmp_path)
     idx.add([])
     assert idx.count == 0
-    assert idx._bm25 is None
+    assert idx._sparse.count() == 0
 
 
 def test_near_duplicate_across_docs_is_skipped(tmp_path):
@@ -156,9 +141,10 @@ def test_distinct_chunks_are_all_kept(tmp_path):
 
 def test_dedup_disabled_keeps_duplicates(tmp_path):
     store = ChromaStore(path=str(tmp_path / "index"))
+    sparse = Bm25Store(path=str(tmp_path / "index" / "bm25.json"))
     idx = Index(
         store=store,
-        sparse_path=str(tmp_path / "index" / "bm25.json"),
+        sparse=sparse,
         embed_fn=_fake_embed,
         dedup_threshold=1.0,
     )
