@@ -23,6 +23,10 @@ class Settings(BaseSettings):
     # Which dense backend the Index uses: chroma | pinecone | milvus.
     vector_backend: str = "chroma"
 
+    # Deduplication (Phase 1.4): skip a chunk whose cosine similarity to an
+    # existing chunk exceeds this. Set >= 1.0 to disable dedup entirely.
+    dedup_threshold: float = 0.95
+
     # Chroma (local, embedded).
     chroma_path: str = "data/index"
 
