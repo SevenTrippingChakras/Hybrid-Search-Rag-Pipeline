@@ -22,6 +22,13 @@ class Settings(BaseSettings):
     # existing chunk exceeds this. Set >= 1.0 to disable dedup entirely.
     dedup_threshold: float = 0.95
 
+    # Hybrid fusion (Phase 2.3): Reciprocal Rank Fusion weights per list and the
+    # RRF rank constant. Higher dense_weight favors semantic hits, higher
+    # sparse_weight favors exact keyword hits. rrf_k damps the rank curve.
+    dense_weight: float = 0.7
+    sparse_weight: float = 0.3
+    rrf_k: int = 60
+
     # Chroma (local, embedded).
     chroma_path: str = "data/index"
 
