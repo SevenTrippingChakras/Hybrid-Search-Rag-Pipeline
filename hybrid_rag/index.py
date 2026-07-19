@@ -1,7 +1,8 @@
-"""Indexing: the write path into the dense and sparse stores, kept in sync.
+"""Indexing: the write path into the hybrid store.
 
-Embeds chunks, drops near-duplicates, and upserts the rest into both stores.
-Stable chunk ids make re-indexing an upsert.
+Embeds chunks, drops near-duplicates, and upserts the rest. One store holds both
+the dense vector and the BM25 text per chunk. Stable chunk ids make re-indexing
+an upsert.
 """
 
 import math
@@ -10,8 +11,7 @@ from dataclasses import asdict, dataclass
 from hybrid_rag.config import settings
 from hybrid_rag.embeddings import embed_texts
 from hybrid_rag.models import Chunk
-from hybrid_rag.sparse import Bm25Store, SparseStore
-from hybrid_rag.stores import VectorStore, build_store
+from hybrid_rag.stores import HybridStore, build_store
 
 
 def _cosine(a: list[float], b: list[float]) -> float:
@@ -42,24 +42,22 @@ def _metadata(chunk: Chunk) -> dict:
 
 
 class Index:
-    """Writes chunks into a dense store and a sparse store, keeping them in sync."""
+    """Writes chunks into the hybrid store (dense vector + BM25 text per chunk)."""
 
     def __init__(
         self,
-        store: VectorStore | None = None,
-        sparse: SparseStore | None = None,
+        store: HybridStore | None = None,
         embed_fn=embed_texts,
         dedup_threshold: float | None = None,
     ) -> None:
         self._store = store or build_store()
-        self._sparse = sparse or Bm25Store()
         self._embed_fn = embed_fn
         self._dedup_threshold = (
             settings.dedup_threshold if dedup_threshold is None else dedup_threshold
         )
 
     def add(self, chunks: list[Chunk]) -> AddResult:
-        """Embed chunks, drop near-duplicates, upsert the rest into both stores."""
+        """Embed chunks, drop near-duplicates, upsert the rest into the store."""
         if not chunks:
             return AddResult(added=[], skipped=[])
         embeddings = self._embed_fn([c.text for c in chunks])
@@ -84,7 +82,6 @@ class Index:
                 documents=documents,
                 metadatas=metadatas,
             )
-            self._sparse.add(ids=ids, documents=documents, metadatas=metadatas)
 
         return AddResult(added=[_chunk_id(c) for c in kept], skipped=skipped)
 

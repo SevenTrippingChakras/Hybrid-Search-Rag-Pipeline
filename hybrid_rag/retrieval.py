@@ -1,37 +1,27 @@
-"""Retrieval: the read path over the dense and sparse stores.
+"""Retrieval: the read path over the hybrid store.
 
-The ``Retriever`` depends only on the store ports plus an ``embed_fn`` and shares
-the store instances the ``Index`` writes to.
+The ``Retriever`` depends only on the store port plus an ``embed_fn`` and shares
+the store instance the ``Index`` writes to.
 """
 
 from hybrid_rag.config import settings
 from hybrid_rag.embeddings import embed_texts
-from hybrid_rag.fusion import reciprocal_rank_fusion
 from hybrid_rag.reranker import CrossEncoderReranker, Reranker
-from hybrid_rag.sparse import Bm25Store, SparseStore
-from hybrid_rag.stores import QueryHit, VectorStore, build_store
+from hybrid_rag.stores import HybridStore, QueryHit, build_store
 
 
 class Retriever:
-    """Reads the dense and sparse stores to find chunks relevant to a query."""
+    """Reads the hybrid store's dense and sparse sides to find relevant chunks."""
 
     def __init__(
         self,
-        store: VectorStore | None = None,
-        sparse: SparseStore | None = None,
+        store: HybridStore | None = None,
         reranker: Reranker | None = None,
         embed_fn=embed_texts,
-        dense_weight: float = settings.dense_weight,
-        sparse_weight: float = settings.sparse_weight,
-        rrf_k: int = settings.rrf_k,
     ) -> None:
         self._store = store or build_store()
-        self._sparse = sparse or Bm25Store()
         self._reranker = reranker or CrossEncoderReranker()
         self._embed_fn = embed_fn
-        self._dense_weight = dense_weight
-        self._sparse_weight = sparse_weight
-        self._rrf_k = rrf_k
 
     def dense_search(self, query: str, k: int = 10) -> list[QueryHit]:
         """Embed the query and return the dense store's top-k chunks by cosine."""
@@ -44,25 +34,17 @@ class Retriever:
         Catches exact terms — function names, config keys, error codes — that
         dense search can miss.
         """
-        return self._sparse.query(query, k=k)
+        return self._store.sparse_query(query, k=k)
 
-    def hybrid_search(
-        self, query: str, k: int = 10, candidate_k: int = 20
-    ) -> list[QueryHit]:
-        """Fuse dense and sparse results with weighted Reciprocal Rank Fusion.
+    def hybrid_search(self, query: str, k: int = 10) -> list[QueryHit]:
+        """OpenSearch native hybrid: BM25 + k-NN fused server-side by RRF.
 
-        Pulls ``candidate_k`` hits from each retriever, merges them by rank into a
-        single list (dense/sparse weights and RRF constant set at construction),
-        and returns the top ``k``. Getting the best of both — semantic recall plus
-        exact keyword matching — in one ranked list.
+        One request; the engine runs both sub-queries and combines them with
+        Reciprocal Rank Fusion. Semantic recall plus exact keyword matching in a
+        single ranked list.
         """
-        dense = self.dense_search(query, k=candidate_k)
-        sparse = self.sparse_search(query, k=candidate_k)
-        return reciprocal_rank_fusion(
-            [(dense, self._dense_weight), (sparse, self._sparse_weight)],
-            k=self._rrf_k,
-            top_k=k,
-        )
+        embedding = self._embed_fn([query])[0]
+        return self._store.hybrid_query(query, embedding, k=k)
 
     def rerank(
         self, query: str, hits: list[QueryHit], top_k: int = settings.rerank_top_k
@@ -76,6 +58,6 @@ class Retriever:
         top_k: int = settings.rerank_top_k,
         candidate_k: int = 20,
     ) -> list[QueryHit]:
-        """The full read pipeline: hybrid fusion then cross-encoder rerank."""
-        candidates = self.hybrid_search(query, k=candidate_k, candidate_k=candidate_k)
+        """The full read pipeline: native hybrid fusion then cross-encoder rerank."""
+        candidates = self.hybrid_search(query, k=candidate_k)
         return self.rerank(query, candidates, top_k=top_k)

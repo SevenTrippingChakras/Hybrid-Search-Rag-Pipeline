@@ -13,35 +13,27 @@ class Settings(BaseSettings):
 
     openai_api_key: str | None = None
 
-    # Which dense backend the Index uses: chroma | pinecone | milvus.
-    vector_backend: str = "chroma"
+    # Which retrieval backend the store uses. Only opensearch for now; the factory
+    # stays so a future adapter (e.g. Azure AI Search) remains swappable.
+    vector_backend: str = "opensearch"
+
+    # OpenSearch (Phase 2.5): dense k-NN + sparse BM25 in one engine. Local dev is
+    # the Docker single node from docker-compose.yml; prod is Amazon OpenSearch.
+    opensearch_host: str = "http://localhost:9200"
+    opensearch_index: str = "chunks"
 
     # Deduplication (Phase 1.4): skip a chunk whose cosine similarity to an
     # existing chunk exceeds this. Set >= 1.0 to disable dedup entirely.
     dedup_threshold: float = 0.95
 
-    # Hybrid fusion (Phase 2.3): Reciprocal Rank Fusion weights per list and the
-    # RRF rank constant. Higher dense_weight favors semantic hits, higher
-    # sparse_weight favors exact keyword hits. rrf_k damps the rank curve.
-    dense_weight: float = 0.7
-    sparse_weight: float = 0.3
+    # Hybrid fusion: OpenSearch's native RRF (score-ranker-processor) rank
+    # constant. Larger values flatten the rank curve; smaller sharpen it.
     rrf_k: int = 60
 
     # Reranker (Phase 2.4): cross-encoder that re-scores fused candidates,
     # keeping the best rerank_top_k.
     reranker_model: str = "BAAI/bge-reranker-v2-m3"
     rerank_top_k: int = 5
-
-    # Chroma (local, embedded).
-    chroma_path: str = "data/index"
-
-    # Pinecone (serverless).
-    pinecone_api_key: str | None = None
-    pinecone_index: str = "hybrid-rag"
-
-    # Milvus / Zilliz Cloud.
-    milvus_uri: str | None = None
-    milvus_token: str = ""
 
 
 settings = Settings()
