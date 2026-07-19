@@ -1,42 +1,34 @@
-"""Dense + sparse index over chunks, kept in sync.
+"""Indexing: the write path into the dense and sparse stores, kept in sync.
 
-Pairs a swappable dense ``VectorStore`` (see :mod:`hybrid_rag.stores`) with a
-BM25 keyword index. Dense vectors go to whichever backend ``VECTOR_BACKEND``
-selects; the sparse index is maintained here from a small local corpus sidecar,
-so BM25 behaves identically whether the dense backend is Chroma, Pinecone, or
-Milvus (Pinecone, for one, cannot enumerate all vectors to rebuild from).
+This module only writes. It embeds chunks, drops near-duplicates, and upserts the
+survivors into a swappable dense ``VectorStore`` (:mod:`hybrid_rag.stores`) and a
+``SparseStore`` (BM25, :mod:`hybrid_rag.sparse`). Both stay in sync because every
+``add`` writes both, and stable chunk ids make re-indexing an upsert on each side.
 
-The two indexes stay in sync because every ``add`` writes both: the dense store
-and the sparse corpus. Stable chunk ids make re-indexing an upsert on both sides.
-Embeddings are computed here via ``embed_fn`` (injectable, so the index builds
-offline) and handed to the store directly.
+Reading the stores back — dense search, sparse search, fusion, rerank — is the
+retriever's job (:mod:`hybrid_rag.retrieval`); this module never searches. That
+split mirrors production: indexing and retrieval are separate concerns over the
+same shared stores.
+
+Embeddings are computed here via ``embed_fn`` (injectable, so indexing runs
+offline in tests) and handed to the dense store directly.
 
 Before inserting, ``add`` drops near-duplicate chunks (Phase 1.4): a chunk whose
 cosine similarity to an already-stored chunk (or to an earlier chunk in the same
-batch) exceeds ``dedup_threshold`` is skipped, so the retriever never wastes
-context on the same content appearing in two docs.
+batch) exceeds ``dedup_threshold`` is skipped, so retrieval never wastes context
+on the same content appearing in two docs.
 """
 
 from __future__ import annotations
 
-import json
 import math
-import re
 from dataclasses import asdict, dataclass
-from pathlib import Path
-
-from rank_bm25 import BM25Okapi
 
 from hybrid_rag.config import settings
 from hybrid_rag.embeddings import embed_texts
 from hybrid_rag.models import Chunk
+from hybrid_rag.sparse import Bm25Store, SparseStore
 from hybrid_rag.stores import VectorStore, build_store
-
-_TOKEN_RE = re.compile(r"\w+")
-
-
-def _tokenize(text: str) -> list[str]:
-    return _TOKEN_RE.findall(text.lower())
 
 
 def _cosine(a: list[float], b: list[float]) -> float:
@@ -67,28 +59,24 @@ def _metadata(chunk: Chunk) -> dict:
 
 
 class Index:
-    """A swappable dense store paired with a local BM25 sparse index."""
+    """Writes chunks into a dense store and a sparse store, keeping them in sync."""
 
     def __init__(
         self,
         store: VectorStore | None = None,
-        sparse_path: str = "data/index/bm25.json",
+        sparse: SparseStore | None = None,
         embed_fn=embed_texts,
         dedup_threshold: float | None = None,
     ) -> None:
         self._store = store or build_store()
+        self._sparse = sparse or Bm25Store()
         self._embed_fn = embed_fn
         self._dedup_threshold = (
             settings.dedup_threshold if dedup_threshold is None else dedup_threshold
         )
-        self._sparse_path = Path(sparse_path)
-        self._corpus: dict[str, str] = self._load_corpus()
-        self._ids: list[str] = []
-        self._bm25: BM25Okapi | None = None
-        self._rebuild_sparse()
 
     def add(self, chunks: list[Chunk]) -> AddResult:
-        """Embed chunks, drop near-duplicates, upsert the rest, update sparse."""
+        """Embed chunks, drop near-duplicates, upsert the rest into both stores."""
         if not chunks:
             return AddResult(added=[], skipped=[])
         embeddings = self._embed_fn([c.text for c in chunks])
@@ -104,16 +92,16 @@ class Index:
             kept_embeddings.append(embedding)
 
         if kept:
+            ids = [_chunk_id(c) for c in kept]
+            documents = [c.text for c in kept]
+            metadatas = [_metadata(c) for c in kept]
             self._store.upsert(
-                ids=[_chunk_id(c) for c in kept],
+                ids=ids,
                 embeddings=kept_embeddings,
-                documents=[c.text for c in kept],
-                metadatas=[_metadata(c) for c in kept],
+                documents=documents,
+                metadatas=metadatas,
             )
-            for c in kept:
-                self._corpus[_chunk_id(c)] = c.text
-            self._save_corpus()
-            self._rebuild_sparse()
+            self._sparse.add(ids=ids, documents=documents, metadatas=metadatas)
 
         return AddResult(added=[_chunk_id(c) for c in kept], skipped=skipped)
 
@@ -139,20 +127,3 @@ class Index:
     @property
     def count(self) -> int:
         return self._store.count()
-
-    def _rebuild_sparse(self) -> None:
-        """Build the BM25 index from the local corpus of chunk texts."""
-        self._ids = list(self._corpus)
-        tokens = [_tokenize(self._corpus[i]) for i in self._ids]
-        self._bm25 = BM25Okapi(tokens) if tokens else None
-
-    def _load_corpus(self) -> dict[str, str]:
-        if self._sparse_path.exists():
-            return json.loads(self._sparse_path.read_text(encoding="utf-8"))
-        return {}
-
-    def _save_corpus(self) -> None:
-        self._sparse_path.parent.mkdir(parents=True, exist_ok=True)
-        self._sparse_path.write_text(
-            json.dumps(self._corpus, ensure_ascii=False), encoding="utf-8"
-        )

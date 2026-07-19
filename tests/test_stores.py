@@ -8,6 +8,7 @@ import pytest
 
 from hybrid_rag.index import Index
 from hybrid_rag.models import Chunk
+from hybrid_rag.sparse import Bm25Store
 from hybrid_rag.stores import ChromaStore, QueryHit, VectorStore, build_store
 
 
@@ -47,11 +48,11 @@ def test_index_works_against_any_vectorstore(tmp_path):
 
     idx = Index(
         store=store,
-        sparse_path=str(tmp_path / "bm25.json"),
+        sparse=Bm25Store(path=str(tmp_path / "bm25.json")),
         embed_fn=lambda texts: [[float(len(t))] for t in texts],
     )
     idx.add([Chunk("a body", "doc.md", 0, "fixed", 6)])
 
     assert idx.count == 1
     assert store.records["doc.md:fixed:0"][1] == "a body"
-    assert idx._bm25 is not None
+    assert idx._sparse.count() == 1
