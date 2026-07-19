@@ -1,22 +1,7 @@
 """Indexing: the write path into the dense and sparse stores, kept in sync.
 
-This module only writes. It embeds chunks, drops near-duplicates, and upserts the
-survivors into a swappable dense ``VectorStore`` (:mod:`hybrid_rag.stores`) and a
-``SparseStore`` (BM25, :mod:`hybrid_rag.sparse`). Both stay in sync because every
-``add`` writes both, and stable chunk ids make re-indexing an upsert on each side.
-
-Reading the stores back — dense search, sparse search, fusion, rerank — is the
-retriever's job (:mod:`hybrid_rag.retrieval`); this module never searches. That
-split mirrors production: indexing and retrieval are separate concerns over the
-same shared stores.
-
-Embeddings are computed here via ``embed_fn`` (injectable, so indexing runs
-offline in tests) and handed to the dense store directly.
-
-Before inserting, ``add`` drops near-duplicate chunks (Phase 1.4): a chunk whose
-cosine similarity to an already-stored chunk (or to an earlier chunk in the same
-batch) exceeds ``dedup_threshold`` is skipped, so retrieval never wastes context
-on the same content appearing in two docs.
+Embeds chunks, drops near-duplicates, and upserts the rest into both stores.
+Stable chunk ids make re-indexing an upsert.
 """
 
 from __future__ import annotations
@@ -110,8 +95,7 @@ class Index:
     ) -> bool:
         """Near-duplicate if cosine to a batch-mate or stored chunk tops the threshold.
 
-        A stored hit with this chunk's own id is a re-index (upsert), not a
-        duplicate, so it is ignored.
+        A stored hit with this chunk's own id is a re-index, not a duplicate.
         """
         if self._dedup_threshold >= 1.0:
             return False

@@ -1,13 +1,8 @@
 """Central configuration for the pipeline.
 
-One ``Settings`` class reads every knob from the environment (and ``.env``), so
-config lives in a single validated place instead of scattered ``os.environ``
-calls. As the project grows (the Phase 5 FastAPI service, the eval harness) new
-settings — host, port, model names — land here too.
-
+One ``Settings`` class reads every knob from the environment (and ``.env``).
 ``settings`` is a shared instance; import it where you need a value. Optional
-fields default to ``None`` so the module imports even when a given backend's
-credentials are absent (the store fails only when that backend is actually used).
+fields default to ``None`` so the module imports without a backend's credentials.
 """
 
 from __future__ import annotations

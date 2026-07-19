@@ -1,13 +1,8 @@
 """Cloud vector-store adapters: Pinecone and Milvus (Zilliz Cloud).
 
-Kept out of :mod:`hybrid_rag.stores` so the heavy SDKs load only when the
-matching backend is actually selected. Both implement the same ``VectorStore``
-port: dense vectors are handed in, the chunk text rides along as a ``text`` field
-so ``query`` can return the document, and cosine similarity is used so ``score``
-means "higher is more similar" — identical semantics to ``ChromaStore``.
-
-Credentials come from the environment (``PINECONE_*`` / ``MILVUS_*``). Each store
-assumes its index/collection is dimensioned for ``text-embedding-3-small``.
+Kept out of :mod:`hybrid_rag.stores` so the heavy SDKs load only when selected.
+Both implement the ``VectorStore`` port with the same cosine ``score`` semantics
+as ``ChromaStore``. Credentials come from the environment.
 """
 
 from __future__ import annotations
