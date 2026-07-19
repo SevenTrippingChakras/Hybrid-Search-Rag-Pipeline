@@ -112,3 +112,27 @@ def test_sparse_search_respects_k(tmp_path):
 def test_sparse_search_empty_index_returns_nothing(tmp_path):
     _idx, retriever = _index_and_retriever(tmp_path)
     assert retriever.sparse_search("anything") == []
+
+
+def test_hybrid_search_fuses_dense_and_sparse(tmp_path):
+    idx, retriever = _index_and_retriever(tmp_path)
+    idx.add([_chunk("restart the engine to clear error code E42", 0)])
+    idx.add([_chunk("the cat sat on the mat", 1)])
+    idx.add([_chunk("a dog ran across the yard", 2)])
+
+    hits = retriever.hybrid_search("engine error code E42", k=3)
+
+    assert hits[0].document == "restart the engine to clear error code E42"
+    assert hits[0].score > hits[1].score
+
+
+def test_hybrid_search_respects_k(tmp_path):
+    idx, retriever = _index_and_retriever(tmp_path)
+    idx.add([_chunk(f"unique words number {n}", n) for n in range(5)])
+
+    assert len(retriever.hybrid_search("words", k=2)) == 2
+
+
+def test_hybrid_search_empty_index_returns_nothing(tmp_path):
+    _idx, retriever = _index_and_retriever(tmp_path)
+    assert retriever.hybrid_search("anything") == []
