@@ -4,8 +4,6 @@ The ``Retriever`` depends only on the store ports plus an ``embed_fn`` and share
 the store instances the ``Index`` writes to.
 """
 
-from __future__ import annotations
-
 from hybrid_rag.config import settings
 from hybrid_rag.embeddings import embed_texts
 from hybrid_rag.fusion import reciprocal_rank_fusion

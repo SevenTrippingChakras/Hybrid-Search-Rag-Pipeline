@@ -5,8 +5,6 @@ Both implement the ``VectorStore`` port with the same cosine ``score`` semantics
 as ``ChromaStore``. Credentials come from the environment.
 """
 
-from __future__ import annotations
-
 from hybrid_rag.config import settings
 from hybrid_rag.stores import EMBED_DIM, QueryHit
 

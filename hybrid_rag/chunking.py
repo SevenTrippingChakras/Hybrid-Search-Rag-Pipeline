@@ -10,8 +10,6 @@ Every chunk records which strategy produced it, so strategies can be compared.
 Each function expects the segments of a single document.
 """
 
-from __future__ import annotations
-
 import re
 from collections.abc import Callable
 

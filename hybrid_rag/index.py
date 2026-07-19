@@ -4,8 +4,6 @@ Embeds chunks, drops near-duplicates, and upserts the rest into both stores.
 Stable chunk ids make re-indexing an upsert.
 """
 
-from __future__ import annotations
-
 import math
 from dataclasses import asdict, dataclass
 

@@ -6,8 +6,6 @@ are copied to ``data/raw`` and the normalized segments are cached to
 ``data/processed`` so the corpus can be re-indexed without re-parsing.
 """
 
-from __future__ import annotations
-
 import json
 import re
 import shutil
