@@ -4,14 +4,29 @@ An injected fake embedder, a ChromaStore under tmp_path, and a tmp sparse sideca
 keep the suite offline and isolated from the real ``data/index``.
 """
 
+import hashlib
+
 from hybrid_rag.index import Index, _chunk_id, _tokenize
 from hybrid_rag.models import Chunk
 from hybrid_rag.stores import ChromaStore
 
+_EMBED_DIM = 32
+
 
 def _fake_embed(texts):
-    """Deterministic 2-d vectors, no network."""
-    return [[float(len(t)), 1.0] for t in texts]
+    """Deterministic bag-of-words vectors, no network.
+
+    Identical text yields an identical vector (cosine 1.0, so dedup catches it);
+    different words hash to different buckets, so distinct chunks stay dissimilar.
+    """
+    vectors = []
+    for text in texts:
+        vec = [0.0] * _EMBED_DIM
+        for token in text.lower().split():
+            bucket = int(hashlib.md5(token.encode()).hexdigest(), 16) % _EMBED_DIM
+            vec[bucket] += 1.0
+        vectors.append(vec)
+    return vectors
 
 
 def _chunk(text, index, source="doc.md", strategy="fixed", heading=None, page=None):
@@ -102,6 +117,55 @@ def test_add_empty_is_noop(tmp_path):
     idx.add([])
     assert idx.count == 0
     assert idx._bm25 is None
+
+
+def test_near_duplicate_across_docs_is_skipped(tmp_path):
+    idx = _index(tmp_path)
+    idx.add([_chunk("shared policy text", 0, source="a.md")])
+    result = idx.add([_chunk("shared policy text", 0, source="b.md")])
+
+    assert idx.count == 1
+    assert result.added == []
+    assert result.skipped == [_chunk_id(_chunk("shared policy text", 0, source="b.md"))]
+
+
+def test_duplicates_within_a_batch_are_skipped(tmp_path):
+    idx = _index(tmp_path)
+    result = idx.add(
+        [
+            _chunk("repeated body", 0, source="a.md"),
+            _chunk("repeated body", 0, source="b.md"),
+        ]
+    )
+
+    assert idx.count == 1
+    assert len(result.added) == 1
+    assert len(result.skipped) == 1
+
+
+def test_distinct_chunks_are_all_kept(tmp_path):
+    idx = _index(tmp_path)
+    result = idx.add(
+        [_chunk("alpha content here", 0), _chunk("totally different words", 1)]
+    )
+
+    assert idx.count == 2
+    assert len(result.added) == 2
+    assert result.skipped == []
+
+
+def test_dedup_disabled_keeps_duplicates(tmp_path):
+    store = ChromaStore(path=str(tmp_path / "index"))
+    idx = Index(
+        store=store,
+        sparse_path=str(tmp_path / "index" / "bm25.json"),
+        embed_fn=_fake_embed,
+        dedup_threshold=1.0,
+    )
+    idx.add([_chunk("shared policy text", 0, source="a.md")])
+    idx.add([_chunk("shared policy text", 0, source="b.md")])
+
+    assert idx.count == 2
 
 
 def test_chroma_store_query_returns_scored_hits(tmp_path):
