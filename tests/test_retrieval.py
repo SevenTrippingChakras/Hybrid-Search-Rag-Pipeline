@@ -136,3 +136,33 @@ def test_hybrid_search_respects_k(tmp_path):
 def test_hybrid_search_empty_index_returns_nothing(tmp_path):
     _idx, retriever = _index_and_retriever(tmp_path)
     assert retriever.hybrid_search("anything") == []
+
+
+class _FakeReranker:
+    """Reranks by query-token overlap; proves Retriever depends on the port."""
+
+    def rerank(self, query, hits, top_k=5):
+        q = set(query.lower().split())
+        scored = sorted(
+            hits,
+            key=lambda h: sum(1 for w in h.document.lower().split() if w in q),
+            reverse=True,
+        )
+        return scored[:top_k]
+
+
+def test_search_reranks_hybrid_candidates(tmp_path):
+    store = ChromaStore(path=str(tmp_path / "index"))
+    sparse = Bm25Store(path=str(tmp_path / "index" / "bm25.json"))
+    idx = Index(store=store, sparse=sparse, embed_fn=_fake_embed)
+    retriever = Retriever(
+        store=store, sparse=sparse, reranker=_FakeReranker(), embed_fn=_fake_embed
+    )
+    idx.add([_chunk("restart the engine to clear error code E42", 0)])
+    idx.add([_chunk("the cat sat on the mat", 1)])
+    idx.add([_chunk("a dog ran across the yard", 2)])
+
+    hits = retriever.search("engine error code E42", top_k=2)
+
+    assert len(hits) == 2
+    assert hits[0].document == "restart the engine to clear error code E42"

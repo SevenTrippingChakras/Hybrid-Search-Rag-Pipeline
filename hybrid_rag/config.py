@@ -29,6 +29,11 @@ class Settings(BaseSettings):
     sparse_weight: float = 0.3
     rrf_k: int = 60
 
+    # Reranker (Phase 2.4): cross-encoder that re-scores fused candidates,
+    # keeping the best rerank_top_k.
+    reranker_model: str = "BAAI/bge-reranker-v2-m3"
+    rerank_top_k: int = 5
+
     # Chroma (local, embedded).
     chroma_path: str = "data/index"
 
