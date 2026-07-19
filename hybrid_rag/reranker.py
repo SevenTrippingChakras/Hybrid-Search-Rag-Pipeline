@@ -3,8 +3,6 @@
 ``Reranker`` is the port, ``CrossEncoderReranker`` the cross-encoder adapter.
 """
 
-from __future__ import annotations
-
 from typing import Protocol, runtime_checkable
 
 from hybrid_rag.config import settings

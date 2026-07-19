@@ -4,8 +4,6 @@ A thin wrapper around the embeddings endpoint. The client is created lazily on
 first use so importing this module never requires an API key.
 """
 
-from __future__ import annotations
-
 from openai import OpenAI
 
 from hybrid_rag.config import settings

@@ -5,8 +5,6 @@ are the adapters, selected by ``build_store`` from the ``VECTOR_BACKEND`` env va
 Embeddings are handed in; ``query`` returns a cosine ``score`` (higher is closer).
 """
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 from typing import Protocol, runtime_checkable
 

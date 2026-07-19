@@ -5,8 +5,6 @@ One ``Settings`` class reads every knob from the environment (and ``.env``).
 fields default to ``None`` so the module imports without a backend's credentials.
 """
 
-from __future__ import annotations
-
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 

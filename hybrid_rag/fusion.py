@@ -7,8 +7,6 @@ sum across lists. ``k`` damps the curve so top ranks dominate without a single
 first place swamping the rest.
 """
 
-from __future__ import annotations
-
 from hybrid_rag.stores import QueryHit
 
 

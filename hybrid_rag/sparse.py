@@ -5,8 +5,6 @@ a JSON corpus sidecar. Symmetric with the dense ``VectorStore`` so the indexer
 writes both and the retriever reads both.
 """
 
-from __future__ import annotations
-
 import json
 import re
 from pathlib import Path
