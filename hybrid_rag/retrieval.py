@@ -9,6 +9,7 @@ from __future__ import annotations
 from hybrid_rag.config import settings
 from hybrid_rag.embeddings import embed_texts
 from hybrid_rag.fusion import reciprocal_rank_fusion
+from hybrid_rag.reranker import CrossEncoderReranker, Reranker
 from hybrid_rag.sparse import Bm25Store, SparseStore
 from hybrid_rag.stores import QueryHit, VectorStore, build_store
 
@@ -20,6 +21,7 @@ class Retriever:
         self,
         store: VectorStore | None = None,
         sparse: SparseStore | None = None,
+        reranker: Reranker | None = None,
         embed_fn=embed_texts,
         dense_weight: float = settings.dense_weight,
         sparse_weight: float = settings.sparse_weight,
@@ -27,6 +29,7 @@ class Retriever:
     ) -> None:
         self._store = store or build_store()
         self._sparse = sparse or Bm25Store()
+        self._reranker = reranker or CrossEncoderReranker()
         self._embed_fn = embed_fn
         self._dense_weight = dense_weight
         self._sparse_weight = sparse_weight
@@ -62,3 +65,19 @@ class Retriever:
             k=self._rrf_k,
             top_k=k,
         )
+
+    def rerank(
+        self, query: str, hits: list[QueryHit], top_k: int = settings.rerank_top_k
+    ) -> list[QueryHit]:
+        """Re-score fused candidates with the cross-encoder, keep the best top_k."""
+        return self._reranker.rerank(query, hits, top_k=top_k)
+
+    def search(
+        self,
+        query: str,
+        top_k: int = settings.rerank_top_k,
+        candidate_k: int = 20,
+    ) -> list[QueryHit]:
+        """The full read pipeline: hybrid fusion then cross-encoder rerank."""
+        candidates = self.hybrid_search(query, k=candidate_k, candidate_k=candidate_k)
+        return self.rerank(query, candidates, top_k=top_k)
