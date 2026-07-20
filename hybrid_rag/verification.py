@@ -26,6 +26,20 @@ _MARKER = re.compile(r"\s*\[(\d+)\]")
 _SENTENCE = re.compile(r"(?<=[.!?])\s+")
 
 
+def split_claims(text: str) -> list[str]:
+    """Answer prose split into claims (sentences), each stripped of ``[n]`` markers.
+
+    Shared with confidence scoring so a claim string produced here matches the
+    ``claim`` on the ``CitationCheck`` it corresponds to.
+    """
+    claims = []
+    for sentence in _SENTENCE.split(text.strip()):
+        claim = _MARKER.sub("", sentence).strip()
+        if claim:
+            claims.append(claim)
+    return claims
+
+
 class _Verdict(BaseModel):
     """The judge's reply: whether the passage supports the claim, and why."""
 
@@ -65,10 +79,9 @@ class CitationVerifier:
         """Split into sentences, pairing each with every number it cites."""
         pairs = []
         for sentence in _SENTENCE.split(text.strip()):
-            numbers = [int(n) for n in _MARKER.findall(sentence)]
             claim = _MARKER.sub("", sentence).strip()
-            for number in numbers:
-                pairs.append((claim, number))
+            for number in _MARKER.findall(sentence):
+                pairs.append((claim, int(number)))
         return pairs
 
     @staticmethod

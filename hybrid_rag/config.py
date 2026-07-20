@@ -41,5 +41,12 @@ class Settings(BaseSettings):
     llm_backend: str = "openai"
     generation_model: str = "gpt-4o-mini"
 
+    # Confidence: weights fusing the three answer-trust signals (retrieval
+    # relevance, citation coverage, question completeness) into one composite.
+    # They should sum to 1.0.
+    confidence_retrieval_weight: float = 0.4
+    confidence_citation_weight: float = 0.4
+    confidence_completeness_weight: float = 0.2
+
 
 settings = Settings()

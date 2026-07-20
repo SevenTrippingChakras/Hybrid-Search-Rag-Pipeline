@@ -54,3 +54,13 @@ class CitationCheck:
     number: int
     supported: bool
     reason: str
+
+
+@dataclass
+class Confidence:
+    """How trustworthy an answer is, per signal plus a weighted composite."""
+
+    retrieval: float
+    citation_coverage: float
+    completeness: float
+    score: float
