@@ -17,26 +17,26 @@ class Settings(BaseSettings):
     # stays so a future adapter (e.g. Azure AI Search) remains swappable.
     vector_backend: str = "opensearch"
 
-    # OpenSearch (Phase 2.5): dense k-NN + sparse BM25 in one engine. Local dev is
-    # the Docker single node from docker-compose.yml; prod is Amazon OpenSearch.
+    # OpenSearch: dense k-NN + sparse BM25 in one engine. Local dev is the Docker
+    # single node from docker-compose.yml; prod is Amazon OpenSearch.
     opensearch_host: str = "http://localhost:9200"
     opensearch_index: str = "chunks"
 
-    # Deduplication (Phase 1.4): skip a chunk whose cosine similarity to an
-    # existing chunk exceeds this. Set >= 1.0 to disable dedup entirely.
+    # Deduplication: skip a chunk whose cosine similarity to an existing chunk
+    # exceeds this. Set >= 1.0 to disable dedup entirely.
     dedup_threshold: float = 0.95
 
     # Hybrid fusion: OpenSearch's native RRF (score-ranker-processor) rank
     # constant. Larger values flatten the rank curve; smaller sharpen it.
     rrf_k: int = 60
 
-    # Reranker (Phase 2.4): cross-encoder that re-scores fused candidates,
-    # keeping the best rerank_top_k.
+    # Reranker: cross-encoder that re-scores fused candidates, keeping the
+    # best rerank_top_k.
     reranker_model: str = "BAAI/bge-reranker-v2-m3"
     rerank_top_k: int = 5
 
-    # Generation (Phase 3): which LLM provider and model produce the grounded
-    # answer. llm_backend is the seam for a future adapter (Anthropic, Bedrock);
+    # Generation: which LLM provider and model produce the grounded answer.
+    # llm_backend is the seam for a future adapter (Anthropic, Bedrock);
     # only openai for now, mirroring vector_backend.
     llm_backend: str = "openai"
     generation_model: str = "gpt-4o-mini"

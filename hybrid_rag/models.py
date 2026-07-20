@@ -5,11 +5,7 @@ from dataclasses import dataclass
 
 @dataclass
 class Segment:
-    """A normalized region of a source document with structural metadata.
-
-    The loader's output unit: clean plaintext plus whatever structure the source
-    exposes (a heading, a PDF page number). Chunking operates on segments.
-    """
+    """A normalized region of a source document: clean text plus metadata."""
 
     text: str
     source: str
@@ -19,11 +15,7 @@ class Segment:
 
 @dataclass
 class Chunk:
-    """A retrieval unit produced by a chunking strategy.
-
-    Carries citation provenance (source, heading, page) and index bookkeeping
-    (chunk_index, strategy, char_count). ``strategy`` records which chunker made it.
-    """
+    """A retrieval unit from a chunking strategy, with provenance and bookkeeping."""
 
     text: str
     source: str
@@ -36,12 +28,7 @@ class Chunk:
 
 @dataclass
 class Citation:
-    """One numbered source the answer references via a ``[number]`` marker.
-
-    Resolves a bracketed marker back to the retrieved chunk that backs it, so a
-    claim's provenance (source, heading, page) and the supporting text are both
-    recoverable — the input to Phase 3.2 citation verification.
-    """
+    """A ``[number]`` marker resolved back to the chunk that backs it."""
 
     number: int
     source: str
@@ -57,3 +44,13 @@ class Answer:
     query: str
     text: str
     citations: list[Citation]
+
+
+@dataclass
+class CitationCheck:
+    """A judge's verdict on whether a cited passage supports a claim."""
+
+    claim: str
+    number: int
+    supported: bool
+    reason: str
