@@ -21,6 +21,18 @@ from hybrid_rag.models import Answer, CitationCheck, Confidence
 from hybrid_rag.stores import QueryHit
 from hybrid_rag.verification import split_claims
 
+
+def retrieval_confidence(hits: list[QueryHit]) -> float:
+    """Mean relevance of the reranked chunks (cross-encoder scores, 0-1).
+
+    The shared retrieval-confidence signal: the composite score folds it in here,
+    and the Phase 3.4 abstention gate reuses it to decide whether to answer at all.
+    """
+    if not hits:
+        return 0.0
+    return sum(hit.score for hit in hits) / len(hits)
+
+
 COMPLETENESS_SYSTEM = (
     "You judge how completely an ANSWER addresses a QUESTION. "
     "Break the question into its distinct parts (each sub-question, requested "
@@ -56,7 +68,7 @@ class ConfidenceScorer:
         checks: list[CitationCheck],
     ) -> Confidence:
         """Fold the three trust signals into a weighted composite confidence."""
-        retrieval = self._retrieval_confidence(hits)
+        retrieval = retrieval_confidence(hits)
         coverage = self._citation_coverage(answer, checks)
         completeness = self._completeness(answer)
         composite = (
@@ -70,13 +82,6 @@ class ConfidenceScorer:
             completeness=completeness,
             score=composite,
         )
-
-    @staticmethod
-    def _retrieval_confidence(hits: list[QueryHit]) -> float:
-        """Mean relevance of the reranked chunks (cross-encoder scores, 0-1)."""
-        if not hits:
-            return 0.0
-        return sum(hit.score for hit in hits) / len(hits)
 
     @staticmethod
     def _citation_coverage(answer: Answer, checks: list[CitationCheck]) -> float:
