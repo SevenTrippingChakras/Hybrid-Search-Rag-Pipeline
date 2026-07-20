@@ -48,5 +48,9 @@ class Settings(BaseSettings):
     confidence_citation_weight: float = 0.4
     confidence_completeness_weight: float = 0.2
 
+    # Abstention: if retrieval confidence (mean rerank score, 0-1) is below this,
+    # the pipeline returns a structured "I don't know" instead of generating.
+    abstain_threshold: float = 0.2
+
 
 settings = Settings()

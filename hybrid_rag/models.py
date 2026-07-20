@@ -57,6 +57,21 @@ class CitationCheck:
 
 
 @dataclass
+class NoAnswer:
+    """A graceful abstention: what was found, why it fell short, where to look.
+
+    Returned instead of an ``Answer`` when retrieval confidence is below the
+    threshold, so the system says what it could not answer rather than guessing.
+    """
+
+    query: str
+    retrieval_confidence: float
+    message: str
+    found: list[str]
+    suggested_sources: list[str]
+
+
+@dataclass
 class Confidence:
     """How trustworthy an answer is, per signal plus a weighted composite."""
 
