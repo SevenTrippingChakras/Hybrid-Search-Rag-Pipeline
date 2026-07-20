@@ -35,5 +35,11 @@ class Settings(BaseSettings):
     reranker_model: str = "BAAI/bge-reranker-v2-m3"
     rerank_top_k: int = 5
 
+    # Generation (Phase 3): which LLM provider and model produce the grounded
+    # answer. llm_backend is the seam for a future adapter (Anthropic, Bedrock);
+    # only openai for now, mirroring vector_backend.
+    llm_backend: str = "openai"
+    generation_model: str = "gpt-4o-mini"
+
 
 settings = Settings()

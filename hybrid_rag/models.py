@@ -32,3 +32,28 @@ class Chunk:
     char_count: int
     heading: str | None = None
     page: int | None = None
+
+
+@dataclass
+class Citation:
+    """One numbered source the answer references via a ``[number]`` marker.
+
+    Resolves a bracketed marker back to the retrieved chunk that backs it, so a
+    claim's provenance (source, heading, page) and the supporting text are both
+    recoverable — the input to Phase 3.2 citation verification.
+    """
+
+    number: int
+    source: str
+    text: str
+    heading: str | None = None
+    page: int | None = None
+
+
+@dataclass
+class Answer:
+    """A grounded answer: prose with inline ``[n]`` markers plus resolved cites."""
+
+    query: str
+    text: str
+    citations: list[Citation]
