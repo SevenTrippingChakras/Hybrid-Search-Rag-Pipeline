@@ -1,8 +1,8 @@
-"""Generation: the grounded answer layer (Phase 3.1).
+"""Grounded answer generation.
 
 ``Generator`` turns retrieved chunks into an answer that cites its sources with
 bracketed ``[n]`` markers and refuses to go beyond the given context. It depends
-on the ``LLM`` port, so the provider is a config choice, not an architecture one.
+on the ``LLM`` port, so the provider is a config choice.
 """
 
 from pydantic import BaseModel
@@ -24,7 +24,7 @@ SYSTEM_PROMPT = (
 
 
 class _LLMAnswer(BaseModel):
-    """The LLM boundary schema: prose with inline ``[n]`` plus the numbers used."""
+    """The LLM's reply: prose with inline ``[n]`` plus the numbers used."""
 
     answer: str
     citations: list[int]
