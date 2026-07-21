@@ -5,8 +5,8 @@ OpenSearch. Files are written to a tmp corpus so discovery and indexing are
 exercised end to end.
 """
 
+from hybrid_rag.eval.ingest import find_documents, ingest_corpus
 from hybrid_rag.index import Index
-from hybrid_rag.ingest import find_documents, ingest_corpus
 from tests.support import FakeHybridStore, fake_embed
 
 

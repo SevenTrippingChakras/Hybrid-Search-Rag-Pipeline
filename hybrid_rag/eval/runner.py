@@ -19,6 +19,7 @@ from hybrid_rag.eval.metrics import (
 from hybrid_rag.eval.ragas_scorer import RagasScorer
 from hybrid_rag.eval.results import EvalResults, QuestionResult, RunInfo
 from hybrid_rag.pipeline import Pipeline
+from hybrid_rag.stores import index_for_strategy
 
 
 def _retrieved_sources(hits) -> list[str]:
@@ -88,7 +89,7 @@ async def run_eval(
     questions = json.loads(Path(golden_path).read_text(encoding="utf-8"))
     if limit is not None:
         questions = questions[:limit]
-    pipeline = pipeline or Pipeline()
+    pipeline = pipeline or Pipeline(index=index_for_strategy(strategy))
     scorer = scorer or RagasScorer()
 
     results = []

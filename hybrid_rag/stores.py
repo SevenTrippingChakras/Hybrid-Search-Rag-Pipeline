@@ -190,9 +190,22 @@ class OpenSearchStore:
         return QueryHit(h["_id"], src["text"], dict(src.get("metadata", {})), score)
 
 
-def build_store(backend: str | None = None) -> HybridStore:
-    """Construct the store named by ``VECTOR_BACKEND`` (default ``opensearch``)."""
+def build_store(backend: str | None = None, index: str | None = None) -> HybridStore:
+    """Construct the store named by ``VECTOR_BACKEND`` (default ``opensearch``).
+
+    ``index`` overrides the default index name, so callers can target a
+    per-strategy index (see :func:`index_for_strategy`).
+    """
     backend = (backend or settings.vector_backend).lower()
     if backend == "opensearch":
-        return OpenSearchStore()
+        return OpenSearchStore(index=index)
     raise ValueError(f"Unknown vector backend: {backend!r}")
+
+
+def index_for_strategy(strategy: str) -> str:
+    """The per-strategy index name, e.g. ``chunks_fixed``.
+
+    Each chunking strategy lives in its own index so the three coexist and can be
+    evaluated without wiping between runs.
+    """
+    return f"{settings.opensearch_index}_{strategy}"

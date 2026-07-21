@@ -18,8 +18,9 @@ class Retriever:
         store: HybridStore | None = None,
         reranker: Reranker | None = None,
         embed_fn=embed_texts,
+        index: str | None = None,
     ) -> None:
-        self._store = store or build_store()
+        self._store = store or build_store(index=index)
         self._reranker = reranker or CrossEncoderReranker()
         self._embed_fn = embed_fn
 

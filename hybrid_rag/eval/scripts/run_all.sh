@@ -2,8 +2,8 @@
 # Unified eval runner: ingest, score, and report all three chunking strategies,
 # then build the combined comparison -- the whole manual flow in one command.
 #
-# Each strategy runs in isolation (clear index -> ingest -> eval -> report),
-# because retrieval does not filter by strategy. Outputs:
+# Each strategy is written to its own index (chunks_<strategy>), so the three
+# coexist and no wiping is needed between runs. Outputs:
 #
 #   hybrid_rag/eval/result/<strategy>/<strategy>.json   raw scores
 #   hybrid_rag/eval/result/<strategy>/<strategy>.html   single-strategy report
@@ -21,7 +21,6 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
 cd "$REPO_ROOT"
 
 OS_HOST="${OPENSEARCH_HOST:-http://localhost:9200}"
-OS_INDEX="${OPENSEARCH_INDEX:-chunks}"
 CORPUS="data/eval_test/corpus"
 GOLDEN="data/eval_test/golden_30.json"
 RESULT_DIR="hybrid_rag/eval/result"
@@ -48,10 +47,8 @@ for strategy in "${STRATEGIES[@]}"; do
   mkdir -p "$out_dir"
   echo ""
   echo "=== $strategy ==="
-  echo "- clearing index"
-  curl -s -X DELETE "$OS_HOST/$OS_INDEX" >/dev/null || true
-  echo "- ingesting corpus"
-  uv run python -m hybrid_rag.ingest --corpus "$CORPUS" --strategy "$strategy"
+  echo "- ingesting corpus into chunks_$strategy"
+  uv run python -m hybrid_rag.eval.ingest --corpus "$CORPUS" --strategy "$strategy"
   echo "- running eval"
   uv run python -m hybrid_rag.eval.runner --strategy "$strategy" \
     --golden "$GOLDEN" --out "$out_dir/$strategy.json" \

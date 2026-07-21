@@ -11,6 +11,7 @@ from pathlib import Path
 from hybrid_rag.chunking import chunk
 from hybrid_rag.index import Index
 from hybrid_rag.loaders import load_file
+from hybrid_rag.stores import index_for_strategy
 
 SUPPORTED_SUFFIXES = {".md", ".markdown", ".txt", ".text", ".html", ".htm", ".pdf"}
 
@@ -43,10 +44,11 @@ def ingest_corpus(
 ) -> IngestReport:
     """Load, chunk, embed, and index every supported document in the corpus.
 
-    Documents are processed one at a time so dedup catches cross-document
-    duplicates. ``limit`` ingests only the first N documents.
+    Each strategy is written to its own index (``chunks_<strategy>``) so the three
+    coexist without wiping. Documents are processed one at a time so dedup catches
+    cross-document duplicates. ``limit`` ingests only the first N documents.
     """
-    index = index or Index()
+    index = index or Index(index=index_for_strategy(strategy))
     files = find_documents(corpus_dir)
     if limit is not None:
         files = files[:limit]
