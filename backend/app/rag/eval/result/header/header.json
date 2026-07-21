@@ -1,0 +1,1301 @@
+{
+  "run": {
+    "chunking_strategy": "header",
+    "sample": "golden_30",
+    "n": 30,
+    "timestamp": "2026-07-21T08:44:00.617741+00:00"
+  },
+  "aggregate": {
+    "abstention_accuracy": 1.0,
+    "answer_correctness": 0.4613707345944691,
+    "citation_accuracy": 0.5611111111111111,
+    "faithfulness": 0.8055555555555556,
+    "retrieval_relevance": 0.856060606060606,
+    "by_category": {
+      "multi_hop": {
+        "answer_correctness": 0.4613707345944691,
+        "citation_accuracy": 0.5611111111111111,
+        "faithfulness": 0.8055555555555556,
+        "retrieval_relevance": 0.856060606060606
+      },
+      "no_answer": {
+        "abstention_accuracy": 1.0
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "mhrag-0003",
+      "category": "multi_hop",
+      "question": "Do the TechCrunch article on software companies and the Hacker News article on The Epoch Times both report an increase in revenue related to payment and subscription models, respectively?",
+      "golden_answer": "Yes",
+      "answer": null,
+      "retrieved_sources": [
+        "doc_0076.md",
+        "doc_0075.md"
+      ],
+      "gold_sources": [
+        "doc_0075.md",
+        "doc_0076.md"
+      ],
+      "abstained": true,
+      "scores": {
+        "retrieval_relevance": 1.0
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0076.md",
+          "text": "Today, The Epoch Times is one of the country’s most successful and influential conservative news organizations. It’s powered by Falun Gong, a religious group persecuted in China, which launched The Epoch Times as a free propaganda newsletter more than two decades ago to oppose the Chinese Communist Party.\n\nFunded through aggressive online and real-world marketing campaigns and big-money conservative donors, The Epoch Times now boasts to be the country’s fourth-largest newspaper by subscriber count. (Unlike most major newspapers, The Epoch Times isn't audited by the two major independent collectors of circulation data.) The nonprofit has amassed a fortune, growing its revenue by a staggering 685% in two years, to $122 million in 2021, according to the group’s most recent tax records."
+        },
+        {
+          "source": "doc_0075.md",
+          "text": "Silver believes the company’s exclusive focus on software companies only gives it an edge.\n\n“None of the modern processors were built specifically for software platforms. Most of them were built directly for merchants, and they’ve all had to retrofit their platforms even to accommodate basic payment processing and reporting functions for software companies,” he told TechCrunch.\n\nAs such, the startup is capturing volume as software platforms migrate from legacy processors such as Fiserv and FIS. As that happens, it competes against companies like Stripe (and its Connect product) to embed financial services and payments."
+        },
+        {
+          "source": "doc_0076.md",
+          "text": "The aggressive online and real-life marketing campaigns paid off. The group reported $76 million in subscription revenue in 2021, compared to nearly $7 million in 2019. A former employee of a regional Epoch Times operation who asked not to be identified because he feared retribution said that in order to send the papers to the most likely customers, they bought lists of addresses from data brokers, specifically for conservatives aged 60 and over. And many of the new subscribers are seniors, according to an employee’s account shared at a Falun Gong conference.\n\nBut hundreds of online complaints suggest that not all of the new customers are satisfied."
+        },
+        {
+          "source": "doc_0075.md",
+          "text": "In his view, most software companies don’t actually want to be fintechs and deal with all the regulatory and compliance issues that go with that. They really just want to be able to accept payments and generate more revenue from being able to do so."
+        },
+        {
+          "source": "doc_0075.md",
+          "text": "Funding and M&A\n\nAs seen in TechCrunch\n\nOpen banking led to a fintech boom — as Brite raises $60M, account-to-account payment grows\n\nRecapitalization, $60M Series D support growth of e-commerce financier Clearco\n\nStitch raises $25M Series A extension led by Ribbit Capital, increasing the round’s total to $46M\n\nResy and Eater co-founder raises $24M for Blackbird, a restaurant loyalty platform\n\nSparx wants to do for enterprise what Truebill did for consumer recurring bills\n\nTen Key Labs wants to simplify managing equity for startups\n\nSeen elsewhere\n\nLogistics company Loop raises $35M to modernize the supply chain (Also, check out TechCrunch’s previous story on Loop.)\n\nShift4 acquires SpotOn unit for $100M (TechCrunch previously covered SpotOn here.)"
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0006",
+      "category": "multi_hop",
+      "question": "Does the TechCrunch article on Twitch's subscription revenue split policy indicate a different monetization strategy compared to the TechCrunch article on Beeper's plans for Beeper Mini subscriptions?",
+      "golden_answer": "Yes",
+      "answer": "Yes, the TechCrunch article on Twitch's subscription revenue split policy indicates a different monetization strategy compared to the TechCrunch article on Beeper's plans for Beeper Mini subscriptions. Twitch's approach involves a complex revenue split system, prioritizing ad revenue and introducing a new monetization tier with specific qualifying criteria for streamers, which has led to backlash from the community [1][4][5]. In contrast, Beeper Mini's strategy is straightforward and focused on a low monthly subscription price of $1.99 with a free trial, appealing to a broader audience while relying on venture capital funding to support its operations [2][3]. This demonstrates that Twitch's strategy is more dependent on community-based support and tiered revenue structures, while Beeper emphasizes accessibility and competitive pricing.",
+      "retrieved_sources": [
+        "doc_0401.md",
+        "doc_0540.md",
+        "doc_0402.md"
+      ],
+      "gold_sources": [
+        "doc_0401.md",
+        "doc_0402.md"
+      ],
+      "abstained": false,
+      "scores": {
+        "retrieval_relevance": 1.0,
+        "citation_accuracy": 0.4,
+        "faithfulness": 0.9166666666666666,
+        "answer_correctness": 0.1383071578809213
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0401.md",
+          "text": "Twitch has had a tense year, in part due to community backlash over policy changes that affect the way creators can monetize their content.\n\nLast year, the company announced that it would end the 70/30 subscription revenue split deal that it had offered select streamers in favor of prioritizing ad revenue. In June, Twitch launched the Partner Plus program, a new monetization tier that would grant eligible creators a 70/30 subscription revenue split on the first $100,000 they make per year. The program further strained its relationship with its community, because the requirements to qualify excluded the vast majority of streamers. Streamers need at least 350 monthly paid subscriptions, and gift subs and monthly subs that come with an Amazon Prime account don’t count."
+        },
+        {
+          "source": "doc_0540.md",
+          "text": "Beeper Mini is competitively priced at $1.99 per month, with a seven-day free trial, compared with $15 per month for the recently acquired competitor Texts.com bought by Automattic. The startup says that it’s able to keep costs down by targeting a wider market that includes Android, iPhone, Mac, Windows and Linux.\n\nHowever, Beeper also has venture capital to lean on, with $16 million raised to date through its Series A, led by Garry Tan of Initialized Capital, now president and CEO at Y Combinator. Other backers include SV Angel, Samsung Next, Liquid2 Ventures, Niv Dror from Shrug Capital, Kevin Mahaffey and others. Beeper is a 25-person distributed team, while Migicovsky is based in Palo Alto."
+        },
+        {
+          "source": "doc_0402.md",
+          "text": "Founded by former Pebble smartwatch founder Eric Migicovsky, Beeper had originally been working on an app that aggregated all of a user’s chat apps into a single interface. However, upon the discovery of new technology that allowed it to reverse-engineer the iMessage protocol, it set out to build a new app called Beeper Mini that solely focused on bringing iMessage chats to Android users for $1.99 per month. That included support for high-quality photos and videos, tapback reactions, typing indicators, read receipts and more.\n\nThe app quickly climbed into the top 20 in the Play Store’s charts and saw over 100,000 downloads in its first 48 hours, the company claims."
+        },
+        {
+          "source": "doc_0401.md",
+          "text": "Like you said, livestreaming is very different from static content, and tactics for monetization that work for Instagram or TikTok just don’t really work for Twitch or any livestreaming platform. In those cases, what has Twitch done differently from those more standard platforms in terms of making monetization more seamless?\n\nOne thing we’ve done since the beginning, where we are a leader, is getting people to take their wallets out and support creators through subscriptions, gifting, cheering. I think that sets us as a unique community-based platform where viewers are directly supporting creators in that way."
+        },
+        {
+          "source": "doc_0401.md",
+          "text": "In an interview with TechCrunch, Twitch’s Chief Monetization Officer Mike Minton discussed the unpopular policy decisions, supporting smaller creators through branded partnerships and what Twitch is doing to mend its relationship with its community.\n\nTechCrunch: I’m going to start with a maybe unpleasant question, but Twitch has made some unpopular decisions in terms of monetization. Is there anything that Twitch is doing to appease irate creators?"
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0007",
+      "category": "multi_hop",
+      "question": "Does 'The New York Times' article attribute the success of the Buffalo Bills' defense to the contributions of Jordan Poyer, while the 'Sporting News' article suggests that the Baltimore Ravens' defense needs to improve before their game against the Cincinnati Bengals?",
+      "golden_answer": "Yes",
+      "answer": "Yes, 'The New York Times' article attributes the success of the Buffalo Bills' defense to Jordan Poyer's contributions, highlighting his role as the second-leading tackler and the versatility, sacrifice, toughness, and communication he brings to the team [1][5]. The 'Sporting News' article suggests that the Baltimore Ravens' defense needs to improve before their game against the Cincinnati Bengals, stating that the defense needs to pick up the pieces ahead of the upcoming match [4].",
+      "retrieved_sources": [
+        "doc_0322.md",
+        "doc_0119.md"
+      ],
+      "gold_sources": [
+        "doc_0119.md",
+        "doc_0322.md"
+      ],
+      "abstained": false,
+      "scores": {
+        "retrieval_relevance": 1.0,
+        "citation_accuracy": 0.6666666666666666,
+        "faithfulness": 0.6,
+        "answer_correctness": 0.46001552230391896
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0322.md",
+          "text": "“It’s about how to be a good human,” he says. “And it grounds you. Really grounds you.”\n\nJordan Poyer is the Bills’ second-leading tackler but hasn’t made as many big plays as he would like for a defense plagued by injuries. (Sarah Stier / Getty Images)\n\nTwo days before OTAs began last April, Poyer returned to the Bills’ headquarters and stepped on the scale. The needle settled at 179 pounds, about 20 pounds below his playing weight.\n\nAfter resuming his regular routine, the weight came back quickly.\n\nHe discussed his experience with curious teammates, coaches and the team psychologist. Poyer hoped ayahuasca would elevate his football performances as Rodgers believes it did his, but it hasn’t worked that way for him."
+        },
+        {
+          "source": "doc_0322.md",
+          "text": "Advertisement\n\nPhysically and mentally, he is being challenged, but he’s grateful, content and all in.\n\nThe Bills’ new safety is Jordan Poyer. It’s the same Jordan Poyer who played for the team the previous six seasons, the only player in the NFL to have 500 or more tackles, 20 or more interceptions and 10 or more sacks in that time frame, a Bills captain for the fourth time, an Ed Block Courage Award winner in 2017, a Pro Bowl safety last year and an All-Pro the year before.\n\nBut this is a new Jordan Poyer because of ayahuasca.\n\nIn the spring of 2020, NFL team facilities were closed because of COVID-19, so Bills defenders met in Washington, D.C., for a few days to train, study and bond."
+        },
+        {
+          "source": "doc_0322.md",
+          "text": "The more time that passed, the less Poyer wanted to drink. He has no desire for it now, and the smell of alcohol almost makes him gag.\n\nDespite a stellar career and a loving family, Bills safety Jordan Poyer “felt like there was something missing” as recently as last year. (Dan Pompei / The Athletic)\n\nBeing sober didn’t make him immune to anxiety and depression, however. In the 2022 season, he missed five games with elbow, foot, knee and rib injuries. When the Bills lost to the Bengals in the divisional playoff round, Poyer felt responsible for not doing more.\n\nAnd his angst ran deeper than football."
+        },
+        {
+          "source": "doc_0119.md",
+          "text": "5. Baltimore Ravens 7-3 (2)\n\nThe Ravens' offense is just fine with the running and passing of Lamar Jackson, but he still can't afford to make big mistakes, which he did vs. the Browns. The defense needs to pick up the pieces, too, stat, ahead of facing the Bengals on a short week.\n\n6. Miami Dolphins 6-3 (6)\n\nThe Dolphins got a much-needed bye to figure out how to beat the better teams in the league. Their defense should be getting a little better to support their often explosive offense. They should feel good about a Week 11 rebound vs. the Raiders.\n\n7. Pittsburgh Steelers 6-3 (9)"
+        },
+        {
+          "source": "doc_0322.md",
+          "text": "He is the second-leading tackler on his team but hasn’t made as many big plays as he would like. What he has done, according to former Bills defensive coordinator Les Frazier, now an analyst for NFL Network, is enable his defense to be the best it can by lifting others through versatility, sacrifice, toughness and communication. Poyer wears his “C” well.\n\n“I feel like I’m playing OK this year,” Poyer said during the Bills’ bye week on the patio of his Florida home. “I’m not playing the best that I’ve played in my career. There are probably two plays I really want back. But I’m doing a lot. And in a very deep sense, I absolutely love that I’m entrusted with doing as much as I’m doing on this defense.”\n\nAyahuasca gifted him in another way — with perspective."
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0011",
+      "category": "multi_hop",
+      "question": "Does 'The Age' article suggest that Australia's Davis Cup team is aiming for an improvement in their performance compared to the previous year, while the 'Sporting News' article indicates that the South Africa national rugby team has already achieved an improvement to reach the Rugby World Cup semi-finals?",
+      "golden_answer": "Yes",
+      "answer": null,
+      "retrieved_sources": [
+        "doc_0167.md",
+        "doc_0407.md"
+      ],
+      "gold_sources": [
+        "doc_0167.md",
+        "doc_0451.md"
+      ],
+      "abstained": true,
+      "scores": {
+        "retrieval_relevance": 0.5
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0167.md",
+          "text": "The Springboks have done it tough, too, having already faced two of the tournament favourites on their way to the semi-finals. Comfortable defeats of Scotland, Romania and Tonga couldn't mask the disappointment of the 13-8 loss to Ireland, which consigned South Africa to second in Pool B. However, with Ireland sent home by the All Blacks in the quarters, the Bokke showed their World Cup mettle to edge the hosts 29-28 at the Stade de France, sneaking past Les Bleus in one of the best games of rugby you're ever likely to see.\n\nThe last time Cheslin Kolbe played England at a Rugby World Cup... 🇿🇦 🏆#RWC2023 | #ENGvRSA pic.twitter.com/Riw2uaSaKa — Rugby World Cup (@rugbyworldcup) October 19, 2023"
+        },
+        {
+          "source": "doc_0167.md",
+          "text": "England's form at this tournament has been perfect — at face value. Argentina, Japan, Chile, Samoa and Fiji have all provided highlights — Los Pumas are also in the semi-finals — and England have beaten all of them. However, only Japan and Chile were defeated with bonus points, and the narrow wins over both Samoa and Fiji in their last two games showed that England are certainly gettable.\n\nIn short, this semi-final requires a huge step up in quality for Borthwick's side, and that's why we think that the Springboks will be victorious at the Stade de France. South Africa have already shown they can match, and beat, the world's best, and we think that they'll do the latter in Saint-Denis."
+        },
+        {
+          "source": "doc_0167.md",
+          "text": "The 2019 Rugby World Cup final between England and South Africa was one of many firsts: the game itself capped off a sensational tournament played outside of the sport's traditional strongholds for the first time; it was the first final in which South Africa scored a try, and by full-time, the 32-12 score in the Springboks' favour sealed a record-equalling third title for the Rainbow Nation.\n\nFast forward four years, and South Africa once again prepare to take on England in an all-or-nothing match to decide which nation gets a shot at World Cup glory — but this time around, the pair meet in the semi-finals of the 2023 tournament, rather than the decider."
+        },
+        {
+          "source": "doc_0167.md",
+          "text": "England's other two changes come in the tight five, with Steve Borthwick making some big calls ahead of this game. Joe Marler starts ahead of vice-captain Ellis Genge at loosehead prop, and Ollie Chessum is replaced in the second-row by George Martin. The latter is winning only his seventh England cap but gets the starting nod alongside Maro Itoje, with Genge, Chessum and the rest of the replacements hoping to make an impact sizeable enough to overcome the Springboks' infamous 'bomb squad'.\n\nTheir time is now 🙌\n\nHere is the @EnglandRugby team to take on reigning champions South Africa in the semi-final in Paris#RWC2023 | #ENGvRSA pic.twitter.com/nkf6rXBPUU — Rugby World Cup (@rugbyworldcup) October 19, 2023"
+        },
+        {
+          "source": "doc_0407.md",
+          "text": "“We’re definitely off the pace but the opportunity to get better is there. I love the game. I love working with young players. I loved seeing some of the young players maturing during the World Cup and some of them struggle. And that’s all part of it. But I love the game and I love coaching the Wallabies.”\n\nJones was named Wallabies coach at the start of the year as replacement for Dave Rennie. He came in with grand statements that his team could win the Rugby Championship, Bledisloe Cup and make a smash and grab on the World Cup.\n\nNone of those targets were achieved and Jones changed his tune about building for the future when he named a young team for the doomed Cup campaign – where his team became the first Australians to bow out of a RWC in the pool stages."
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0014",
+      "category": "multi_hop",
+      "question": "Does 'The Independent - Life and Style' article suggesting Prince William's emotional state regarding Princess Diana's death align with the same publication's depiction of the events leading up to her death in 'The Crown season six'?",
+      "golden_answer": "Yes",
+      "answer": "The context does not provide specific information from 'The Independent - Life and Style' regarding Prince William's emotional state about Princess Diana's death or how it aligns with the depiction of events leading up to her death in 'The Crown season six'. Therefore, it is unclear if there is any alignment between the two sources on this matter.",
+      "retrieved_sources": [
+        "doc_0266.md",
+        "doc_0265.md"
+      ],
+      "gold_sources": [
+        "doc_0265.md",
+        "doc_0266.md"
+      ],
+      "abstained": false,
+      "scores": {
+        "retrieval_relevance": 1.0,
+        "faithfulness": 1.0,
+        "answer_correctness": 0.5278251210628622
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0266.md",
+          "text": "On 16 November, Netflix dropped the first four episodes of The Crown’s final season, followed by the last six episodes on 14 December. The latest installment takes place between the late 1990s to mid-2000s, and includes the lead-up to Princess Diana’s fatal Paris car crash in 1997.\n\nThe season begins with Princess Diana (played by Elizabeth Debicki) whisking her sons - Prince William (played by Rufus Kampa) and Prince Harry (played by Fflyn Edwards) - away on summer holiday to Saint-Tropez, France. After staying several days on Mohamed Al Fayed’s yacht, the boys return home to London where their father, the then-Prince of Wales, accompanies them to Balmoral Castle to vacation with the rest of the royal family in Scotland."
+        },
+        {
+          "source": "doc_0265.md",
+          "text": "The first part of season six takes place in the summer of 1997, and sees Prince Charles (Dominic West) building on his relationship with Camilla Parker Bowles (Olivia Williams), while Princess Diana (Elizabeth Debicki) sparks up a romance with film producer Dodi Fayed (Khalid Abdalla). The show also features the pair’s death in a car crash in Paris.\n\nAs the new season arrives, and fans wonder what in The Crown is based in reality, here’s everything you need to know.\n\nDiana’s role with Tony Blair’s government"
+        },
+        {
+          "source": "doc_0266.md",
+          "text": "Stay ahead of the trend in fashion and beyond with our free weekly Lifestyle Edit newsletter Stay ahead of the trend in fashion and beyond with our free weekly Lifestyle Edit newsletter Please enter a valid email address Please enter a valid email address SIGN UP I would like to be emailed about offers, events and updates from The Independent. Read our privacy notice Thanks for signing up to the\n\nLifestyle Edit email {{ #verifyErrors }} {{ message }} {{ /verifyErrors }} {{ ^verifyErrors }} Something went wrong. Please try again later {{ /verifyErrors }}\n\nThe first four episodes of The Crown season six are officially here, but many viewers believe one scene has depicted the most devastating moment throughout the entire series."
+        },
+        {
+          "source": "doc_0266.md",
+          "text": "It is in this scene that The Crown depicts the doting mother’s final conversation with her sons.\n\nWilliam, then 15, and Harry, then 12, inquire over the phone when their mother will be coming back home from Paris. “I’m coming home tomorrow, and I’m seeing you both tomorrow night,” Diana replies in the episode, which also takes place on the same day as her fatal car crash later that evening. The boys then ask Diana whether she plans on marrying Dodi, considering their relationship has been plastered all over the tabloids.\n\nDiana’s poignant last words to William and Harry shown in The Crown scene\n\n“Well, you know better than to believe the papers,” she tells William, before adding: “I’m emphatically not going to marry Dodi. To be honest, I can’t wait to come home.”"
+        },
+        {
+          "source": "doc_0265.md",
+          "text": "William (Kampa) goes missing after his mother’s death (Keith Bernstein)\n\nIt’s true that William and Harry initially stayed in Balmoral with their grandmother following the death of Diana. While it’s not known whether he went missing, during a visit to Scotland in 2021, William recalled how that experience was one of the “saddest” moments of his life. “I was in Balmoral when I was told that my mother had died. Still in shock, I found sanctuary in the service at Crathie Kirk that very morning,” he recalled. “And in the dark days of grief that followed, I found comfort and solace in the Scottish outdoors. As a result, the connection I feel to Scotland will forever run deep.”\n\nThe Crown season six part one is on Netflix now, with part two arriving on 14 December."
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0019",
+      "category": "multi_hop",
+      "question": "Does the Sporting News article suggest that streaming services do not require a subscription for viewing the Cowboys vs. 49ers game, in contrast to the Polygon article's claim about film availability on streaming platforms without a subscription?",
+      "golden_answer": "no",
+      "answer": "The Sporting News article indicates that streaming the Cowboys vs. 49ers game via Peacock or NBCSports.com requires a subscription, while Fubo offers a free trial for its service [1][2]. Therefore, it does not suggest that streaming services do not require a subscription for viewing the game, contradicting any claim made about film availability on streaming platforms without a subscription from the Polygon article.",
+      "retrieved_sources": [
+        "doc_0275.md"
+      ],
+      "gold_sources": [
+        "doc_0275.md",
+        "doc_0327.md"
+      ],
+      "abstained": false,
+      "scores": {
+        "retrieval_relevance": 0.5,
+        "citation_accuracy": 1.0,
+        "faithfulness": 0.75,
+        "answer_correctness": 0.2866565714320873
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0275.md",
+          "text": "Fans can also stream the game via Peacock or NBCSports.com with a subscription, along with Fubo, which offers a free trial.\n\nViewers in Canada can stream every NFL game via DAZN.\n\nCowboys vs. 49ers start time\n\nDate: Sunday, Oct. 8\n\nSunday, Oct. 8 Start time: 8:20 p.m. ET (5:20 p.m. CT)\n\nSunday night's game between the Cowboys and 49ers is set to kick off at 8:20 p.m. ET (5:20 p.m. local time) from Levi's Stadium in Santa Clara, Calif.\n\nThe 49ers and Cowboys have a long history with one another, but San Francisco has gotten the better of Dallas in each of their last two meetings. The 49ers knocked the Cowboys out of the playoffs in both of the last two seasons, so a win for Dallas on Sunday could be helpful just from a psychological standpoint."
+        },
+        {
+          "source": "doc_0275.md",
+          "text": "What channel is Cowboys vs. 49ers on today?\n\nGame: Cowboys vs. 49ers\n\nCowboys vs. 49ers Date: Sunday, Oct. 8\n\nSunday, Oct. 8 TV channel: NBC\n\nNBC Live stream: Peacock | NBCSports.com | Fubo (U.S.) | DAZN (Canada)\n\nCowboys vs, 49ers can be watched on NBC, which has long held the broadcast rights to \"Sunday Night Football.\"\n\nMike Tirico (play-by-play) and Cris Collinsworth (color analyst) will be on the call from Levi's Stadium while Melissa Stark will serve as the sideline reporter. The crew is entering their second season together after Tirico replaced play-by-play legend Al Michaels while Stark took over for Michele Tafoya.\n\nFans can also stream the game via Peacock or NBCSports.com with a subscription, along with Fubo, which offers a free trial."
+        },
+        {
+          "source": "doc_0275.md",
+          "text": "Cowboys vs. 49ers final score\n\n1 2 3 4 F Cowboys 0 7 3 0 10 49ers 7 14 7 14 42\n\nCowboys vs. 49ers results, highlights from 'Sunday Night Football'\n\n(All times Eastern)\n\nFinal: 49ers 42, Cowboys 10\n\n11:26 p.m. — That'll do it! The 49ers trounce the Cowboys and reassert themselves as one of the NFL's most dominant teams. Through five games, San Francisco is unbeaten.\n\n11:24 p.m. — These teams are trading possessions as the clock winds down. There was a brief skirmish officials had to break up as frustrations mount for Dallas.\n\n11:14 p.m. — A sack by Kevin Givens ends Rush's first drive of the night and sets up a Bryan Anger punt. Backups are in nearly all around for the 49ers.\n\n11:09 p.m. — Cooper Rush is in the game for the Cowboys..."
+        },
+        {
+          "source": "doc_0275.md",
+          "text": "11:09 p.m. — Cooper Rush is in the game for the Cowboys...\n\n11:07 p.m. — Mitch Wishnowsky with an excellent punt for the 49ers, who are just trying to get through the rest of the game injury-free.\n\n11:04 p.m. — Sam Darnold has entered the game with 49ers. So, that's where we are with 12 minutes still on the clock.\n\n11:00 p.m. INTERCEPTION — So much for that. Oren Burks gets the 49ers' third interception of the night as Prescott continues to struggle against this San Francisco defense.\n\n10:59 p.m. — The Cowboys are moving the ball now, when it's a bit too late. Tony Pollard rips off a 26-yard run to finally break through.\n\n49ers 42, Cowboys 10"
+        },
+        {
+          "source": "doc_0275.md",
+          "text": "7:36 p.m. — CeeDee Lamb is coming off back-to-back games with only four catches. Is he due for a huge performance tonight?\n\n7:11 p.m. — New 49ers acquisition Randy Gregory is officially inactive against his former team.\n\n7:01 p.m. — The Eagles are going to win in Los Angeles, so the 49ers need a win to keep pace atop the NFC. After they had to play the last two NFC championship games on the road, the No. 1 seed is undoubtedly in the back of their minds.\n\n6:45 p.m. — The run of great prime-time weather continues, as it's set to be in the high 70s and sunny in Santa Clara tonight. No excuses for these powerful offenses.\n\nWhat channel is Cowboys vs. 49ers on today?\n\nGame: Cowboys vs. 49ers\n\nCowboys vs. 49ers Date: Sunday, Oct. 8\n\nSunday, Oct. 8 TV channel: NBC"
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0027",
+      "category": "multi_hop",
+      "question": "Does the TechCrunch article suggest that Amazon's large language model (LLM) is not trained on kids' responses, while The Age article raises concerns about TikTok's pixel collecting data without consent?",
+      "golden_answer": "Yes",
+      "answer": "Yes, the TechCrunch article suggests that Amazon's large language model (LLM) is not trained on kids' responses, as it explicitly states that the company notes it is not training its LLM on kids’ answers [1]. On the other hand, The Age article raises concerns about TikTok collecting data without consent, highlighting the privacy issues associated with the TikTok pixel and the recommendations from Civic Data regarding its removal due to non-consensual data collection [2][3][4].",
+      "retrieved_sources": [
+        "doc_0188.md",
+        "doc_0189.md"
+      ],
+      "gold_sources": [
+        "doc_0188.md",
+        "doc_0189.md"
+      ],
+      "abstained": false,
+      "scores": {
+        "retrieval_relevance": 1.0,
+        "citation_accuracy": 0.75,
+        "faithfulness": 0.8,
+        "answer_correctness": 0.4672798129305574
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0188.md",
+          "text": "Amazon is also preparing to launch an AI-powered “Let’s Chat” Alexa experience for adults later this year, he says.\n\nIn terms of privacy, the company notes it’s not training its LLM on kids’ answers. In addition, the “Explore with Alexa” experience and any future LLM-backed features will continue to follow the same data handling policies of “classic Alexa” (non-AI Alexa). That means the Alexa app will include a list of the questions asked by kids in the household (those with a kids’ profile) and the response Alexa provided. That history can be stored or deleted either manually or automatically, depending on your settings.\n\nAlongside the launch of “Explore with Alexa,” the new Echo Pop Kids speakers will also now be available for purchase, starting at $49.99 in the U.S."
+        },
+        {
+          "source": "doc_0189.md",
+          "text": "Similar data is sent to Google and Meta, but only after “I consent”, for example, has been ticked. “When The Age and Sydney Morning Herald alerted us to this issue, we immediately commenced a review of our privacy policy and removed the TikTok pixel from our website. Our investigations are continuing as a priority. “Like many health organisations, Beyond Blue uses tools such as pixels to help us deliver safe and relevant content to people online.”"
+        },
+        {
+          "source": "doc_0189.md",
+          "text": "“With the pixel, you can track website visitor actions, like view page or purchase, and create audience segments to re-engage previous site visitors or model lookalikes to find new customers,” TikTok says on its website. TikTok has rejected claims the pixel breaches Australia’s privacy laws. Credit: AP ‘Remove that pixel’ The extent of data collected by TikTok’s pixel without user consent has caused concern among Australian marketers. Marketing and advisory agency Civic Data has issued a warning to its clients recommending they remove the pixel from their websites on privacy grounds. In the client bulletin on December 20, which was obtained by this masthead, Civic Data director Chris Brinkworth said his company had “repeatedly observed non-consensual collection of personal data on"
+        },
+        {
+          "source": "doc_0189.md",
+          "text": "Loading “This raises serious privacy concerns regarding the lack of transparency, misuse of personal information and disregard for consent requirements under current regulations such as the Privacy Act 1988. Civic Data’s recommendation is that all Australian businesses consider removing the TikTok pixel and other TikTok integrations from their platforms if they cannot guarantee that the data usage matches the consent given by consumers.” Civic Data’s clients include accounting software company Xero, Ticketek, Carsales, RACV and BlueScope. Call to protect Australians Senator James Paterson has called for an urgent probe by Australia’s information commissioner."
+        },
+        {
+          "source": "doc_0188.md",
+          "text": "That also comes with constraints, however, as generative AI can be led astray or “hallucinate” answers, while kids could ask inappropriate questions. To address these potential problems, Amazon has put guardrails into place around its use of gen AI for kids.\n\nFor starters, the Alexa Kids science team narrowed down the new experience, which leverages Alexa’s LLM (large language model) technology, to include only kid-friendly fun facts and trivia questions. Initially, the content will come from just two partners, the World Wildlife Fund and A-Z animals. In time, the team would like to expand the AI to include other areas of interest to kids, like space, music, video games and sports."
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0028",
+      "category": "multi_hop",
+      "question": "Did the report from Cnbc | World Business News Leader on \"Nike's Latin America and Asia Pacific unit\" or the article from Fortune on the \"U.S. home sales price\" both report a decrease in their respective financial figures?",
+      "golden_answer": "no",
+      "answer": null,
+      "retrieved_sources": [
+        "doc_0215.md",
+        "doc_0112.md",
+        "doc_0479.md"
+      ],
+      "gold_sources": [
+        "doc_0112.md",
+        "doc_0215.md"
+      ],
+      "abstained": true,
+      "scores": {
+        "retrieval_relevance": 1.0
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0215.md",
+          "text": "Nike saw sales jumps in every region besides North America, its largest market by revenue. Sales in North America fell 2% from the year-ago period to $5.42 billion, just above the $5.39 billion analysts had expected, according to StreetAccount.\n\nIn Europe, the Middle East and Africa, sales were up 8% at $3.61 billion. That compared with the $3.51 billion analysts had expected. Sales in its Latin America and Asia Pacific unit came in 2% higher at $1.57 billion, just shy of the $1.59 billion analysts had expected, according to StreetAccount."
+        },
+        {
+          "source": "doc_0112.md",
+          "text": "At the start of Volcker’s term as Fed chair in August 1979, the median U.S. home sales price was $64,700. And even after a near doubling of mortgage rates, that figure rose to $69,400 by the second quarter of 1981.\n\nOver the past 18 months, the Fed’s current chair, Jerome Powell, has been following a very similar game plan to Volcker’s, raising interest rates aggressively to quash inflation. The average 30-year fixed mortgage rate, the most common type of mortgage in the U.S., has soared from 3.8% in March 2022 to over 7.5% today as a result. This, in turn, has slowed mortgage purchase applications and caused home sales to plummet, just as it did in the ’80s; but home prices, echoing the dynamic of that era, have yet to collapse."
+        },
+        {
+          "source": "doc_0479.md",
+          "text": "All things considered, home sales activity also plummeted from 1978 to 1982. Existing-home sales dropped 50% during that period, according to the Office of Policy Development and Research. And while we haven’t seen home sales activity levels this low since the 2000s, the housing market more closely mimics that of the ’80s, according to a report published this week by Fortune 500 financial services company First American.\n\n“Today’s housing market isn’t anything like the housing market of the mid-2000s,” First American’s Fleming wrote in a Tuesday report titled “1980s Déjà Vu for the Housing Market.” “The housing market today is not overbuilt, nor is it driven by loose lending standards, subprime mortgages, or homeowners who are highly leveraged.”"
+        },
+        {
+          "source": "doc_0215.md",
+          "text": "Despite the shift in how it's working with wholesalers, Nike insisted that direct sales will pave the way to its future growth.\n\n\"Ultimately, we have a segmented portfolio of strong partners across price points and channels. With no single partner representing more than a mid-single digit of Nike's total business,\" said Friend.\n\n\"While the ultimate landing spot of digital and direct isn't as clear, we do believe we're going to be a more direct and a more digital company, and a more profitable company,\" he said. \"And there's a channel mix and channel profitability opportunity that comes with that as well.\"\n\nMeanwhile, inventories fell 10% to $8.7 billion. The drop was driven by a decrease in units but offset by product mix and higher manufacturing and production costs."
+        },
+        {
+          "source": "doc_0215.md",
+          "text": "During the quarter, Nike's gross margin fell about 0.1 percentage points to 44.2%, but it was higher than the 43.7% analysts had expected, according to StreetAccount. The company attributed the gross margin drop to higher product costs and currency exchange rates, but those trends were offset by price increases, which contributed to the earnings beat.\n\nSales in China grew by 5% compared to the year-ago period to $1.7 billion, which fell short of the $1.8 billion analysts had expected, according to StreetAccount.\n\nDuring the previous quarter ended May 31, Nike saw China sales jump 16% compared to the year-ago period. But the numbers were against easy comparisons because the region was still under Covid-related lockdown orders during the prior year."
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0001",
+      "category": "multi_hop",
+      "question": "Which individual is implicated in both inflating the value of a Manhattan apartment to a figure not yet achieved in New York City's real estate history, according to 'Fortune', and is also accused of adjusting this apartment's valuation to compensate for a loss in another asset's worth, as reported by 'The Age'?",
+      "golden_answer": "Donald Trump",
+      "answer": "The individual implicated in both inflating the value of a Manhattan apartment to a figure not yet achieved in New York City's real estate history and adjusting this apartment's valuation to compensate for a loss in another asset's worth is Donald Trump. He inflated the value of his Trump Tower apartment to $327 million, which is noted as nearly three times its actual size, and this increase was allegedly to mask a decrease in the value of another property [1][2].",
+      "retrieved_sources": [
+        "doc_0529.md",
+        "doc_0530.md"
+      ],
+      "gold_sources": [
+        "doc_0529.md",
+        "doc_0530.md"
+      ],
+      "abstained": false,
+      "scores": {
+        "retrieval_relevance": 1.0,
+        "citation_accuracy": 0.5,
+        "faithfulness": 1.0,
+        "answer_correctness": 0.5949833756529757
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0529.md",
+          "text": "Among the allegations were that Trump claimed his Trump Tower apartment in Manhattan — a three-story penthouse replete with gold-plated fixtures — was nearly three times its actual size and valued the property at $327 million. No apartment in New York City has ever sold for close to that amount, James said.\n\nTrump valued Mar-a-Lago as high as $739 million — more than 10 times a more reasonable estimate of its worth. Trump’s figure for the private club and residence was based on the idea that the property could be developed for residential use, but deed terms prohibit that, James said."
+        },
+        {
+          "source": "doc_0530.md",
+          "text": "Space inflation wasn’t the only issue. Between 2014 and 2015, Trump increased the value of the apartment to $US327 million from $US200 million. The prosecution argues that was to mask a drop in the value of one of his other properties. “A discrepancy of this order of magnitude, by a real estate developer sizing up his own living space of decades, can only be considered fraud,” Judge Arthur Engoron wrote in a September ruling. ‘The company has never been stronger and never been better.’ Eric Trump Bloomberg values the property using recent Trump Tower sales, as well as those of comparable Manhattan penthouses. While some splashy residences in much newer buildings on so-called Billionaires Row have listed for well in excess of $US100 million, they typically boast higher ceilings, more"
+        },
+        {
+          "source": "doc_0530.md",
+          "text": "Thousands of pages of exhibits detailing the performance of his assets made available during the trial have provided a deeper look into his fortune. The former president’s 2021 statement of financial condition, filed as part of the lawsuit, pegged his net worth at $US4.5 billion. Bloomberg’s calculation has consistently been below Trump’s figures. At the same time, Bloomberg measured the value of some Trump properties higher than what New York state claims. Trump took the stand and testified that the properties whose values he’s accused of inflating were actually undervalued, based on the premium his “brand” adds. He also said that banks didn’t rely on his statements of financial condition when weighing loans. “They just weren’t a very important element in banks’ decision-making process,”"
+        },
+        {
+          "source": "doc_0529.md",
+          "text": "Engoron, noting that he had “emphatically rejected” those arguments earlier in the case, equated them to the “time-loop in the film ‘Groundhog Day.'”\n\nJames, a Democrat, sued Trump and the Trump Organization a year ago, alleging a pattern of duplicity that she dubbed “the art of the steal,” a twist on the title of Trump’s 1987 business memoir “The Art of the Deal.”\n\nThe lawsuit accused Trump and his company of routinely inflating the value of assets like skyscrapers, golf courses and his Mar-a-Lago estate in Florida, padding his bottom line by billions."
+        },
+        {
+          "source": "doc_0530.md",
+          "text": "40 Wall Street Trump’s valuation (2021): $US664 million, Bloomberg valuation (2023): $US270 million, New York’s valuation: No current estimate available In valuing his flagship lower Manhattan office tower, Trump consistently ignored more conservative appraisals he’d received from professionals, New York State argues. Trump has been accused of significantly over-valuing his flagship downtown New York property. Credit: Bloomberg For example, 40 Wall Street was appraised by a real estate company at $US200 million in 2011 and $US220 million in 2012. Despite this, Trump valued the property in financial statements at $US524.7 million and $US527.2 million, respectively, for those years."
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0002",
+      "category": "multi_hop",
+      "question": "Who is the figure associated with generative AI technology whose departure from OpenAI was considered shocking according to Fortune, and is also the subject of a prevailing theory suggesting a lack of full truthfulness with the board as reported by TechCrunch?",
+      "golden_answer": "Sam Altman",
+      "answer": "The figure associated with generative AI technology and whose departure from OpenAI was considered shocking is Sam Altman. His exit was notable as he has been described as the face of generative AI technology, and there are theories suggesting he was not consistently candid with the board, contributing to his ouster from his CEO role at OpenAI as noted in Fortune and TechCrunch's reporting, respectively [1][2][4].",
+      "retrieved_sources": [
+        "doc_0333.md",
+        "doc_0332.md"
+      ],
+      "gold_sources": [
+        "doc_0332.md",
+        "doc_0333.md"
+      ],
+      "abstained": false,
+      "scores": {
+        "retrieval_relevance": 1.0,
+        "citation_accuracy": 0.6666666666666666,
+        "faithfulness": 0.8,
+        "answer_correctness": 0.5724737638582403
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0333.md",
+          "text": "In perhaps the most unexpected tech news of the year, billionaire and AI evangelist Sam Altman has been ejected from his CEO role at OpenAI by the company’s board after an apparent vote of no confidence. Its exact wording in a release issued this afternoon: Altman’s “departure follows a deliberative review process by the board, which concluded that he was not consistently candid in his communications with the board, hindering its ability to exercise its responsibilities.”\n\nWhat the hell is happening at the most hyped company in the world?! Here are some totally speculative theories that occurred to us and others around the web.\n\n1. Did Altman circumvent the board in a major deal?"
+        },
+        {
+          "source": "doc_0332.md",
+          "text": "While OpenAI’s board has preserved its nonprofit governance structure, the startup it oversees has increasingly sought to capitalize on its technology by tailoring its popular chatbot to business customers.\n\nAt its first developer conference last week, Altman was the main speaker showcasing a vision for a future of AI agents that could help people with a variety of tasks. Days later, he announced the company would have to pause new subscriptions to its premium version of ChatGPT because it had exceeded capacity.\n\nAltman’s exit “is indeed shocking as he has been the face of” generative AI technology, said Gartner analyst Arun Chandrasekaran."
+        },
+        {
+          "source": "doc_0333.md",
+          "text": "1. Did Altman circumvent the board in a major deal?\n\nBased on the board’s language and the way these giant tech companies work, this is the prevailing theory floating around right now. “Not consistently candid” is a very diplomatic way of saying Altman lied.\n\nIt’s possible that Altman — and potentially OpenAI President Greg Brockman, who stepped down as chairman simultaneously, then resigned — wanted to make a bold move that he knew the board would not like. It’s not uncommon for these deals to be hammered out quietly in smoke- (or vape-) filled rooms and then presented as a fait accompli, but if it was controversial enough and the board found out about these maneuvers, it could be fuel for an ouster."
+        },
+        {
+          "source": "doc_0332.md",
+          "text": "Altman’s exit “is indeed shocking as he has been the face of” generative AI technology, said Gartner analyst Arun Chandrasekaran.\n\nHe said OpenAI still has a “deep bench of technical leaders” but its next executives will have to steer it through the challenges of scaling the business and meeting the expectations of regulators and society.\n\nForrester analyst Rowan Curran speculated that Altman’s departure, “while sudden,” did not likely reflect deeper business problems.\n\n“This seems to be a case of an executive transition that was about issues with the individual in question, and not with the underlying technology or business,” Curran said.\n\nAltman has a number of possible next steps. Even while running OpenAI, he placed large bets on several other ambitious projects."
+        },
+        {
+          "source": "doc_0332.md",
+          "text": "OpenAI started out as a nonprofit when it launched with financial backing from Tesla CEO Elon Musk and others. Its stated aims were to “advance digital intelligence in the way that is most likely to benefit humanity as a whole, unconstrained by a need to generate financial return.”\n\nThat changed in 2018 when it incorporated a for-profit business Open AI LP, and shifted nearly all its staff into the business, not long after releasing its first generation of the GPT large language model for mimicking human writing. Around the same time, Musk, who had co-chaired its board with Altman, resigned from the board in a move that OpenAI said would eliminate a “potential future conflict for Elon” due to Tesla’s work on building self-driving systems."
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0005",
+      "category": "multi_hop",
+      "question": "Who is the individual alleged to have built a thriving crypto exchange on falsehoods and is accused by the prosecution of committing fraud for personal gain, as reported by both Fortune and TechCrunch?",
+      "golden_answer": "Sam Bankman-Fried",
+      "answer": "The individual alleged to have built a thriving crypto exchange on falsehoods and is accused by the prosecution of committing fraud for personal gain is Sam Bankman-Fried. He is described as the former CEO of FTX, which the Securities and Exchange Commission alleges was a fraud from the start, leading to a multi-billion-dollar deficiency due to the misappropriation of customer funds [1][3][4]",
+      "retrieved_sources": [
+        "doc_0031.md",
+        "doc_0226.md",
+        "doc_0175.md"
+      ],
+      "gold_sources": [
+        "doc_0011.md",
+        "doc_0031.md"
+      ],
+      "abstained": false,
+      "scores": {
+        "retrieval_relevance": 0.5,
+        "citation_accuracy": 0.6666666666666666,
+        "faithfulness": 1.0,
+        "answer_correctness": 0.5059098927867107
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0031.md",
+          "text": "A conscious criminal…\n\nThe prosecution’s account of the alleged crimes by Bankman-Fried, who spent most of his day in court staring into a laptop while seated between his two attorneys, featured a study in contrasts.\n\n“One year ago, it looked like the defendant was on the top of the world,” began Thane Rehn, a prosecutor for the government, in his opening statement. The former CEO of FTX oversaw a supposedly thriving crypto exchange, jetted between international locales, and hobnobbed with celebrities like Tom Brady and Larry David. He repeatedly emphasized to customers that their money was safe and secure."
+        },
+        {
+          "source": "doc_0226.md",
+          "text": "$65 billion line of credit\n\nFor months, Bankman-Fried has known that Wang and Ellison, who were integral members of his personal and professional inner circles, had turned on him. Both pleaded guilty in December and have since been cooperating with the U.S. attorney's office in Manhattan. Wang's testimony, which stretched into Friday, was given under a cooperation agreement with the government. Ellison is expected to take the stand under a similar arrangement.\n\nU.S. District Judge Lewis Kaplan presides as Gary Wang testifies during the fraud trial of Sam Bankman-Fried over the collapse of FTX, the bankrupt cryptocurrency exchange, at Federal Court in New York City, U.S., October 6, 2023 in this courtroom sketch. Jane Rosenberg | Reuters"
+        },
+        {
+          "source": "doc_0175.md",
+          "text": "Sam Bankman-Fried, the founder of failed cryptocurrency exchange FTX, is on trial for seven counts of wire fraud and conspiracy. FTX was a fraud “from the start,” the Securities and Exchange Commission alleges — with a “multi-billion-dollar deficiency caused by his own misappropriation of customer funds.” Follow along for all the latest news and regular updates from the trial.\n\n“Really just old-fashioned embezzlement.”"
+        },
+        {
+          "source": "doc_0031.md",
+          "text": "Moreover, Bankman-Fried allegedly directed employees to conceal the flow of money into FTX’s coffers and forged financial documents distributed to lenders and investors. “The defendant lied to the world,” Rehn alleged.\n\nAnd who was this defendant? Not a crypto “boy” genius, as so many in the media (Fortune included) have written, but a “man” who “stole billions of dollars from thousands of victims,” Rehn said. “You will see the full picture.”\n\n…or a well-meaning founder?\n\nBut Bankman-Fried, whose cheekbones were more prominent after spending about seven weeks in a Brooklyn prison, was no liar, according to Mark Cohen, one of his lawyers. “Sam didn’t defraud anyone,” he said early on in his opening statement."
+        },
+        {
+          "source": "doc_0226.md",
+          "text": "Two of Sam Bankman-Fried's former friends from MIT, who also worked at crypto exchange FTX while living with the company's founder in the Bahamas, took the stand in a Manhattan courtroom this week to testify against their former classmate, confidant, and boss — a man who allegedly ran a crypto empire that defrauded thousands of customers out of billions of dollars. Gary Wang, the lesser-known co-founder of FTX, was asked by Assistant U.S. Attorney Nicolas Roos on Thursday, \"Did you commit financial crimes while working at FTX?\" \"Yes,\" responded Wang. He said that his crimes, including wire and commodities fraud, were carried out with the help of Bankman-Fried, FTX ex-engineering head Nishad Singh and Caroline Ellison, who ran sister hedge fund Alameda Research and had been Bankman-Fried's"
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0033",
+      "category": "multi_hop",
+      "question": "What company, recently reported by TechCrunch to have made significant profitability in the third quarter, has also faced criticism for not adequately preventing incidents and streamlining driver sign-ups, despite being aware of safety concerns since 2014 and introducing new app features to address them?",
+      "golden_answer": "Uber",
+      "answer": "The company that recently reported significant profitability in the third quarter, while facing criticism for not adequately preventing incidents and streamlining driver sign-ups despite knowing about safety concerns since 2014, is Uber. Uber introduced new safety features in its app to address these concerns, but survivors and their attorneys argue that these efforts have been inadequate [1][2][5].",
+      "retrieved_sources": [
+        "doc_0367.md",
+        "doc_0337.md",
+        "doc_0505.md"
+      ],
+      "gold_sources": [
+        "doc_0337.md",
+        "doc_0367.md"
+      ],
+      "abstained": false,
+      "scores": {
+        "retrieval_relevance": 1.0,
+        "citation_accuracy": 0.3333333333333333,
+        "faithfulness": 0.8333333333333334,
+        "answer_correctness": 0.7932792280512501
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0367.md",
+          "text": "The upshot? Technology lies at the center of this very human story.\n\nUber has attempted to address sexual assaults by drivers — which the lawsuits claim Uber has known about since 2014 — through new safety features in its app, like a 911 button and the ability to share location with a friend. Yet survivors, and their attorneys, say that response has been inadequate, and they’re calling for better technological solutions like in-vehicle surveillance cameras."
+        },
+        {
+          "source": "doc_0337.md",
+          "text": "Uber reported third-quarter earnings on Tuesday that show a profitable ride-hail and delivery company that’s chugging along in spite of slowing growth in some sectors.\n\nThe company reported revenue of $9.3 billion, an 11% increase year over year. Investors had expected Uber to report revenues of around $9.5 billion (FactSet, Refinitiv), meaning that despite the company’s growth, it fell short of estimates. Turning to profitability, Uber reported net income of $221 million in the third quarter, or 10 cents per share, compared with a net loss of $1.2 billion, or 61 cents per share, in the same quarter last year. Again, the company fell short of expectations that it would generate 12 cents in per-share profit."
+        },
+        {
+          "source": "doc_0505.md",
+          "text": "Discord is introducing new safeguards to protect young users. On Thursday, the company announced Teen Safety Assist. The rollout will happen in the coming weeks and consists of two features: Automated alerts and content filters.\n\nMoving forward, when a user a teen hasn’t chatted with before sends a direct message, Discord will display a safety alert if the platform’s automated systems suspect the teen’s safety could be at risk. The prompt will nudge the young person to reconsider if they want to respond to the message, and point them to the app’s block feature and related safety tips."
+        },
+        {
+          "source": "doc_0505.md",
+          "text": "Discord\n\n“Teens are still in the process of learning about themselves and what it means to be online, and our new safety features are rooted in providing them with agency on the platform, to give them ways to learn and grow in safe and age-appropriate online spaces,” said Savannah Badalich, senior director of policy at Discord. “These newest features are part of an ongoing, multi-year effort to continually evolve and advance safety on Discord.”\n\nAt the same time, Discord is introducing a new warning system for people who violate its policies. Outside of incidents involving the most “extreme” violations, the company is moving away from permanent bans. It’s doing so under the belief that most users will choose to be better online citizens given the chance and proper guidance."
+        },
+        {
+          "source": "doc_0367.md",
+          "text": "And while the total number of incidents as a percentage of total number of rides does decrease through the years, the number of incidents in certain categories actually increases. The number of incidents increased in the categories of nonconsensual kissing, nonconsensual touching and nonconsensual penetration, or rape, between 2017 and 2019.\n\nThe total number of rape incidents also rose from 2017 to 2019. And while the number of reported rapes dropped in 2020, the rate has remained the same since 2017. In other words, there has not been an improvement in the rate of rapes on the platform.\n\nSexual assaults are an ongoing problem for Uber"
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0000",
+      "category": "multi_hop",
+      "question": "Who is the individual associated with the cryptocurrency industry facing a criminal trial on fraud and conspiracy charges, as reported by both The Verge and TechCrunch, and is accused by prosecutors of committing fraud for personal gain?",
+      "golden_answer": "Sam Bankman-Fried",
+      "answer": "The individual associated with the cryptocurrency industry facing a criminal trial on fraud and conspiracy charges is Sam Bankman-Fried, the founder of the failed cryptocurrency exchange FTX. He is accused by prosecutors of committing fraud for personal gain, with allegations stating that FTX was a fraud from the beginning, resulting in a multi-billion-dollar deficiency caused by his own misappropriation of customer funds [1][4].",
+      "retrieved_sources": [
+        "doc_0175.md",
+        "doc_0226.md",
+        "doc_0010.md"
+      ],
+      "gold_sources": [
+        "doc_0010.md",
+        "doc_0011.md",
+        "doc_0175.md"
+      ],
+      "abstained": false,
+      "scores": {
+        "retrieval_relevance": 0.6666666666666666,
+        "citation_accuracy": 0.5,
+        "faithfulness": 0.8,
+        "answer_correctness": 0.42195789549216906
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0175.md",
+          "text": "Sam Bankman-Fried, the founder of failed cryptocurrency exchange FTX, is on trial for seven counts of wire fraud and conspiracy. FTX was a fraud “from the start,” the Securities and Exchange Commission alleges — with a “multi-billion-dollar deficiency caused by his own misappropriation of customer funds.” Follow along for all the latest news and regular updates from the trial.\n\n“Really just old-fashioned embezzlement.”"
+        },
+        {
+          "source": "doc_0175.md",
+          "text": "The trial of Sam Bankman-Fried is likely to be more consequential than just whether the man himself is found guilty. Depending on what evidence is introduced during the trial, it could be rough for the entire crypto industry.\n\n“How much damage can this trial do to the already beaten-down reputation of the industry at this point?” asks Yesha Yadav, a law professor at Vanderbilt University. “This trial is going to be an excruciating moment for the industry because no one knows what kind of evidence might come out.”"
+        },
+        {
+          "source": "doc_0226.md",
+          "text": "$65 billion line of credit\n\nFor months, Bankman-Fried has known that Wang and Ellison, who were integral members of his personal and professional inner circles, had turned on him. Both pleaded guilty in December and have since been cooperating with the U.S. attorney's office in Manhattan. Wang's testimony, which stretched into Friday, was given under a cooperation agreement with the government. Ellison is expected to take the stand under a similar arrangement.\n\nU.S. District Judge Lewis Kaplan presides as Gary Wang testifies during the fraud trial of Sam Bankman-Fried over the collapse of FTX, the bankrupt cryptocurrency exchange, at Federal Court in New York City, U.S., October 6, 2023 in this courtroom sketch. Jane Rosenberg | Reuters"
+        },
+        {
+          "source": "doc_0010.md",
+          "text": "SBF’s trial has started, this is how he and FTX got here\n\nThe highly anticipated criminal trial for Sam Bankman-Fried, former CEO of bankrupt crypto exchange FTX, started Tuesday to determine whether he’s guilty of seven counts of fraud and conspiracy. And as one former federal prosecutor put it: “The odds seem to be stacked against him at this point.”\n\nThe 31-year-old co-founded FTX in 2019; within a few years the once third-largest crypto exchange’s valuation hit $32 billion at its peak. It’s now trying to claw back any funds to distribute to creditors.\n\nBut how did the once third-largest crypto exchange get here?"
+        },
+        {
+          "source": "doc_0226.md",
+          "text": "Witness Adam Yedidia answers questions during Sam Bankman-Fried fraud trial over the collapse of FTX, the bankrupt cryptocurrency exchange, at Federal Court in New York City, October 5, 2023, in this courtroom sketch. Jane Rosenberg | Reuters"
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0004",
+      "category": "multi_hop",
+      "question": "Which online betting platform provides a welcome bonus of up to $1000 in bonus bets for new customers' first losses, runs NBA betting promotions, and is anticipated to extend the same sign-up offer to new users in Vermont, as reported by both CBSSports.com and Sporting News?",
+      "golden_answer": "Caesars Sportsbook",
+      "answer": "Caesars Sportsbook provides a welcome bonus of up to $1,000 in bonus bets for new customers' first losses and runs NBA betting promotions. It is anticipated that Caesars will extend the same sign-up offer to new users in Vermont, as reported by both CBSSports.com and Sporting News [1][3].",
+      "retrieved_sources": [
+        "doc_0072.md",
+        "doc_0062.md"
+      ],
+      "gold_sources": [
+        "doc_0062.md",
+        "doc_0071.md",
+        "doc_0072.md"
+      ],
+      "abstained": false,
+      "scores": {
+        "retrieval_relevance": 0.6666666666666666,
+        "citation_accuracy": 0.5,
+        "faithfulness": 0.75,
+        "answer_correctness": 0.8479677715967899
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0072.md",
+          "text": "Again, we'll keep an eye out for any news regarding ESPN Bet Sportsbook VT.\n\nOther potential Vermont sportsbooks\n\nVermont's new sports betting law allows for as many as six online sportsbooks, and while we know of a few of these we're still waiting to find out which ones go live in the state. Here are a couple of other online sports betting sites that are thriving in other states, one or both of which could potentially come to Vermont eventually.\n\nCaesars Vermont promo code\n\nCaesars Sportsbook has become one of the most popular online sportsbooks in the US in several states, and it should prove a favorite in Vermont as well. We expect Caesars to offer the same offer in VT is has elsewhere, with new sign-ups eligible to receive up to a $1,000 Bonus Bet if their first bet loses."
+        },
+        {
+          "source": "doc_0072.md",
+          "text": "Fanatics Vermont promo code\n\nFanatics Sportsbook is already scheduled to launch in Vermont in Jan. 2024. We are still awaiting word on what the Fanatics Sportsbook VT welcome offer will be. The site is live in several other states\n\nIn the past, Fanatics has featured different welcome offers for new sign-ups. These have included variations on the “bet-and-get” welcome offers described above. Fanatics has featured a bet $5, get $200 in Bonus Bets offer before. They have also structured the same offer differently by inviting new users to make five bets of at least $10 over five days and receive Bonus Bets each time they do, again totaling $200."
+        },
+        {
+          "source": "doc_0062.md",
+          "text": "As one of the most recognizable names in the gambling industry, BetMGM knows how to attract and keep customers with competitive odds for all bet types, including futures bets and the NBA Rookie of the Year. BetMGM offers many deposit and withdrawal options and 24/7 customer service, and generous sports betting bonuses and promotions. Caesars Sportsbook: Caesars knows its way around sports betting when you use its app and online sportsbook. It offers favorable odds for almost every bet type, including NBA ROTY betting, and offers a nice variety of deposit and withdrawal options. Additionally, Caesars has a competitive welcome bonus for new players and runs NBA betting promos for existing players.\n\nWhen is the best time for NBA ROTY odds?"
+        },
+        {
+          "source": "doc_0072.md",
+          "text": ". Use your Bonus Bet within 14 days or else it will expire.\n\nor else it will expire. If you win with your Bonus Bet, you only receive the winnings and not the bet amount back.\n\nBetRivers Vermont promo code\n\nBetRivers Sportsbook is another site that has launched in many states and could be among those coming to Vermont. BetRivers has a lot to offer and many have found it a great choice elsewhere. Like the sites described above, BetRivers also has a “second chance” welcome offer that gives new sign-ups a free bet refund worth up to $500 should they lose their first wager."
+        },
+        {
+          "source": "doc_0072.md",
+          "text": "If you win with Bonus Bets, you only get the winnings and not the wager amounts back\n\nWhat is the welcome offer at FanDuel Sportsbook VT?\n\nThose signing up at FanDuel Sportsbook Vermont by Jan. 10, 2024 will find $100 in Bonus Bets in their accounts when the site launches on Jan. 11. In addition, FanDuel Sportsbook VT will also feature the same welcome offer it has in other states, inviting new sign-ups to bet at least $5 and get $200 in Bonus Bets. Be aware that sometimes FanDuel add perks to that offer, such as they did at the start of the NBA season when they threw in a free three-month subscription to NBA League Pass.\n\nWhat can I win with the FanDuel Sportsbook welcome offer?"
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0009",
+      "category": "multi_hop",
+      "question": "Which company, as reported by both TechCrunch and The Verge, has spent billions to maintain its default search engine status on various platforms and is also accused of harming news publishers’ revenue through its business practices?",
+      "golden_answer": "Google",
+      "answer": "The company that has spent billions to maintain its default search engine status on various platforms and is accused of harming news publishers' revenue through its business practices is Google. It spent $26.3 billion in 2021 to be the default search engine across various platforms, and it faces a class action lawsuit from news publishers claiming that it harms their revenue by siphoning off their content and ad revenue through anticompetitive means [1][2][3][4].",
+      "retrieved_sources": [
+        "doc_0237.md",
+        "doc_0033.md",
+        "doc_0015.md"
+      ],
+      "gold_sources": [
+        "doc_0014.md",
+        "doc_0033.md",
+        "doc_0237.md"
+      ],
+      "abstained": false,
+      "scores": {
+        "retrieval_relevance": 0.6666666666666666,
+        "citation_accuracy": 0.0,
+        "faithfulness": 1.0,
+        "answer_correctness": 0.5247068852780699
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0237.md",
+          "text": "The government has argued that Google uses its platforms and deals with partners to block out any competition in search or advertising, thus hindering competitors from accessing the data they’d need to improve their products.\n\nGoogle argues that it’s just doing business. Everybody wants Google as the default engine because it’s the best. That doesn’t make its actions illegal, the company says.\n\nMonday’s trial hearing revealed plenty of juicy tidbits, including the $26.3 billion Google spent making itself the default search engine across platforms in 2021, how Google tried to take it further and have Chrome preinstalled on iPhones and more.\n\nGoogle paid $26 billion in 2021 to be everyone’s default search engine"
+        },
+        {
+          "source": "doc_0033.md",
+          "text": "A new class action lawsuit filed this week in the U.S. District Court in D.C. accuses Google and parent company Alphabet of anticompetitive behavior in violation of U.S. antitrust law, the Sherman Act, and others, on behalf of news publishers. The case, filed by Arkansas-based publisher Helena World Chronicle, argues that Google “siphons off” news publishers’ content, their readers and ad revenue through anticompetitive means. It also specifically cites new AI technologies like Google’s Search Generative Experience (SGE) and Bard AI chatbot as worsening the problem.\n\nIn the complaint, Helena World Chronicle, which owns and publishes two weekly newspapers in Arkansas, argues that Google is “starving the free press” by sharing publishers’ content on Google, losing them “billions of dollars.”"
+        },
+        {
+          "source": "doc_0015.md",
+          "text": "In our last roundup, we learned how Google spent $26.3 billion in 2021 making itself the default search engine across platforms and how Google tried to have Chrome preinstalled on iPhones. Over the past couple of weeks, more of the inner workings of Google has come to light, including some of the search engine’s most lucrative search queries, what the revenue-share agreements between Google and Android OEMs look like and why Expedia has a bone to pick with Google.\n\nBefore we go into some of these tidbits…\n\nWhy the Google vs. U.S. antitrust case matters"
+        },
+        {
+          "source": "doc_0237.md",
+          "text": "Google paid $26 billion in 2021 to be everyone’s default search engine\n\nWhen Google’s search head Prabhakar Raghavan testified in court on October 28, he revealed that the tech giant had paid $26.3 billion in 2021 to multiple browsers, phones and platforms, from companies including Apple, Samsung and Mozilla, The Verge reports.\n\nAbout $18 billion of that total amount went directly to Apple, according to a New York Times report published earlier this month. Google has had its deal with Apple in place since 2003."
+        },
+        {
+          "source": "doc_0237.md",
+          "text": "When questioned on the amount of money Google spends to get first pick of search engines, Pichai said that the decision was made with the consumer in mind. Google pays big bucks to be everywhere so that it can take in all the data and be the best search engine across different companies’ devices, said Pichai, according to The Verge.\n\nGoogle understood the value of defaults very early on. U.S. Justice Department lawyer Meagan Bellshaw showed Pichai a 2007 email from a Google product strategy meeting containing data showing that when people changed their browser homepage to Google, they did 15% more Google searches. When they switched away, their Google searches dropped 27%."
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0012",
+      "category": "multi_hop",
+      "question": "After the TechCrunch report on October 7, 2023, concerning Dave Clark's comments on Flexport, and the subsequent TechCrunch article on October 30, 2023, regarding Ryan Petersen's actions at Flexport, was there a change in the nature of the events reported?",
+      "golden_answer": "Yes",
+      "answer": "After the report on October 7, 2023, regarding Dave Clark's comments on Flexport, and the follow-up article on October 30, 2023, discussing Ryan Petersen's actions, there was a notable change in the events reported. Dave Clark, the former CEO, publicly criticized the situation at Flexport, calling the reporting on his departure \"deeply concerning\" and expressing dissatisfaction with how the company's board handled his ousting [2]. Meanwhile, Ryan Petersen took back the CEO position and focused on financial restructuring, which included significant layoffs and criticism of Clark's spending policies [1]. These developments reflect a shift from internal conflict and criticism to realignment under Petersen's leadership and attempts to stabilize Flexport financially [1][2].",
+      "retrieved_sources": [
+        "doc_0537.md",
+        "doc_0011.md"
+      ],
+      "gold_sources": [
+        "doc_0011.md",
+        "doc_0537.md"
+      ],
+      "abstained": false,
+      "scores": {
+        "retrieval_relevance": 1.0,
+        "citation_accuracy": 0.75,
+        "faithfulness": 0.75,
+        "answer_correctness": 0.02831880377457734
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0537.md",
+          "text": "— Rebecca Bellan\n\nDeal of the week\n\nWell this is a fun one.\n\nFlexport is in talks to acquire the technology of Convoy, the once buzzy digital freight startup that abruptly shuttered after failing to find a buyer. This possible deal, which was reported by WSJ, didn’t have any other details, but it still made me raise an eyebrow.\n\nLest you forget, Flexport founder Ryan Petersen just took back the CEO title after his hand-picked successor was pushed out. Petersen’s big message has been getting the company’s financial house back in order and has criticized former CEO Dave Clark of overspending, specifically around hiring and expanding too quickly. Petersen has spent the past month cutting costs, including laying off about 20% of its workers, or about 600 people."
+        },
+        {
+          "source": "doc_0011.md",
+          "text": "Turmoil at Flexport: Dave Clark, the former Amazon executive who was ousted as CEO of Flexport just a year into the job, fired back at its founder and board, calling recent reporting on the logistics company “deeply concerning.” Clark made the comments Monday in a lengthy post on social media site X following a report from CNBC that provided new information about his last days at Flexport, a freight forwarding and customs brokerage startup valued at $8 billion."
+        },
+        {
+          "source": "doc_0011.md",
+          "text": "Hiya, folks, and welcome to Week in Review (WiR), TechCrunch’s digest of the past week in tech news. It’s TC’s column that highlights the major stories over the past few days, and — we humbly submit — it’s a darn useful resource for folks on the go.\n\nThis week, we cover Sam Altman backing a teen’s AI startup, Google’s hardware event (and first impressions of the Pixel 8 Pro), Flexport drama, and the ongoing FTX fallout. Also on the agenda: Gmail’s harsher rules to prevent spam, TikTok testing an ad-free subscription plan, and LinkedIn going big on AI tools. And that’s not all.\n\nIf you haven’t, sign up here to get WiR in your inbox every Saturday. And if you have, our thanks. Now, let’s get on with the news.\n\nMost read"
+        },
+        {
+          "source": "doc_0537.md",
+          "text": "If Flexport acquires the technology, the company plans to restore Convoy’s trucking services for as many customers and partners as possible, according to WSJ’s source. And folks, that’s going to cost money. Is Petersen’s reign of financial frugality already over?\n\nOther deals that got my attention …\n\nFaction, the driverless tech developer, raised an undisclosed amount in a round led by TDK Ventures. Ducera Partners, Trucks Venture Capital and Fifty Years also joined the round."
+        },
+        {
+          "source": "doc_0537.md",
+          "text": "What changed? Perhaps Cruise execs were pressured by GM or they looked around and realized that they were losing support from other states. Either way, Cruise said it’s now going to examine “processes, systems, and tools and reflect on how we can better operate in a way that will earn public trust.”\n\nThat might be a hefty challenge, especially in California. As the Cruise drama unfolded, opposition against robotaxis grew in cities like Los Angeles. And two of the biggest groups to oppose robotaxi expansion in California are now formally working together.\n\nWant to reach out with a tip, comment or complaint? Email Kirsten at kirsten.korosec@techcrunch.com or Rebecca at rebecca.techcrunch@gmail.com."
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0023",
+      "category": "multi_hop",
+      "question": "Was there inconsistency in Jada Pinkett Smith's statements regarding what she learned from her children after The Independent - Life and Style's report on her views on self-acceptance published at 13:41:30, and before The Independent - Life and Style's subsequent report on the same topic published at 15:48:10 on the same day?",
+      "golden_answer": "no",
+      "answer": null,
+      "retrieved_sources": [
+        "doc_0018.md",
+        "doc_0036.md",
+        "doc_0360.md"
+      ],
+      "gold_sources": [
+        "doc_0036.md",
+        "doc_0360.md"
+      ],
+      "abstained": true,
+      "scores": {
+        "retrieval_relevance": 1.0
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0018.md",
+          "text": "The pair have been married since 1997 and share son Jaden, 25, and daughter Willow, 22. The Fresh Prince of Bel-Air star also has a son Trey, 30, whom he shares with his first wife, Sheree Zampino.\n\nAs for her children, Jada praised them for how they’ve helped her grow. “My children, they’re little gurus. They’ve taught me a deep sense of self-acceptance,” she told the outlet.\n\nJada and Will have often opened up about their relationship over the years, and have had very public ups and downs throughout their marriage. Here’s a timeline of their relationship.\n\n1994: Will and Jada meet on the set of The Fresh Prince of Bel-Air"
+        },
+        {
+          "source": "doc_0036.md",
+          "text": "She praised her and Will’s two children - Jaden, 25, and Willow, 22 - for being her “little gurus” throughout this time, noting that they’ve taught her “a deep sense of self-acceptance”. Although the married couple are not living together, she insisted that their marriage has never been an open one, as she and Will have “eliminated the chance of betrayal” while going on to live their “separate lives”.\n\nThis isn’t the first time that Jada and Will have taken some time apart from each other. During a 2020 episode of her Facebook Watch series, Red Table Talk, Jada disclosed that while she and Will were separated amicably, she had a relationship with singer August Alsina, describing their involvement as an “entanglement”."
+        },
+        {
+          "source": "doc_0360.md",
+          "text": "Jada then praised her children for how they’ve helped her grow, adding: “My children, they’re little gurus. They’ve taught me a deep sense of self-acceptance.”\n\nOn 16 October, Will broke his silence on his wife’s comments during an interview with the New York Times. The outlet noted that he said his partner’s memoir “kind of woke him up” and that he has now realised she is more “resilient, clever and compassionate than he’d understood”.\n\n“When you’ve been with someone for more than half of your life, a sort of emotional blindness sets in, and you can all too easily lose your sensitivity to their hidden nuances and subtle beauties,” Will added."
+        },
+        {
+          "source": "doc_0018.md",
+          "text": "Stay ahead of the trend in fashion and beyond with our free weekly Lifestyle Edit newsletter Stay ahead of the trend in fashion and beyond with our free weekly Lifestyle Edit newsletter Please enter a valid email address Please enter a valid email address SIGN UP I would like to be emailed about offers, events and updates from The Independent. Read our privacy notice Thanks for signing up to the\n\nLifestyle Edit email {{ #verifyErrors }} {{ message }} {{ /verifyErrors }} {{ ^verifyErrors }} Something went wrong. Please try again later {{ /verifyErrors }}\n\nJada Pinkett Smith has revealed that she and husband Will Smith have been separated for the last seven years."
+        },
+        {
+          "source": "doc_0360.md",
+          "text": "“I made a promise that there will never be a reason for us to get a divorce,” she said. “We will work through whatever. And I just haven’t been able to break that promise.”\n\nWhen asked why she and Will didn’t “just amicably divorce,” Jada simply replied: “We don’t want to.”\n\nShe then explained how her family shaped that decision, as she and the King Richard star share two children - Jaden, 25, and Willow, 22. Will also has a 30-year-old son, Trey, who he shares with ex-wife Sheree Zampino. “We love our family and we love each other. It’s more of a life partnership,\" Jada explained. \"Now, 10 years from now, Hoda, who knows?”"
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0029",
+      "category": "multi_hop",
+      "question": "Did the coverage of ski resorts by 'The Independent - Travel' change after their report on the 'Swiss slopes of Zermatt and pistes of Vail in Colorado' on October 13th, 2023, compared to their subsequent report on 'Tremblant Ski Resort' on October 25th, 2023?",
+      "golden_answer": "no",
+      "answer": null,
+      "retrieved_sources": [
+        "doc_0573.md",
+        "doc_0572.md"
+      ],
+      "gold_sources": [
+        "doc_0572.md",
+        "doc_0573.md"
+      ],
+      "abstained": true,
+      "scores": {
+        "retrieval_relevance": 1.0
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0573.md",
+          "text": "Picture indulging in delectable regional dishes from personal chefs, Michelin-star dining and exhaustive pillow menus, or upgrading your après pints to champagne flutes as you peruse high-end Alpine boutiques. From the Swiss slopes of Zermatt to the pistes of Vail in Colorado, it’s not just the snow that sparkles.\n\nBespoke adventure sports, including heliskiing, meet private ski instructors and pre-warmed boots in these prestigious resorts, while chalet board accommodation ensures there’s post-slope cake and canapes waiting, with a side of steamy hot tub sessions.\n\nHere are the world’s most exclusive ski resorts for a five-star holiday, and the lavish gondola-hugging chalets to book for unrivalled luxury off-piste.\n\nZermatt, Switzerland"
+        },
+        {
+          "source": "doc_0572.md",
+          "text": "The town of Whistler was purpose-built and has quickly developed into one of the world’s premier resorts. There are plenty of non-skiing activities available and several options for kids, while the apres is among some of the best in North America, centred around venues like Merlin’s, Dusty’s and BrewHouse.\n\nBook it\n\nHeidi offers packages to The Westin Resort & Spa, two minutes from the slopes and just over five away from the town centre. Inside, the rooms are spacious, modern and come with excellent views which are only beaten by those offered from the terrace and grill restaurant.\n\nFrom £3,073pp, including seven nights’ accommodation, room-only, return flights from London Heathrow to Vancouver and airport transfers. Departing 13 January 2024.\n\nRead more on ski holidays:\n\nTremblant"
+        },
+        {
+          "source": "doc_0572.md",
+          "text": "Read more on ski holidays:\n\nTremblant\n\nTremblant is Quebec’s premier resort (Getty Images)\n\nQuebec’s premier ski resort sits at the foot of the eponymous mountain, whose pistes cater well to all abilities. Beginners can start their ski journey at the edge of the village before progressing onto a series of long greens, including the Flying Mile. There are a number blues for intermediates, especially in the areas around Le Soleil and the Lowell Thomas lift, while advanced skiers can enjoy several terrain parks and steep black runs on both the north and south side of the mountain."
+        },
+        {
+          "source": "doc_0572.md",
+          "text": "It may be further afield than the Alps or the Dolomites, but a trip to Canada makes it onto on the bucket lists of ski lovers everywhere for good reason. From the world-famous Whistler Blackcomb and its attractive resort towns to the steep verticals of Revelstoke, there’s enough choice – for every level of skier – to keep you coming back for years.\n\nFamilies, couples and groups alike can enjoy varied, all-round resorts like charming Tremblant, beginner-friendly family resorts such as Big White and expert areas like Fernie, with some of North America’s steepest terrain, best runs and most challenging off-piste."
+        },
+        {
+          "source": "doc_0573.md",
+          "text": "How to ski in Whistler\n\nInghams is offering seven nights at the prestigious chateau-style Fairmont Chateau Whistler, below Whistler’s Blackcomb Mountain, from £1,559pp, based on four adults sharing, including return flights from London Heathrow, access to the hotel’s health club and a shuttle that runs into Whistler Village. Departing 1 December 2023.\n\nVail, USA\n\nCelebrated après and scenic gondola rides dot Colorado’s pistes (Getty Images)\n\nThis Colorado resort is North America’s premium ski destination and the third-largest mountain ski resort in the US. Vail’s iconic peaks, celebrated après and glamorous villages foster an exclusive atmosphere for travellers to share piste stories over Swiss-style fondue, likely in the company of some famous faces.\n\nHow to ski in Vail"
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0041",
+      "category": "multi_hop",
+      "question": "Did The Independent - Sports report on the All Blacks' home victories against Ireland, South Africa, and Argentina last summer on October 14, 2023, and did The Roar | Sports Writers Blog report on Argentina's victories over the All Blacks in Christchurch last year and their first victory in 2020 in Sydney on October 18, 2023, making the reporting on the All Blacks' defeats by Argentina consistent?",
+      "golden_answer": "no",
+      "answer": null,
+      "retrieved_sources": [
+        "doc_0023.md",
+        "doc_0167.md",
+        "doc_0493.md",
+        "doc_0538.md"
+      ],
+      "gold_sources": [
+        "doc_0023.md",
+        "doc_0538.md"
+      ],
+      "abstained": true,
+      "scores": {
+        "retrieval_relevance": 1.0
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0023.md",
+          "text": "“That’s the team we think best for this week,” Foster said.\n\n“Mark has done his time. He made a mistake and accepted what was happening but you don’t linger in that space. He’s been our form winger. We have got a faith in him and think he is in good place to play this game.\n\nAdvertisement\n\n“We really enjoyed Leicester Fainga’anuku]’s game last week and he should be proud of that and its’s a tough selection. It’s a chance for us to get Mark on the park.”\n\nThe All Blacks are 18-point favourites for the opening semi-final.\n\nIt comes despite Argentina knocking over the All Blacks last year in Christchurch, as well as a maiden defeat in 2020 in Sydney.\n\n“The past sets us up beautifully for both teams,” Foster said."
+        },
+        {
+          "source": "doc_0167.md",
+          "text": "The Springboks have done it tough, too, having already faced two of the tournament favourites on their way to the semi-finals. Comfortable defeats of Scotland, Romania and Tonga couldn't mask the disappointment of the 13-8 loss to Ireland, which consigned South Africa to second in Pool B. However, with Ireland sent home by the All Blacks in the quarters, the Bokke showed their World Cup mettle to edge the hosts 29-28 at the Stade de France, sneaking past Les Bleus in one of the best games of rugby you're ever likely to see.\n\nThe last time Cheslin Kolbe played England at a Rugby World Cup... 🇿🇦 🏆#RWC2023 | #ENGvRSA pic.twitter.com/Riw2uaSaKa — Rugby World Cup (@rugbyworldcup) October 19, 2023"
+        },
+        {
+          "source": "doc_0493.md",
+          "text": "But after initially moving back into the coaching fray with the Blues in Super Rugby, he joined the All Blacks ahead of last year’s Rugby Championship as New Zealand Rugby shook the All Blacks coaching team up following their historic series loss to Andy Farrell’s Irish.\n\nSchmidt’s expertise proved telling, with he and Jason Ryan transforming the All Blacks and helping Ian Foster’s side reach the final of this year’s World Cup after stunning wins over Ireland and Argentina in the knockout stages.\n\nImportantly, the 58-year-old, The Roar understands, is interested in the Wallabies coaching job.\n\nDan McKellar, Stephen Larkham, Andy Friend and Ian Foster remain interested in the role."
+        },
+        {
+          "source": "doc_0023.md",
+          "text": "PARIS – The All Blacks have downplayed Rieko Ioane’s gestures towards Ireland fans and retiring great Johnny Sexton, as the three-time world champions said they have learned to “respect Argentina” ahead of their semi-final on Saturday (6am AEDT).\n\nIt comes as Michael Cheika embraced the underdog status and said he was hoping Los Pumas “inspired” Argentina “not by our results but by our ambition”, as the former Wallabies coach readies for another clash against the All Blacks and a second semi-final.\n\nFacebook Twitter Whatsapp Reddit Email Share\n\nIoane copped a spray from Sexton following their 28-24 nail-biting win over Ireland."
+        },
+        {
+          "source": "doc_0538.md",
+          "text": "Ireland were left bereft after an agonising defeat (PA Wire)\n\nInstead of being feted as the heroes to finally overcome that insurmountable obstacle, the Ireland players will still have to answer endless questions about the heavy burden of previous knockout failures and fans will endure at least four more years of choking jokes at their expense.\n\nAs for the All Blacks, they looked lost at times during this World Cup cycle and it’s still faintly remarkable that head coach Ian Foster survived last summer as the home defeats to Ireland, South Africa and Argentina piled up."
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0043",
+      "category": "multi_hop",
+      "question": "Did the 'Fortune' report on Donald Trump's real estate valuations published on September 26, 2023, disagree with 'The Age' report regarding the allegation that Donald Trump increased the value of his penthouse apartment in the matter of inflating property values?",
+      "golden_answer": "no",
+      "answer": "The provided context does not specify whether the 'Fortune' report disagreed with 'The Age' report regarding the allegation that Donald Trump increased the value of his penthouse apartment by inflating property values. Therefore, there is no sufficient information to answer the question.",
+      "retrieved_sources": [
+        "doc_0529.md",
+        "doc_0530.md"
+      ],
+      "gold_sources": [
+        "doc_0529.md",
+        "doc_0530.md"
+      ],
+      "abstained": false,
+      "scores": {
+        "retrieval_relevance": 1.0,
+        "faithfulness": 0.3333333333333333,
+        "answer_correctness": 0.41883280483260754
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0529.md",
+          "text": "Among the allegations were that Trump claimed his Trump Tower apartment in Manhattan — a three-story penthouse replete with gold-plated fixtures — was nearly three times its actual size and valued the property at $327 million. No apartment in New York City has ever sold for close to that amount, James said.\n\nTrump valued Mar-a-Lago as high as $739 million — more than 10 times a more reasonable estimate of its worth. Trump’s figure for the private club and residence was based on the idea that the property could be developed for residential use, but deed terms prohibit that, James said."
+        },
+        {
+          "source": "doc_0530.md",
+          "text": "Space inflation wasn’t the only issue. Between 2014 and 2015, Trump increased the value of the apartment to $US327 million from $US200 million. The prosecution argues that was to mask a drop in the value of one of his other properties. “A discrepancy of this order of magnitude, by a real estate developer sizing up his own living space of decades, can only be considered fraud,” Judge Arthur Engoron wrote in a September ruling. ‘The company has never been stronger and never been better.’ Eric Trump Bloomberg values the property using recent Trump Tower sales, as well as those of comparable Manhattan penthouses. While some splashy residences in much newer buildings on so-called Billionaires Row have listed for well in excess of $US100 million, they typically boast higher ceilings, more"
+        },
+        {
+          "source": "doc_0530.md",
+          "text": "Trump’s Fifth Avenue penthouse Trump’s valuation (2021): $US131.3 million, Bloomberg valuation (2023): $US40 million, New York valuation: No current estimate available Trump’s penthouse apartment at Trump Tower has been an integral part of his image for 40 years, so it’s not surprising that one of the world’s masters of hyperbole exaggerated its size for most of that time. Trump’s penthouse apartment at Trump Tower has been an integral part of his image for 40 years. Credit: AP Between 2011 and 2016, Trump valued his apartment based on it being 30,000 square feet (2,787 square metres) in size — almost triple its actual measurement of 10,996 square feet. Because of this, New York State arrived at a valuation that was about a third of Trump’s in those years. They haven’t provided a more"
+        },
+        {
+          "source": "doc_0530.md",
+          "text": "It’s possible Trump would get a higher price because of his name. “There would be a Trump premium because the person that would want that property is likely to be a Trump supporter,” Beracha said. But it’s also likely that the association with Trump would turn off some buyers. Trump Park Avenue Trump’s valuation (2021): $US90.9 million, Bloomberg valuation (2023): $US86.4 million, New York’s valuation (2021): $US80 million The residential condo tower on Manhattan’s Upper East Side, formerly the Hotel Delmonico, isn’t one of Trump’s best-known buildings, but it’s been the source of some significant asset inflations, according to the prosecution."
+        },
+        {
+          "source": "doc_0529.md",
+          "text": "Engoron, noting that he had “emphatically rejected” those arguments earlier in the case, equated them to the “time-loop in the film ‘Groundhog Day.'”\n\nJames, a Democrat, sued Trump and the Trump Organization a year ago, alleging a pattern of duplicity that she dubbed “the art of the steal,” a twist on the title of Trump’s 1987 business memoir “The Art of the Deal.”\n\nThe lawsuit accused Trump and his company of routinely inflating the value of assets like skyscrapers, golf courses and his Mar-a-Lago estate in Florida, padding his bottom line by billions."
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0058",
+      "category": "multi_hop",
+      "question": "Did the Sporting News report on Elijah Garcia's 16th victory before The Roar | Sports Writers Blog covered the first-round knockout by Jai Opetaia against Ellis Zorro?",
+      "golden_answer": "Yes",
+      "answer": "The Sporting News did report on Elijah Garcia's 16th victory because it is mentioned that Garcia achieved this victory in a fight against Armando Resendiz, but the timing of that report in relation to The Roar | Sports Writers Blog's coverage of Jai Opetaia's first-round knockout against Ellis Zorro is not stated in the provided context. Therefore, I cannot determine if the report on Garcia's victory occurred before or after Opetaia's knockout coverage.",
+      "retrieved_sources": [
+        "doc_0561.md",
+        "doc_0245.md"
+      ],
+      "gold_sources": [
+        "doc_0245.md",
+        "doc_0561.md"
+      ],
+      "abstained": false,
+      "scores": {
+        "retrieval_relevance": 1.0,
+        "faithfulness": 0.75,
+        "answer_correctness": 0.33204641198329854
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0561.md",
+          "text": "Jai Opetaia has taken his frustrations out on a hapless Ellis Zorro, the unbeaten Australian delivering a brutal first-round knockout in Saudi Arabia, while Kiwi heavyweight Joseph Parker stunned former champ Deontay Wilder to ruin his chances of facing Anthony Joshua.\n\nCruiserweight Opetaia was forced to vacate his IBF world title belt to take his place on the mega-card in Riyadh early on Sunday morning (AEDT).\n\nIn a bout reportedly worth $680,000 to the Australian, he wasted little time, a huge left hand obliterating Zorro with four seconds remaining in the first round.\n\nFacebook Twitter Whatsapp Reddit Email Share"
+        },
+        {
+          "source": "doc_0561.md",
+          "text": "Facebook Twitter Whatsapp Reddit Email Share\n\nThe punch sent the dazed Englishman into the ropes and on to the canvas, the outclassed Zorro eventually able to offer a sheepish smile in what was his first loss in 18 professional fights.\n\nThe former Olympian moved to 24-0 with 19 stoppages and retained his Ring Magazine belt to cap a week of drama that saw Opetaia stripped of his IBF status in controversial circumstances.\n\n“I train for 12 rounds, was prepared for 12 and if the knockout comes, it comes,” Opetaia said.\n\n“He was a bit too hesitant and he got clipped, that’s the way it goes.”\n\nCommentator Sergio Mora described the one-punch knockout as “devastating and scary” while fellow pundit Mike Costello added: “At any weight, at any level that’s as clinical as it gets in this sport”."
+        },
+        {
+          "source": "doc_0245.md",
+          "text": "Elijah Garcia stops Armando Resendiz in eight\n\n8:56 p.m. ET: Garcia finished the job in style. Although Resendiz was in the fight, Garcia's power punches were having more of an effect on him in the later rounds. Garcia dropped Resendiz with a body shot and a hook to the head in the eighth round. Garcia then took his time picking his spots as a huge combination forced the hand of referee Tony Weeks at the 1:26 mark to get his 16th victory. The middleweight division could use some new blood and Garcia might be the future of the division."
+        },
+        {
+          "source": "doc_0561.md",
+          "text": "Advertisement\n\n“He dismissed Zorro with the minimum of fuss and the maximum of power,” he added.\n\nOpetaia broke his jaw twice on the way to upsetting Mairis Briedis to win the IBF and Ring belts last year before enduring a frustrating wait to defend them 14 months later.\n\nMultiple opponents have dodged the 28-year-old, who the IBF demanded fight Briedis next despite the injured Latvian being happy to delay their bout until he is fit early next year.\n\n“I did, but look at this place, beautiful, I’m happy to be here,” Opetaia said when asked if he had vented his frustrations in the ring.\n\n“I’m pumped; first round knockout, I’m ready for the next fight.\n\n“The last 18 months is just part of the journey. I’m here in the ring now and that’s all that matters.\n\nAdvertisement"
+        },
+        {
+          "source": "doc_0561.md",
+          "text": "The early card also included five knockouts.\n\nAfter Opetaia, Daniel Dubois (20-2-0) registered a 10th-round TKO of Jarrell Miller (26-1-1) with eight seconds left in the final round.\n\nAdvertisement\n\nAgit Kabayel (24-0-0) scored a fourth-round TKO of Arslanbek Makhmudov (18-1-0) in a scheduled 10-round heavyweight bout.\n\nFilip Hrgovic (17-0-0) stopped Mark De Mori (41-3-2) with a first-round TKO, and Frank Sanchez (24-0-0) opened the night with a seventh-round knockout of Junior Fa (20-3-0).\n\n© AAP"
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0017",
+      "category": "multi_hop",
+      "question": "Was there no change in the portrayal of Google's influence on the digital ecosystem between the report from The Verge on Google's impact on the internet's appearance published on November 1, 2023, and the report from TechCrunch on a class action antitrust suit against Google published later?",
+      "golden_answer": "no",
+      "answer": null,
+      "retrieved_sources": [
+        "doc_0033.md",
+        "doc_0237.md"
+      ],
+      "gold_sources": [
+        "doc_0033.md",
+        "doc_0115.md",
+        "doc_0355.md"
+      ],
+      "abstained": true,
+      "scores": {
+        "retrieval_relevance": 0.3333333333333333
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0033.md",
+          "text": "A new class action lawsuit filed this week in the U.S. District Court in D.C. accuses Google and parent company Alphabet of anticompetitive behavior in violation of U.S. antitrust law, the Sherman Act, and others, on behalf of news publishers. The case, filed by Arkansas-based publisher Helena World Chronicle, argues that Google “siphons off” news publishers’ content, their readers and ad revenue through anticompetitive means. It also specifically cites new AI technologies like Google’s Search Generative Experience (SGE) and Bard AI chatbot as worsening the problem.\n\nIn the complaint, Helena World Chronicle, which owns and publishes two weekly newspapers in Arkansas, argues that Google is “starving the free press” by sharing publishers’ content on Google, losing them “billions of dollars.”"
+        },
+        {
+          "source": "doc_0033.md",
+          "text": "The case also arrives alongside the filing of the U.S. Justice Department’s lawsuit against Google for monopolizing digital ad technologies, and references the 2020 Justice Department’s civil antitrust suit over search and search advertising (which are different markets from digital ad technologies in the more recent suit).\n\n“The anticompetitive effects of Google’s scheme cause profound harm to competition, to consumers, to labor, and to a democratic free press,” reads an announcement posted to the website of the law firm handling the case, Hausfeld."
+        },
+        {
+          "source": "doc_0237.md",
+          "text": "Google CEO Sundar Pichai testified Monday in the U.S. government’s antitrust trial against the company. The executive defended Google’s business tactics, including its deal with Apple and other partners to make Google the default search engine.\n\nThe lawsuit stems from a 2020 antitrust claim over Google’s dominance in the online search market. The claim is separate from one filed in January by the Department of Justice, along with eight states including New York, California and Colorado, that aims to “halt Google’s anticompetitive scheme, unwind Google’s monopolistic grip on the market and restore competition to digital advertising.”"
+        },
+        {
+          "source": "doc_0237.md",
+          "text": "What does it all mean?\n\nThe case is expected to continue for several weeks, bringing to a head one of the biggest fights in tech antitrust since the U.S. took Microsoft to trial in the 1990s.\n\nIf the judge rules against Google, the outcome could look a lot like the Microsoft deal, in which the computer company was required to change its behavior and share its APIs with third-party developers. Microsoft was also banned from making anticompetitive and exclusive deals with computer manufacturers.\n\nGoogle might end up having to turn over all or most of the data it has collected to other search engines so they can improve their products and attract more users. The DOJ has said that Google gets 16 times more data than Bing does everyday."
+        },
+        {
+          "source": "doc_0033.md",
+          "text": "The case points to other concerns, too, like changing AdSense rates and evidence of improper spoliation of evidence on Google’s part, by its destruction of chat messages — an issue raised in the recent Epic Games lawsuit against Google over app store antitrust issues, which Epic won.\n\nIn addition to damages, the suit is asking for an injunction that would require Google to obtain consent from publishers to use their website data to train its general artificial intelligence products including Google’s own and those of rivals. It also asks Google to allow publishers who opt out of SGE to still show up in Google search results, among other things."
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0010",
+      "category": "no_answer",
+      "question": "Considering the information from a BBC article detailing Sridevi's achievements in the Indian film industry and a Times of India report on her posthumous honors, which single character from a film portrayed by Sridevi has been recognized for its cultural impact and has also been commemorated with a special award after her passing?",
+      "golden_answer": "Insufficient information.",
+      "answer": null,
+      "retrieved_sources": [
+        "doc_0347.md",
+        "doc_0154.md",
+        "doc_0081.md",
+        "doc_0136.md",
+        "doc_0192.md"
+      ],
+      "gold_sources": [],
+      "abstained": true,
+      "scores": {
+        "abstention_accuracy": 1.0
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0347.md",
+          "text": "“I always wanted to find that balance in the story because … it’s life, there are ups and downs,” she says. A large part of the film is devoted to the character holding on to the rituals of Persian New Year, and finding a way to connect with her culture amid the upheaval.\n\n“For her, that’s through music and poetry and dance, and sharing that with her daughter. It became fundamental to the story. That was how I grew up as well. We’re in the Australian suburbs but I lived in a Persian house with my mum’s cooking and music.\n\n‘The world is seeing the strength of Iranian women now; it’s not just me looking at my mum in admiration,’ says Niasari. Photograph: Miff"
+        },
+        {
+          "source": "doc_0154.md",
+          "text": "the galaxy’s authoritarian ruler. Digital science-fiction spectacle is a given, but can Snyder deliver genuine emotional stakes? November highlights: David Fincher hit the mark with his assured hitman drama The Killer, documentary Last Stop Larrimah was a fascinating outback mystery, Robbie Williams was a star telling his own story, but prestige drama All the Light We Cannot See fell short. Binge Opal (BeBe Bettencourt), Christine (Maria Angelico), Jeeet (Olivia Junkeer), Penny (Bryony Skillington) and Evelyn (Asher Keddie) in Strife. Credit: Binge My top Binge recommendation is Strife (December 6). It’s not a direct adaptation, but this new Australian comic-drama about a woman trying to keep up with her own life is based on Mia Freedman’s 2017 memoir, Work Strife Balance. Asher Keddie,"
+        },
+        {
+          "source": "doc_0081.md",
+          "text": "Brave and the Bold\n\nTaking its title from a silver age DC Comic, Brave and the Bold will introduce Batman’s biological son Damian to the DCU — he’s the fifth of Batman’s many Robins — with a story inspired by Grant Morrison’s interpretation of the character in the Batman and Son run of the Batman comic. This will be Damian’s first appearance in a live-action film, though the character has appeared in animated form in TV and movies. The continuity of this film will be separate from Matt Reeves’ planned The Batman trilogy; it’s meant to establish the new DCU continuity for Batman and Robin.\n\nThe Authority"
+        },
+        {
+          "source": "doc_0136.md",
+          "text": "featured an image of a white woman’s face, which was recognizable to Umamaheswar as the same person she once taught. The tweets frequently denigrated Umamaheswar, Sinha, and Tan for being Asian: “Fat Indian bitch,” read one tweet, referencing Umamaheswar by her first name in another tweet that day. “Squinty eyed retard with a cucktonut husband,” read another, referencing Sinha. “I like that alex is probably abusive to her,” read one tweet. “And all she has is Catherine to call her awesome. Live in hell bitch.” Another read: “I have super detailed deaths I like to think about them experiencing.” When Umamaheswar and Sinha returned home from the park that day, Sinha told himself he needed to monitor this account closely. Screenshot everything. Head off any potential threats of danger."
+        },
+        {
+          "source": "doc_0192.md",
+          "text": "But the film is much stranger than it sounds on paper. Scorsese’s take on the material largely operates outside the text, centering the story on a peripheral character we know little about from David Grann’s book. Miraculously, the film also has its funny elements, incorporating The Departed and The Wolf of Wall Street’s nervy energy, featuring long and zany improvisational exchanges on grim subject matter, sudden wild swings in tone, and one major decision that should spark more debate and differences of opinion than any narrative device Scorsese has ever employed. It’s a suspenseful, moving film with many brilliant parts."
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0013",
+      "category": "no_answer",
+      "question": "What is the first letter of the name of the company that, according to an article from The Financial Times, received the most European patents in 2021, and is also mentioned in a Bloomberg article as having faced a significant legal challenge at the European Patent Office over one of its key patents?",
+      "golden_answer": "Insufficient information.",
+      "answer": null,
+      "retrieved_sources": [
+        "doc_0485.md",
+        "doc_0140.md",
+        "doc_0025.md",
+        "doc_0498.md",
+        "doc_0015.md"
+      ],
+      "gold_sources": [],
+      "abstained": true,
+      "scores": {
+        "abstention_accuracy": 1.0
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0485.md",
+          "text": "news were hanging their hopes on big tech. The five biggest companies in the S&P 500 — Apple, Microsoft, Alphabet, Amazon and AI chipmaker Nvidia — account for about a quarter of the benchmark’s market capitalisation. Their earnings are projected to jump 34 per cent from a year earlier on average, according to analyst estimates compiled by Bloomberg Intelligence."
+        },
+        {
+          "source": "doc_0140.md",
+          "text": "Meta is likely banking on another multi year round of GDPR complaints, legal challenges and — finally — a referral to the CJEU, followed by another long wait before a ruling gets handed down, buying it several more years to run with its new legal basis fix and keep feeding its profits by doing what it likes with Europeans’ data.\n\nBut the consumer protection challenge could complicate its usual playbook."
+        },
+        {
+          "source": "doc_0025.md",
+          "text": "Oh and he also pulled X out of the EU’s Code of Practice on Disinformation earlier this year in a very clear thumb of the nose to EU regulators.\n\nUrgent letter to Musk\n\nIn an “urgent” letter to Musk today, which the EU’s internal market commissioner Thierry Breton also shared on X, the bloc has sent the strongest signal yet it believes Musk’s platform is in breach of the DSA — although this is by no means Musk’s first warning.\n\nA rule of law clash between Musk and the EU has looked increasingly inevitable in recent months — and, indeed, has been predicted by some industry watchers since rumors of the erratic billionaire’s plan to take over Twitter emerged last year."
+        },
+        {
+          "source": "doc_0498.md",
+          "text": "says, pointing out that the nonprofit has just a handful of lawyers dedicated to the EU regulations compared to the legions that companies like Meta and Google can dedicate."
+        },
+        {
+          "source": "doc_0015.md",
+          "text": "European antitrust fine spurs Google to beef up search engine quality\n\nThe government argued on November 10 that Google only endeavored to enhance its search engine in the European Union after it was hit by a €5 billion antitrust fine in 2018, internal documents revealed, according to Bloomberg."
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0018",
+      "category": "no_answer",
+      "question": "Considering the features highlighted in an article from The Verge about the iPhone 13's camera system and the battery life improvements mentioned in a piece by CNET, which model of the iPhone 13 series, represented by a single Roman numeral, was noted for having the best combination of both attributes?",
+      "golden_answer": "Insufficient information.",
+      "answer": null,
+      "retrieved_sources": [
+        "doc_0526.md",
+        "doc_0576.md",
+        "doc_0364.md"
+      ],
+      "gold_sources": [],
+      "abstained": true,
+      "scores": {
+        "abstention_accuracy": 1.0
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0526.md",
+          "text": "Camera\n\nBoth new Pro models are built around Apple’s Liquid Retina XDR display. The 14-inch sports 3024 x 1964 pixels to the 16’s 3456 x 2234 pixels — both come out to a pixel density of 254 ppi. The 15-inch Air, meanwhile, has a 224 ppi density. The 16-inch system’s display is largely unchanged from the 2021 model. It has a 1000 nit sustained brightness and 1600 nit peak with HDR (high dynamic range) content. For SDR (standard dynamic range) content, however, brightness has been bumped up from a 500 to 600 nits max."
+        },
+        {
+          "source": "doc_0526.md",
+          "text": "Frankly, however, Apple’s biggest enemy here is itself. Continuity Camera is a game changer for many. The system lets a mounted iPhone take over webcam duties, and there’s really no comparing the two. I never go on a trip without the Belkin MagSafe camera mount.\n\nThe on-board speaker and microphone systems, meanwhile, remain mostly unchanged from the 2021 M1 Pro. There are six speakers, with two large grilles on either side of the keyboard. The system supports both Spatial Audio and Dolby Atmos. It’s not an exceptional speaker system, but it gets the job done. The Pro also has a three-mic array with directional beamforming.\n\nM3 Max"
+        },
+        {
+          "source": "doc_0526.md",
+          "text": "Along with building new chips, Apple has spent the last few years listening to consumers in a way it hadn’t for decades. That means finally updating the camera, building a better keyboard (the class action settlement probably tipped the scales as well) and ditching the well-meaning but ultimately ineffectual Touch Bar altogether. In fact, it shouldn’t go unremarked upon that the arrival of the new 14-inch signaled the merciful end to that particular technology, as the last Touch Bar Mac — the 13-inch Pro — was replaced by the new 14-inch model.\n\nDesign"
+        },
+        {
+          "source": "doc_0576.md",
+          "text": "Apple Watch Deals\n\nRead our Best Apple Watch guide for an overview of the company's smartwatches.\n\nApple Watch Series 9 Photograph: Apple\n\nThe Series 9 (7/10, WIRED Recommends) is the latest Apple Watch. If you're looking to upgrade, it offers faster performance, improved battery life, and a brighter display. There's also a new Double Tap feature that will trigger functions like playing music or hanging up a call by tapping your index finger and thumb. With the second-gen ultra-wideband chip, you can precision-locate your iPhone and AirPods too."
+        },
+        {
+          "source": "doc_0364.md",
+          "text": "LED privacy indicator still too subtle\n\nBattery life improved but could be better $299 at Amazon$299 at Best Buy How we rate and review products\n\nI get why. These glasses look good. They officially come in 150 style variations across two frame styles, seven colors, and multiple lens options (including color, prescription, and transitions). The camera has been upgraded from 5MP to 12MP. Photo resolution has improved to 3024 x 4032 pixels, while videos are now 1080p at 30 frames per second. There are now five mics instead of one, so you sound better on calls. The speaker quality has also improved. It’s louder, with more bass, less audio leakage, and spatial audio support. They stuffed some AI in there, and you can now livestream to Facebook or Instagram. These are significant updates."
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0020",
+      "category": "no_answer",
+      "question": "Considering the information from an article in The New York Times about the band Used To Be Young's latest tour and a review in Rolling Stone discussing the standout performance of a particular member during a recent concert, which member of Used To Be Young was highlighted for their exceptional solo during the tour's opening night and also plays the instrument that begins with the letter 'B'?",
+      "golden_answer": "Insufficient information.",
+      "answer": null,
+      "retrieved_sources": [
+        "doc_0579.md",
+        "doc_0560.md"
+      ],
+      "gold_sources": [],
+      "abstained": true,
+      "scores": {
+        "abstention_accuracy": 1.0
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0579.md",
+          "text": "From popularising the massive, heavily gated drum sound that dominated the era to becoming one of world music’s greatest champions by co-founding the WOMAD festival, for a while there Gabriel was seemingly everywhere. And then… he wasn’t. In fact, I/O is his first solo album of new original material in over two decades. Some wags are calling it his Chinese Democracy, but the rarely punctual Axl Rose only took a comparatively brisk 18 years to finally release the follow-up to Use Your Illusion. Some things haven’t changed. From the get-go, on opening track Panopticom, there’s that gunshots-in-an-echo-chamber drum sound and the instantly recognisable fat, slithering tones of long-time bassist Tony Levin. And the subject matter is the familiar, big-world thinking we’ve come to expect, too –"
+        },
+        {
+          "source": "doc_0560.md",
+          "text": "screen, using an 18K Big Sky camera, and featuring sequences shot in Greece, India, Mexico and the USA. The Big Sky, in layman’s terms, delivers an image that is about 40 times greater in resolution than a 4K television screen. From Vegas to the desert ... U2 perform at the Sphere. Credit: Stufish Entertainment Architects Like Lipson, Williams is cautious about becoming lost in the dramatic differences of scale, particularly when it is the storytelling of the bands and their discographies that are the key draw for the audience. The same principles apply, Williams says, whether the show is U2 at Sphere or, in another of his shows, Australian playwright Suzie Miller’s Prima Facie, starring Jodie Comer, on the substantially smaller stages of London’s Harold Pinter Theatre and Broadway’s John"
+        },
+        {
+          "source": "doc_0560.md",
+          "text": "kinds of choices and make it work,” Williams says. The two shows also share British music stage architecture firm Stufish whose work ranges from the Queen’s Platinum Jubilee, tours for Beyoncé and Jay-Z, Michael Bublé, Elton John and Madonna as well as the ABBA Arena in London. Stufish partner Ric Lipson (along with artist Es Devlin and producer Brian Eno) collaborated on the U2 project for Sphere. “With the ABBA Arena, it’s absolutely designed for that show, but you could also imagine that building having another avatar show in there, or indeed a live performance where people would use the technology that’s in the building as an immersive environment,” Lipson says."
+        },
+        {
+          "source": "doc_0560.md",
+          "text": "“Both [the U2 and ABBA] shows are taking a bold stab at the next-generation way of doing shows,” Lipson says, but notes that the traditional blueprint of iconic artist and audience remains key. “I’m sitting in a regular arena right now with Madonna, we are doing a very exciting show that pushes the limits of a pop show balancing staging and audience, and we are doing things that will feel fresh for her audience and for the show.” Critically, says Lipson, the staging for the U2 show is elementary in real terms, despite its technological complexity. “And what’s interesting is that the Sphere, like ABBA Arena, is only touching the sides of what you can do,” he says. “In five years’ time and 10 years’ time, two years’ time, whenever the technology shifts, you’ll be able to do more.” By the"
+        },
+        {
+          "source": "doc_0560.md",
+          "text": "you can do,” he says. “In five years’ time and 10 years’ time, two years’ time, whenever the technology shifts, you’ll be able to do more.” By the numbers ... U2 perform at the Sphere in Las Vegas. Credit: Stufish Entertainment Architects The screens, for example, are a bespoke assembly of state-of-the-art screens. But behind those screens are “a whole new kind of speaker,” Lipson says. “In a regular show, the speakers are at one end pushing the sound down the room, so it’s louder at the stage end and quieter further away. [But here] because everybody’s sort of getting their own feed, everybody’s getting an equal volume. So hearing the show in there, sonically, may be better than anywhere.” When the Sphere venue is in cinema mode, it utilises the full range of haptics, that is its ability"
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0024",
+      "category": "no_answer",
+      "question": "Considering the economic forecasts from a Bloomberg article and the archaeological discoveries reported by Al Jazeera, which country in North Africa, expected to see a significant rise in GDP, also recently unveiled an ancient artifact believed to be from the reign of a pharaoh whose name begins with the letter \"T\"?",
+      "golden_answer": "Insufficient information.",
+      "answer": null,
+      "retrieved_sources": [
+        "doc_0532.md",
+        "doc_0125.md",
+        "doc_0506.md"
+      ],
+      "gold_sources": [],
+      "abstained": true,
+      "scores": {
+        "abstention_accuracy": 1.0
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0532.md",
+          "text": "India's nominal GDP measured in USD terms is forecast to rise from $3.5 trillion in 2022 to $7.3 trillion by 2030. This rapid pace of economic expansion would result in the size of the Indian GDP exceeding the Japanese GDP by 2030, making India the second largest economy in the Asia-Pacific region.\n\nBy 2022, the size of the Indian GDP had already become larger than the GDP of the UK and also France. By 2030, India's GDP is also forecast to surpass Germany, the research said.\n\nThe long-term outlook for the Indian economy is supported by a number of key growth drivers. An important positive factor for India is its large and fast-growing middle class, which is helping to drive consumer spending."
+        },
+        {
+          "source": "doc_0532.md",
+          "text": "While China's shrinking, rapidly aging population is likely to impede economic growth and may curtail its geopolitical ambitions, India -- one of the world's youngest countries, with a median age of 28.2 -- is poised to reap a huge demographic dividend, the article said.\n\nBut the driving force behind India's emergence as a major global power is its rapid economic growth. While India's gross domestic product is still smaller than China's, the country is currently the world's fastest-growing major economy and is projected to account for 12.9 per cent of global growth over the next five years, surpassing the United States' 11.3 per cent share, the article said."
+        },
+        {
+          "source": "doc_0125.md",
+          "text": "Do you have a forecast for the consequences of the war for economic growth?\n\n\"It’s too early to make a quantitative estimate of the effects on the growth of the economy in 2024 and 2025. We have a great deal of information about loss of growth and product in various episodes in the past, such as the Yom Kippur War, the Lebanon War, two intifadas, various military operations, and the Covid pandemic."
+        },
+        {
+          "source": "doc_0532.md",
+          "text": "The IMF. in its latest update. has said that India is one of the large emerging economies that has been doing better than expected.\n\nThe IMF said India has been doing better for a while now and that India is, in fact, one of the growth engines in the world economy at this point.\n\nThe IMF said important divergences are appearing. The slowdown is more pronounced in advanced economies than in emerging markets and developing economies. Among the advanced economies, the US has been revised up, with resilient consumption and investment, while the euro area has been revised down, as tighter monetary policy and the energy crisis took a toll."
+        },
+        {
+          "source": "doc_0506.md",
+          "text": "Business associates who worked with him outside AOG and who were willing to speak to The Telegraph describe a savvy operator who was fun to be around. Loading Zamora, who is Venezuelan, got his start in aviation in 2010 as an account manager at AJW, an engine maintenance business, according to Bloomberg. A keen techno DJ, he was also gigging as recently as 2018 according to the Daily Mail. Zamora founded AOG in 2015 from a rented terraced house in Hove, about 70 kilometres south of London on the UK’s South Coast."
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0038",
+      "category": "no_answer",
+      "question": "Considering the information from an article by The Verge and another by Forbes about Sygic, which letter represents both the first character of the European country where Sygic is headquartered and the last character of the name of Sygic's CEO as mentioned in these articles?",
+      "golden_answer": "Insufficient information.",
+      "answer": null,
+      "retrieved_sources": [
+        "doc_0199.md",
+        "doc_0216.md",
+        "doc_0081.md"
+      ],
+      "gold_sources": [],
+      "abstained": true,
+      "scores": {
+        "abstention_accuracy": 1.0
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0199.md",
+          "text": "Magic Leap, an augmented reality hardware company, has replaced its CEO Peggy Johnson with Ross Rosenberg, marking the completion of its enterprise pivot. Johnson joined Magic Leap in August 2020 and led the shift in business strategy. Her successor previously served as executive at Belden and First Solar, and will now guide the company through its next period, as the company faces the daunting challenge of achieving profitability.\n\nMore from hardware land:\n\nIs it a bird? Is it a plane?: Shield AI, a startup specializing in autonomous flying systems for the U.S. military, has raised $200 million in a new funding round, reaching a valuation of $2.7 billion.\n\nEero grows up, with best-in-class Wi-Fi: Amazon’s Eero has launched its most advanced mesh Wi-Fi router yet, the Eero Max 7."
+        },
+        {
+          "source": "doc_0216.md",
+          "text": "The company has picked India as a strategic market from where it can reach a number of new users and enter new markets, starting with neighboring country Nepal, Luke said at the company’s launch in New Delhi.\n\nThe new developments are on the heels of Gogoro’s earlier India announcements, including the early battery-swapping pilot in Delhi, a partnership with Belrise Industries to invest a total of $2.5 billion in Maharashtra to build its battery-swapping infrastructure and network in the western peninsular state and $25 million investment in electric fleet management startup Zypp Electric."
+        },
+        {
+          "source": "doc_0199.md",
+          "text": "Top reads on TechCrunch this week\n\nShinier, smarter maps: Google is rolling out a variety of updates for Maps, incorporating AI technology to enhance user experience. The feature is currently available in France, Germany, Japan, the U.K. and the U.S., with plans for further expansion.\n\nFrom stop-and-start to charging ahead: Over on TC+, Tim has had it with U.S. automakers hesitating on EVs, as Ford and GM are showing signs of backing away from their commitment to electric vehicles. Cowards.\n\nA swan song from the bird sanctuary: X has marked its value at $19 billion, according to internal documents, marking a 56% decrease in value since Elon Musk’s purchase last year. Bad for shareholders and Musk, but potentially good for executives and employees, Amanda explains."
+        },
+        {
+          "source": "doc_0081.md",
+          "text": "Booster Gold\n\nDC hasn’t said much about this TV series, which brings the comics’ fan-favorite comic-relief character to the screen for his own adventures. The company’s logline for the show is just “Booster Gold uses basic technology from the future to pretend to be a superhero in present day” — which is pretty much Booster Gold’s traditional comics depiction as well.\n\nLanterns"
+        },
+        {
+          "source": "doc_0081.md",
+          "text": "Brave and the Bold\n\nTaking its title from a silver age DC Comic, Brave and the Bold will introduce Batman’s biological son Damian to the DCU — he’s the fifth of Batman’s many Robins — with a story inspired by Grant Morrison’s interpretation of the character in the Batman and Son run of the Batman comic. This will be Damian’s first appearance in a live-action film, though the character has appeared in animated form in TV and movies. The continuity of this film will be separate from Matt Reeves’ planned The Batman trilogy; it’s meant to establish the new DCU continuity for Batman and Robin.\n\nThe Authority"
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0039",
+      "category": "no_answer",
+      "question": "Considering the information from an article by Forbes about the growth strategies of Pets Best Insurance Services and a report by The Wall Street Journal on the company's recent partnership with a major pet retailer, which letter of the alphabet starts the name of the CEO who has overseen these developments at Pets Best Insurance Services?",
+      "golden_answer": "Insufficient information.",
+      "answer": null,
+      "retrieved_sources": [
+        "doc_0212.md",
+        "doc_0075.md",
+        "doc_0333.md",
+        "doc_0401.md"
+      ],
+      "gold_sources": [],
+      "abstained": true,
+      "scores": {
+        "abstention_accuracy": 1.0
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0212.md",
+          "text": "Capitol Music Group is in significantly stronger shape than it’s been for a while. It also feels meaningfully influential in pop culture – with several tracks in TikTok’s end-of-year / most popular playlists. It’s fair to say things looked less steady when you took over as CEO & Chair in 2021. You had to right some turbulence…\n\nBe careful what you wish for, right [laughs]?\n\nAs you well know, [before Jubelirer was named CEO/Chair] CMG had undergone a few leadership changes within a short period of time, and that turmoil was compounded by the economic volatility of the pandemic. As a result, the company faced eroding market share, low morale, and a stagnant artist roster."
+        },
+        {
+          "source": "doc_0075.md",
+          "text": "team he’s recruited to the company. Many are longtime payments and SaaS vets who knew there was so much potential for a better provider, and now they’ve built it themselves.”"
+        },
+        {
+          "source": "doc_0075.md",
+          "text": "PayPal did not respond to requests for comment. — Mary Ann\n\nBolt CEO gets frank about SEC probe\n\nBolt Financial CEO Maju Kuruvilla told me in an interview that the one-click checkout company is putting a recent U.S. Securities and Exchange Commission probe behind it and is moving on.\n\n“It obviously is a very, very involved process, but we’re really happy to put that behind us,” Kuruvilla told TechCrunch. “We look forward to focusing on the momentum for the business and how we can help the retailers, especially the big retailers who are looking to us to innovate for them, because this is a tough year for retailers.”"
+        },
+        {
+          "source": "doc_0333.md",
+          "text": "It’s been obvious to all that Altman took the company in a much more corporate direction from its origins, changing its legal status and aggressively pursuing enterprise and consumer applications. That doesn’t sound a lot like the “mission” the board wants to advance. Then again, this shift didn’t happen today, and it certainly doesn’t seem like a plausible reason for abruptly firing the CEO and a few others on a beautiful fall Friday afternoon.\n\n6. What about IP and legal liability?"
+        },
+        {
+          "source": "doc_0401.md",
+          "text": "I would say it this way: I think they are an acknowledgement, and maybe a closer connectivity to the community via Dan specifically. I credit Dan in his short time as CEO to really make some big, hard decisions. Both the launch of Partner Plus, as well as simulcasting, the embed stuff we talked about in the keynote — these are three things that I think are very much an acknowledgement of the feedback from the community. We’ve made that change, so I wouldn’t call it out of competitive pressures. I would call it out of focus on the community."
+        }
+      ]
+    },
+    {
+      "id": "mhrag-0048",
+      "category": "no_answer",
+      "question": "Considering the economic analysis from Bloomberg and the agricultural developments reported by Reuters, which minister, responsible for the finance portfolio in Zimbabwe, also announced a partnership with an international firm to boost crop production in the country?",
+      "golden_answer": "Insufficient information.",
+      "answer": null,
+      "retrieved_sources": [
+        "doc_0182.md",
+        "doc_0532.md",
+        "doc_0485.md",
+        "doc_0028.md"
+      ],
+      "gold_sources": [],
+      "abstained": true,
+      "scores": {
+        "abstention_accuracy": 1.0
+      },
+      "retrieved_contexts": [
+        {
+          "source": "doc_0182.md",
+          "text": "So, this week, prime minister Fumio Kishida will make his strongest ever push for a bet on Asia’s biggest advanced economy — as BlackRock founder Larry Fink, and other heads of global funds, gather in Tokyo for a series of events to attract investment.\n\n“I would urge you to evaluate what we are doing in my country, look at the underlying strength of our economy and our plans for the future and then invest in Japan,” Kishida said in a recent speech at the Economic Club of New York."
+        },
+        {
+          "source": "doc_0532.md",
+          "text": "The long-term trajectory remains to be seen. In any case, for now this has provided a floor for commodity prices, especially base metals. Fickle commodity prices will also be victims of fresh geopolitical tensions in West Asia, which has pushed up Brent crude. Food prices could also play truant with climate change affecting cropping area worldwide: sugar and rice prices are booming, the note said.\n\nIn this challenging environment, Indian real GDP growth, estimated to be 6.2 per cent y/y in real terms in FY24, is resilient. High frequency indicators suggest strong construction and infrastructure activity, and soaring urban demand."
+        },
+        {
+          "source": "doc_0485.md",
+          "text": "GSFM investment strategist Stephen Miller said the inflation data, taken with the October Reserve Bank board meeting minutes, which revealed the board had “low tolerance for a slower return of inflation to target than currently expected”, made the possibility of an interest rate rise from the central bank in November a “near certainty”. However, commodity prices supported mining companies as iron ore prices increased 2.9 per cent overnight, bolstering Australia’s iron ore giants. It comes as Chinese President Xi Jinping stepped up support for the world’s second-biggest economy and major commodity trading partner for Australia, issuing additional sovereign debt, raising the budget deficit ratio and even making an unprecedented visit to the central bank. Loading Elsewhere, on Wall Street,"
+        },
+        {
+          "source": "doc_0028.md",
+          "text": "Only five large-cap stocks declined, with Evolution Mining sinking a mammoth 13 per cent after it raised $525 million selling new shares to institutional investors at $3.80 a share. The mining sector, however, managed to finish in positive territory. Gold miner Newmont was down 1.25 per cent, Origin Energy fell 0.4 per cent, Mercury Nz declined 0.3 per cent and Argo Investments traded 0.1 per cent lower. The lowdown Moomoo market strategist Jessica Amir said the local sharemarket outperformed global equities on Wednesday because of the National Accounts figures, which pointed to the Reserve Bank potentially hitting pause on lifting interest rates. “We know economic growth is slowing, Australian unemployment is likely to pick up next year and inflation is likely to fall,” Amir said. “The"
+        },
+        {
+          "source": "doc_0532.md",
+          "text": "Emerging market economies with large volumes of USD denominated debt are especially vulnerable as they could be caught in a vicious circle of their external debt (in local currency terms) ballooning due to strong DXY and their servicing ability being impaired by tepid economic activity owing to high rates. Even advanced economies have felt the heat, and the ECB etc. have maintained a hawkish narrative, Jain said.\n\nAnother developing story seems to be the greenshoots of recovery in China backed by domestic consumption in the Golden week, and tourism related to the Asian Games. For now, these seem to buttressed on stimulus and base effects as China is now fully open."
+        }
+      ]
+    }
+  ]
+}
