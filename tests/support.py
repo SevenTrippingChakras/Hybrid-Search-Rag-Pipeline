@@ -79,3 +79,22 @@ class FakeHybridStore:
 
     def count(self):
         return len(self.records)
+
+
+class FakeStorage:
+    """In-memory object storage: proves callers depend on the StorageBackend port."""
+
+    def __init__(self):
+        self.objects: dict[str, bytes] = {}
+
+    def put(self, key, data, content_type=None):
+        self.objects[key] = data
+
+    def get(self, key):
+        return self.objects[key]
+
+    def delete(self, key):
+        self.objects.pop(key, None)
+
+    def exists(self, key):
+        return key in self.objects

@@ -52,5 +52,16 @@ class Settings(BaseSettings):
     # the pipeline returns a structured "I don't know" instead of generating.
     abstain_threshold: float = 0.2
 
+    # Object storage for uploaded documents. Only the S3-compatible adapter for
+    # now; the factory stays so a future backend remains swappable. Values point
+    # at Supabase Storage today (S3-compatible); swapping to R2 or AWS S3 later is
+    # a credentials change, not a code change.
+    storage_backend: str = "s3"
+    s3_endpoint: str | None = None
+    s3_region: str | None = None
+    s3_access_key_id: str | None = None
+    s3_secret_access_key: str | None = None
+    s3_bucket: str | None = None
+
 
 settings = Settings()
