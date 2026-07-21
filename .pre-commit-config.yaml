@@ -3,17 +3,19 @@ repos:
     hooks:
       - id: ruff-lint
         name: ruff lint
-        entry: uv run ruff check --fix
+        entry: bash -c 'cd backend && uv run ruff check --fix app tests scripts'
         language: system
         types: [python]
+        pass_filenames: false
       - id: ruff-format
         name: ruff format
-        entry: uv run ruff format
+        entry: bash -c 'cd backend && uv run ruff format app tests scripts'
         language: system
         types: [python]
+        pass_filenames: false
       - id: mypy
         name: mypy
-        entry: uv run mypy hybrid_rag
+        entry: bash -c 'cd backend && uv run mypy app'
         language: system
         types: [python]
         pass_filenames: false

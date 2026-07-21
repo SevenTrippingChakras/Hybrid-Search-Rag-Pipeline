@@ -1,0 +1,90 @@
+<!doctype html><html><head><meta charset='utf-8'><style>
+body { font: 15px/1.5 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+       color: #1a1a1a; background: #fafafa; margin: 0; padding: 2rem; }
+h1 { font-size: 1.5rem; margin: 0 0 .25rem; }
+h2 { font-size: 1.15rem; margin: 2rem 0 .75rem; border-bottom: 2px solid #eee; padding-bottom: .3rem; }
+.sub { color: #666; margin: 0 0 1.5rem; font-size: .9rem; }
+table { border-collapse: collapse; width: 100%; background: #fff; margin-bottom: 1rem; }
+th, td { text-align: left; padding: .5rem .7rem; border-bottom: 1px solid #eee; }
+th { background: #f4f4f6; font-weight: 600; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+td.best { background: #e6f7ed; font-weight: 700; color: #0a6b34; }
+.card { background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 1rem 1.2rem; margin-bottom: 1rem; }
+.card h3 { margin: 0 0 .5rem; font-size: 1rem; }
+.q { color: #333; font-weight: 600; }
+.ans { white-space: pre-wrap; background: #f8f8fa; border-radius: 6px; padding: .5rem .7rem; margin: .4rem 0; }
+.gold { color: #0a6b34; } .gen { color: #1a4fa0; }
+.tag { display: inline-block; font-size: .75rem; padding: .1rem .5rem; border-radius: 10px; background: #eef; margin-left: .5rem; }
+.miss { color: #b00020; } .hit { color: #0a6b34; }
+.scores span { display: inline-block; margin-right: .8rem; font-size: .85rem; color: #444; }
+.n { color: #999; font-weight: 400; font-size: .8em; }
+details { margin-bottom: 1rem; }
+summary { cursor: pointer; font-weight: 600; font-size: 1.15rem; margin: 2rem 0 .75rem;
+          border-bottom: 2px solid #eee; padding-bottom: .3rem; }
+.chunks { margin: .4rem 0; }
+.chunk { font-size: .82rem; color: #444; background: #f8f8fa; border-left: 3px solid #ccd;
+         border-radius: 4px; padding: .35rem .6rem; margin: .3rem 0; }
+.chunk b { color: #556; }
+</style></head><body><h1>Eval report - fixed chunking</h1><p class='sub'>sample golden_30 - 30 questions - 2026-07-21T08:29:23.054528+00:00</p><h2>Overall</h2><table><tr><th>Metric</th><th class='num'>Mean</th><th class='num'>n</th></tr><tr><td>Retrieval relevance</td><td class='num'>0.82</td><td class='num n'>22</td></tr><tr><td>Citation accuracy</td><td class='num'>0.73</td><td class='num n'>13</td></tr><tr><td>Faithfulness</td><td class='num'>0.79</td><td class='num n'>14</td></tr><tr><td>Answer correctness</td><td class='num'>0.45</td><td class='num n'>14</td></tr><tr><td>Abstention accuracy</td><td class='num'>1.00</td><td class='num n'>8</td></tr></table><h2>By category</h2><table><tr><th>Category</th><th class='num'>Retrieval relevance</th><th class='num'>Citation accuracy</th><th class='num'>Faithfulness</th><th class='num'>Answer correctness</th><th class='num'>Abstention accuracy</th></tr><tr><td>multi_hop</td><td class='num'>0.82</td><td class='num'>0.73</td><td class='num'>0.79</td><td class='num'>0.45</td><td class='num'>-</td></tr><tr><td>no_answer</td><td class='num'>-</td><td class='num'>-</td><td class='num'>-</td><td class='num'>-</td><td class='num'>1.00</td></tr></table><details><summary>Lowest-scoring questions</summary><div class='card'><h3>mhrag-0017 <span class='tag'>multi_hop</span><span class='tag'>abstained</span></h3><div class='q'>Was there no change in the portrayal of Google&#x27;s influence on the digital ecosystem between the report from The Verge on Google&#x27;s impact on the internet&#x27;s appearance published on November 1, 2023, and the report from TechCrunch on a class action antitrust suit against Google published later?</div><div class='ans gold'>Golden: no</div><div class='ans gen'>Generated: (no answer generated)</div><div>Gold sources: <span class='hit'>doc_0033.md [OK]</span> <span class='miss'>doc_0115.md [MISS]</span> <span class='miss'>doc_0355.md [MISS]</span></div><div class='chunks'><div class='chunk'><b>doc_0033.md</b>: A new class action lawsuit filed this week in the U.S. District Court in D.C. accuses Google and parent company Alphabet of anticompetitive behavior in violation of U.S. antitrust law, the Sherman Act, and others, on behalf of news publishers. The case, filed by Arkansas-based publisher Helena World...</div><div class='chunk'><b>doc_0033.md</b>: he same web crawler as Google’s general search service, GoogleBot.
+
+Plus, it says Google’s Bard AI was trained on a dataset that included “news, magazine and digital publications,” citing both a 2023 report from the News Media Alliance and a Washington Post article about AI training data for referen...</div><div class='chunk'><b>doc_0033.md</b>: the lawsuit, saying “This lawsuit is meritless. People have many ways to access information and news content today – through publishers’ websites, dedicated apps, social media platforms, print papers and more. Google links people to publishers’ websites more than 24 billion times each month – at no...</div><div class='chunk'><b>doc_0033.md</b>: digital ad technologies in the more recent suit).
+
+“The anticompetitive effects of Google’s scheme cause profound harm to competition, to consumers, to labor, and to a democratic free press,” reads an announcement posted to the website of the law firm handling the case, Hausfeld.
+
+“Plaintiff Helena...</div><div class='chunk'><b>doc_0237.md</b>: Google CEO Sundar Pichai testified Monday in the U.S. government’s antitrust trial against the company. The executive defended Google’s business tactics, including its deal with Apple and other partners to make Google the default search engine.
+
+The lawsuit stems from a 2020 antitrust claim over Goo...</div></div><div class='scores'><span>Retrieval relevance: <b>0.33</b></span></div></div><div class='card'><h3>mhrag-0043 <span class='tag'>multi_hop</span></h3><div class='q'>Did the &#x27;Fortune&#x27; report on Donald Trump&#x27;s real estate valuations published on September 26, 2023, disagree with &#x27;The Age&#x27; report regarding the allegation that Donald Trump increased the value of his penthouse apartment in the matter of inflating property values?</div><div class='ans gold'>Golden: no</div><div class='ans gen'>Generated: The context does not provide a clear comparison between the &#x27;Fortune&#x27; report and &#x27;The Age&#x27; report regarding Donald Trump&#x27;s real estate valuations or whether they disagreed specifically about the allegation concerning the inflation of his penthouse apartment&#x27;s value. Therefore, I cannot determine if there is a disagreement between the two sources based on the provided information.</div><div>Gold sources: <span class='hit'>doc_0529.md [OK]</span> <span class='hit'>doc_0530.md [OK]</span></div><div class='chunks'><div class='chunk'><b>doc_0529.md</b>: s, golf courses and his Mar-a-Lago estate in Florida, padding his bottom line by billions.
+
+Among the allegations were that Trump claimed his Trump Tower apartment in Manhattan — a three-story penthouse replete with gold-plated fixtures — was nearly three times its actual size and valued the propert...</div><div class='chunk'><b>doc_0530.md</b>: ut a third of Trump’s in those years. They haven’t provided a more recent estimate.
+
+Space inflation wasn’t the only issue. Between 2014 and 2015, Trump increased the value of the apartment to $US327 million from $US200 million. The prosecution argues that was to mask a drop in the value of one of h...</div><div class='chunk'><b>doc_0530.md</b>: mberg valuation (2023): $US40 million, New York valuation: No current estimate available Trump’s penthouse apartment at Trump Tower has been an integral part of his image for 40 years, so it’s not surprising that one of the world’s masters of hyperbole exaggerated its size for most of that time. Tru...</div><div class='chunk'><b>doc_0530.md</b>: ce and sell it as two separate apartments. Both were eventually delisted.
+
+It’s possible Trump would get a higher price because of his name. “There would be a Trump premium because the person that would want that property is likely to be a Trump supporter,” Beracha said. But it’s also likely that th...</div><div class='chunk'><b>doc_0529.md</b>: use there isn’t any evidence that the public was harmed by Trump’s actions. They also argued that many of the allegations in the lawsuit were barred by the statute of limitations.
+
+Engoron, noting that he had “emphatically rejected” those arguments earlier in the case, equated them to the “time-loop...</div></div><div class='scores'><span>Retrieval relevance: <b>1.00</b></span> <span>Faithfulness: <b>0.33</b></span> <span>Answer correctness: <b>0.04</b></span></div></div><div class='card'><h3>mhrag-0041 <span class='tag'>multi_hop</span></h3><div class='q'>Did The Independent - Sports report on the All Blacks&#x27; home victories against Ireland, South Africa, and Argentina last summer on October 14, 2023, and did The Roar | Sports Writers Blog report on Argentina&#x27;s victories over the All Blacks in Christchurch last year and their first victory in 2020 in Sydney on October 18, 2023, making the reporting on the All Blacks&#x27; defeats by Argentina consistent?</div><div class='ans gold'>Golden: no</div><div class='ans gen'>Generated: The Independent - Sports reported on the All Blacks&#x27; home defeats against Ireland, South Africa, and Argentina last summer, stating that head coach Ian Foster survived those defeats [2]. However, there is no evidence provided that specifically mentions The Independent - Sports reporting on these events on October 14, 2023. Similarly, The Roar | Sports Writers Blog discussed Argentina&#x27;s victories over the All Blacks in Christchurch last year and their first victory in Sydney in 2020, but again, there is no specific mention that this report was released on October 18, 2023 [1]. Thus, while both passages discuss the relevant matches, they do not confirm the specific publication dates or the consistency of reporting on the All Blacks&#x27; defeats by Argentina.</div><div>Gold sources: <span class='hit'>doc_0023.md [OK]</span> <span class='hit'>doc_0538.md [OK]</span></div><div class='chunks'><div class='chunk'><b>doc_0023.md</b>: eek,” Foster said.
+
+“Mark has done his time. He made a mistake and accepted what was happening but you don’t linger in that space. He’s been our form winger. We have got a faith in him and think he is in good place to play this game.
+
+Advertisement
+
+“We really enjoyed Leicester Fainga’anuku]’s game...</div><div class='chunk'><b>doc_0538.md</b>: y overcome that insurmountable obstacle, the Ireland players will still have to answer endless questions about the heavy burden of previous knockout failures and fans will endure at least four more years of choking jokes at their expense.
+
+As for the All Blacks, they looked lost at times during this...</div><div class='chunk'><b>doc_0493.md</b>: he world’s best teams but helped usher through transformational change off the field, as Ireland moved to a centralised system.
+
+Advertisement
+
+Schmidt briefly exited the international coaching scene following the 2019 World Cup, citing a desire to move home to New Zealand to be closer to his family...</div><div class='chunk'><b>doc_0167.md</b>: an almighty scare by Samoa in their final pool match, England overcame a Fijian fightback in Marseille to triumph 30-24. Despite being outscored by three tries to two, captain Owen Farrell kicked 20 points, sending his side into the last four at the expense of 2023&#x27;s breakout stars.
+
+The Springboks...</div><div class='chunk'><b>doc_0538.md</b>: y evening against an Argentina side that, frankly, are a tier below them. Forget the hand-wringing ahead of the tournament, the All Blacks are one very small step away from another World Cup final.
+
+Foster will leave his role after the World Cup, to be replaced by all-conquering Crusaders boss Scott...</div></div><div class='scores'><span>Retrieval relevance: <b>1.00</b></span> <span>Citation accuracy: <b>0.50</b></span> <span>Faithfulness: <b>0.44</b></span> <span>Answer correctness: <b>0.02</b></span></div></div><div class='card'><h3>mhrag-0011 <span class='tag'>multi_hop</span><span class='tag'>abstained</span></h3><div class='q'>Does &#x27;The Age&#x27; article suggest that Australia&#x27;s Davis Cup team is aiming for an improvement in their performance compared to the previous year, while the &#x27;Sporting News&#x27; article indicates that the South Africa national rugby team has already achieved an improvement to reach the Rugby World Cup semi-finals?</div><div class='ans gold'>Golden: Yes</div><div class='ans gen'>Generated: (no answer generated)</div><div>Gold sources: <span class='hit'>doc_0167.md [OK]</span> <span class='miss'>doc_0451.md [MISS]</span></div><div class='chunks'><div class='chunk'><b>doc_0167.md</b>: s are also in the semi-finals — and England have beaten all of them. However, only Japan and Chile were defeated with bonus points, and the narrow wins over both Samoa and Fiji in their last two games showed that England are certainly gettable.
+
+In short, this semi-final requires a huge step up in q...</div><div class='chunk'><b>doc_0167.md</b>: an almighty scare by Samoa in their final pool match, England overcame a Fijian fightback in Marseille to triumph 30-24. Despite being outscored by three tries to two, captain Owen Farrell kicked 20 points, sending his side into the last four at the expense of 2023&#x27;s breakout stars.
+
+The Springboks...</div><div class='chunk'><b>doc_0167.md</b>: The 2019 Rugby World Cup final between England and South Africa was one of many firsts: the game itself capped off a sensational tournament played outside of the sport&#x27;s traditional strongholds for the first time; it was the first final in which South Africa scored a try, and by full-time, the 32-12...</div><div class='chunk'><b>doc_0300.md</b>: cutive Rugby World Cup final.
+
+talkSPORT will have updates from all the action in Paris as England take on the Springboks from 8:00pm
+
+9 Owen Farrell will be looking to inspire England to victory against the Springboks Credit: Getty
+
+Over in India, England&#x27;s Cricket World Cup hopes hang by a thread...</div><div class='chunk'><b>doc_0167.md</b>: oje, with Genge, Chessum and the rest of the replacements hoping to make an impact sizeable enough to overcome the Springboks&#x27; infamous &#x27;bomb squad&#x27;.
+
+Their time is now 🙌
+
+Here is the @EnglandRugby team to take on reigning champions South Africa in the semi-final in Paris#RWC2023 | #ENGvRSA pic.twit...</div></div><div class='scores'><span>Retrieval relevance: <b>0.50</b></span></div></div><div class='card'><h3>mhrag-0019 <span class='tag'>multi_hop</span><span class='tag'>abstained</span></h3><div class='q'>Does the Sporting News article suggest that streaming services do not require a subscription for viewing the Cowboys vs. 49ers game, in contrast to the Polygon article&#x27;s claim about film availability on streaming platforms without a subscription?</div><div class='ans gold'>Golden: no</div><div class='ans gen'>Generated: (no answer generated)</div><div>Gold sources: <span class='hit'>doc_0275.md [OK]</span> <span class='miss'>doc_0327.md [MISS]</span></div><div class='chunks'><div class='chunk'><b>doc_0275.md</b>: ed on NBC, which has long held the broadcast rights to &quot;Sunday Night Football.&quot;
+
+Mike Tirico (play-by-play) and Cris Collinsworth (color analyst) will be on the call from Levi&#x27;s Stadium while Melissa Stark will serve as the sideline reporter. The crew is entering their second season together after T...</div><div class='chunk'><b>doc_0275.md</b>: 7:01 p.m. — The Eagles are going to win in Los Angeles, so the 49ers need a win to keep pace atop the NFC. After they had to play the last two NFC championship games on the road, the No. 1 seed is undoubtedly in the back of their minds.
+
+6:45 p.m. — The run of great prime-time weather continues, as...</div><div class='chunk'><b>doc_0275.md</b>: ve scoring updates and highlights from &quot;Sunday Night Football&quot; between the Cowboys and 49ers. Check out all of the key moments you might have missed.
+
+Cowboys vs. 49ers final score
+
+1 2 3 4 F Cowboys 0 7 3 0 10 49ers 7 14 7 14 42
+
+Cowboys vs. 49ers results, highlights from &#x27;Sunday Night Football&#x27;
+
+(...</div><div class='chunk'><b>doc_0035.md</b>: deal with the streaming giant to make it the home of the package for 11 years, so those looking to watch &quot;TNF&quot; nationally will need a subscription to Amazon Prime to watch the games.
+
+That said, those in the local markets of the teams playing on &quot;Thursday Night Football&quot; can watch the contests witho...</div><div class='chunk'><b>doc_0275.md</b>: For Prescott and the Cowboys, questions about whether they can get over the hump against the class of the NFC will persist. While their wins have been dominant, Dallas already sits two games behind the Eagles in the NFC East.
+
+The 49ers are rolling right along, with all of their major offensive weap...</div></div><div class='scores'><span>Retrieval relevance: <b>0.50</b></span></div></div></details></body></html>
