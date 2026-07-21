@@ -18,5 +18,11 @@ planning/
 # Generated ingest artifacts (regenerable from samples/)
 data/
 
+# Generated eval results and reports (regenerable via eval/scripts/run_all.sh)
+hybrid_rag/eval/result/
+
 # Env
 .env
+
+# macOS
+.DS_Store

@@ -23,6 +23,8 @@ class QuestionResult:
     gold_sources: list[str]
     abstained: bool
     scores: dict[str, float] = field(default_factory=dict)
+    # Retrieved chunks, {"source", "text"} each, for drill-down.
+    retrieved_contexts: list[dict] = field(default_factory=list)
 
 
 @dataclass
