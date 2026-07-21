@@ -1,4 +1,0 @@
-Release notes for v2.1
-
-Fixed the retry loop bug.
-Added rate limiting on the /ingest endpoint.
