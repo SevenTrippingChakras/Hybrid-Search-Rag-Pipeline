@@ -42,8 +42,9 @@ class Pipeline:
         generator: Generator | None = None,
         verifier: CitationVerifier | None = None,
         scorer: ConfidenceScorer | None = None,
+        index: str | None = None,
     ) -> None:
-        self._retriever = retriever or Retriever()
+        self._retriever = retriever or Retriever(index=index)
         self._gate = gate or AbstentionGate()
         self._generator = generator or Generator()
         self._verifier = verifier or CitationVerifier()

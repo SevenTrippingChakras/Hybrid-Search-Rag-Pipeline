@@ -49,8 +49,9 @@ class Index:
         store: HybridStore | None = None,
         embed_fn=embed_texts,
         dedup_threshold: float | None = None,
+        index: str | None = None,
     ) -> None:
-        self._store = store or build_store()
+        self._store = store or build_store(index=index)
         self._embed_fn = embed_fn
         self._dedup_threshold = (
             settings.dedup_threshold if dedup_threshold is None else dedup_threshold

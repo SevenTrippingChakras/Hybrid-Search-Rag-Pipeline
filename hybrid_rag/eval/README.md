@@ -9,6 +9,7 @@ metric means and how a "best strategy" verdict is reached.
 
 ## Modules
 
+- `ingest.py` - fills a per-strategy OpenSearch index (`chunks_<strategy>`)
 - `metrics.py` - the three local, no-LLM metrics
 - `ragas_scorer.py` - faithfulness + answer correctness via RAGAS
 - `runner.py` - runs the pipeline over the golden set, writes `results.json`
@@ -31,15 +32,15 @@ docker compose up -d            # start local OpenSearch
 The unified script (below) creates its own output folders. For the manual steps,
 outputs go under `hybrid_rag/eval/result/`.
 
-The eval reads whatever is currently in the OpenSearch `chunks` index, and
-retrieval does not filter by strategy. So each strategy is run in isolation:
-**clear the index, ingest that strategy, then run.** Clearing is a `curl DELETE`;
-the next ingest recreates the index automatically.
+Each strategy is written to its **own** OpenSearch index (`chunks_fixed`,
+`chunks_header`, `chunks_semantic`), so the three coexist and no wiping is needed
+between runs. Ingest writes to `chunks_<strategy>`; the runner points retrieval at
+the matching index.
 
 ## Run everything (one command)
 
-`scripts/run_all.sh` does the whole flow for all three strategies -- clear,
-ingest, eval, report -- then builds the combined comparison:
+`scripts/run_all.sh` does the whole flow for all three strategies -- ingest,
+eval, report -- then builds the combined comparison:
 
 ```bash
 hybrid_rag/eval/scripts/run_all.sh          # full run over golden_30
@@ -58,8 +59,8 @@ hybrid_rag/eval/result/
 
 The optional first argument caps the number of questions (passed to the runner
 only; the full corpus is always ingested so every question's gold docs are
-present). Override the OpenSearch endpoint with `OPENSEARCH_HOST` /
-`OPENSEARCH_INDEX` env vars if not on the local defaults.
+present). Override the OpenSearch endpoint with `OPENSEARCH_HOST` if not on the
+local default.
 
 The sections below document the individual steps the script runs, for when you
 want to run one strategy by hand.
@@ -70,15 +71,14 @@ Replace `STRATEGY` with `fixed`, `header`, or `semantic`:
 
 ```bash
 mkdir -p hybrid_rag/eval/result/STRATEGY
-curl -X DELETE "http://localhost:9200/chunks"
-uv run python -m hybrid_rag.ingest --corpus data/eval_test/corpus --strategy STRATEGY
+uv run python -m hybrid_rag.eval.ingest --corpus data/eval_test/corpus --strategy STRATEGY
 uv run python -m hybrid_rag.eval.runner --strategy STRATEGY \
   --out hybrid_rag/eval/result/STRATEGY/STRATEGY.json
 uv run python -m hybrid_rag.eval.report hybrid_rag/eval/result/STRATEGY/STRATEGY.json \
   --out hybrid_rag/eval/result/STRATEGY/STRATEGY.html
 ```
 
-Repeat for all three strategies (clearing the index each time).
+Repeat for all three strategies -- each writes to its own `chunks_STRATEGY` index.
 
 ## Combined comparison report
 
@@ -108,9 +108,8 @@ open hybrid_rag/eval/result/final/comparison.html
 Confirm the wiring before a full run:
 
 ```bash
-uv run python -m hybrid_rag.ingest --corpus data/eval_test/corpus --strategy fixed --limit 3
+uv run python -m hybrid_rag.eval.ingest --corpus data/eval_test/corpus --strategy fixed --limit 3
 uv run python -m hybrid_rag.eval.runner --strategy fixed --out /tmp/smoke.json --limit 3
-curl -X DELETE "http://localhost:9200/chunks"   # clear before the real run
 ```
 
 Or just run the unified script with a small cap: `scripts/run_all.sh 5`.
