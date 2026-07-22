@@ -6,14 +6,16 @@ business logic lives in services; routes stay thin. Run locally with::
     uv run uvicorn app.main:app --reload
 """
 
+import asyncio
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
 from app import db
+from app.config import settings
 from app.core.errors import register_error_handlers
-from app.routes import documents
+from app.routes import ask, documents
 
 
 @asynccontextmanager
@@ -28,6 +30,7 @@ app = FastAPI(title="Hybrid RAG API", version="0.1.0", lifespan=lifespan)
 
 register_error_handlers(app)
 app.include_router(documents.router)
+app.include_router(ask.router)
 
 
 @app.get("/health", tags=["health"])
@@ -44,7 +47,7 @@ async def ready() -> JSONResponse:
     from ``/health`` liveness which only says the process is alive.
     """
     checks: dict[str, str] = {}
-    for name, ping in (("mongo", _ping_mongo),):
+    for name, ping in (("mongo", _ping_mongo), ("opensearch", _ping_opensearch)):
         try:
             await ping()
             checks[name] = "ok"
@@ -60,3 +63,14 @@ async def ready() -> JSONResponse:
 
 async def _ping_mongo() -> None:
     await db.get_db().command("ping")
+
+
+async def _ping_opensearch() -> None:
+    from opensearchpy import OpenSearch
+
+    def _ping() -> None:
+        client = OpenSearch(hosts=[settings.opensearch_host])
+        if not client.ping():
+            raise RuntimeError("opensearch ping failed")
+
+    await asyncio.to_thread(_ping)
