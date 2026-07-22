@@ -80,6 +80,16 @@ class FakeHybridStore:
     def count(self):
         return len(self.records)
 
+    def delete_by_document_id(self, document_id):
+        ids = [
+            i
+            for i, (_e, _d, m) in self.records.items()
+            if m.get("document_id") == document_id
+        ]
+        for i in ids:
+            del self.records[i]
+        return len(ids)
+
 
 class FakeStorage:
     """In-memory object storage: proves callers depend on the StorageBackend port."""

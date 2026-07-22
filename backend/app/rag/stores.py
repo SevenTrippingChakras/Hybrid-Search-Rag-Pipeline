@@ -46,6 +46,8 @@ class HybridStore(Protocol):
 
     def count(self) -> int: ...
 
+    def delete_by_document_id(self, document_id: str) -> int: ...
+
 
 class OpenSearchStore:
     """OpenSearch: dense k-NN and sparse BM25 over one index.
@@ -182,6 +184,15 @@ class OpenSearchStore:
     def count(self) -> int:
         self._client.indices.refresh(index=self._index)
         return self._client.count(index=self._index)["count"]
+
+    def delete_by_document_id(self, document_id: str) -> int:
+        """Delete every chunk belonging to a document. Returns how many removed."""
+        res = self._client.delete_by_query(
+            index=self._index,
+            body={"query": {"term": {"metadata.document_id": document_id}}},
+            refresh=True,
+        )
+        return res.get("deleted", 0)
 
     @staticmethod
     def _hit(h: dict, cosine: bool) -> QueryHit:
