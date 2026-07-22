@@ -6,18 +6,33 @@ service stops at "bytes are in storage" - triggering ingestion (parse -> chunk
 -> embed -> index) is a separate concern wired in a later phase.
 """
 
+import asyncio
 import uuid
 
 from app.core.errors import DocumentNotFound, UploadNotFound
 from app.models.document import Document, DocumentStatus
+from app.rag.stores import HybridStore, build_store
 from app.repositories.document_repo import DocumentRepository
 from app.storage import StorageBackend
 
 
 class DocumentService:
-    def __init__(self, storage: StorageBackend, repo: DocumentRepository) -> None:
+    def __init__(
+        self,
+        storage: StorageBackend,
+        repo: DocumentRepository,
+        store: HybridStore | None = None,
+    ) -> None:
         self._storage = storage
         self._repo = repo
+        # Built lazily (only delete needs it) so the other endpoints never
+        # depend on OpenSearch being reachable.
+        self._store = store
+
+    def _get_store(self) -> HybridStore:
+        if self._store is None:
+            self._store = build_store()
+        return self._store
 
     async def initiate_upload(
         self, filename: str, content_type: str, size: int
@@ -70,9 +85,14 @@ class DocumentService:
         return document
 
     async def delete_document(self, document_id: str) -> None:
-        """Remove the record and its object from storage."""
+        """Remove the document everywhere: its chunks, its file, its record.
+
+        Chunks go first (retryable if OpenSearch is down: nothing else is gone
+        yet), then the stored object, then the metadata record last.
+        """
         document = await self._repo.get(document_id)
         if document is None:
             raise DocumentNotFound
+        await asyncio.to_thread(self._get_store().delete_by_document_id, document_id)
         self._storage.delete(document.storage_key)
         await self._repo.delete(document_id)
