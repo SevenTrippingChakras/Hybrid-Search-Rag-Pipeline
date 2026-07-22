@@ -9,6 +9,7 @@ are copied to ``data/raw`` and the normalized segments are cached to
 import json
 import re
 import shutil
+import tempfile
 from dataclasses import asdict
 from pathlib import Path
 
@@ -34,6 +35,21 @@ def load_file(path: str | Path) -> list[Segment]:
     if suffix in {".txt", ".text"}:
         return _load_text(path)
     raise ValueError(f"Unsupported file type: {suffix!r}")
+
+
+def load_bytes(data: bytes, filename: str) -> list[Segment]:
+    """Parse in-memory file bytes by writing them to a temp file named ``filename``.
+
+    Uploaded documents live in object storage as bytes, not on disk. Writing them
+    to a temp file that keeps the original name lets the path-based loaders run
+    unchanged and carry the right ``source``. Any path parts in ``filename`` are
+    stripped for safety.
+    """
+    name = Path(filename).name
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir) / name
+        path.write_bytes(data)
+        return load_file(path)
 
 
 def ingest_file(path: str | Path, data_dir: str | Path = "data") -> list[Segment]:

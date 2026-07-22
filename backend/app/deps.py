@@ -12,6 +12,7 @@ from fastapi import Depends
 
 from app.repositories.document_repo import DocumentRepository
 from app.services.document_service import DocumentService
+from app.services.ingest_service import IngestService
 from app.storage import StorageBackend, build_storage
 
 
@@ -32,3 +33,13 @@ def get_document_service(
 
 
 DocumentServiceDep = Annotated[DocumentService, Depends(get_document_service)]
+
+
+def get_ingest_service(
+    storage: Annotated[StorageBackend, Depends(get_storage)],
+    repo: Annotated[DocumentRepository, Depends(get_document_repo)],
+) -> IngestService:
+    return IngestService(storage=storage, repo=repo)
+
+
+IngestServiceDep = Annotated[IngestService, Depends(get_ingest_service)]

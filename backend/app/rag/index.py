@@ -30,8 +30,13 @@ class AddResult:
 
 
 def _chunk_id(chunk: Chunk) -> str:
-    """Stable id so re-indexing the same chunk upserts instead of duplicating."""
-    return f"{chunk.source}:{chunk.strategy}:{chunk.chunk_index}"
+    """Stable id so re-indexing the same chunk upserts instead of duplicating.
+
+    Prefixed by ``document_id`` when set (unique per uploaded document, so two
+    files with the same name never collide), else by ``source`` (corpus ingest).
+    """
+    prefix = chunk.document_id or chunk.source
+    return f"{prefix}:{chunk.strategy}:{chunk.chunk_index}"
 
 
 def _metadata(chunk: Chunk) -> dict:
