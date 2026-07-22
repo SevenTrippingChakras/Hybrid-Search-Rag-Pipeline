@@ -12,6 +12,7 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
 from app import db
+from app.core.errors import register_error_handlers
 from app.routes import documents
 
 
@@ -25,6 +26,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Hybrid RAG API", version="0.1.0", lifespan=lifespan)
 
+register_error_handlers(app)
 app.include_router(documents.router)
 
 

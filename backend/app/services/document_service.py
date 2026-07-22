@@ -8,17 +8,10 @@ service stops at "bytes are in storage" - triggering ingestion (parse -> chunk
 
 import uuid
 
+from app.core.errors import DocumentNotFound, UploadNotFound
 from app.models.document import Document, DocumentStatus
 from app.repositories.document_repo import DocumentRepository
 from app.storage import StorageBackend
-
-
-class DocumentNotFound(Exception):
-    """No document record for the given id."""
-
-
-class UploadNotFound(Exception):
-    """Client called complete but the object is not in storage."""
 
 
 class DocumentService:
@@ -58,11 +51,11 @@ class DocumentService:
         """
         document = await self._repo.get(document_id)
         if document is None:
-            raise DocumentNotFound(document_id)
+            raise DocumentNotFound
         if document.status != DocumentStatus.pending:
             return document
         if not self._storage.exists(document.storage_key):
-            raise UploadNotFound(document_id)
+            raise UploadNotFound
         await self._repo.set_status(document_id, DocumentStatus.uploaded)
         document.status = DocumentStatus.uploaded
         return document
@@ -73,13 +66,13 @@ class DocumentService:
     async def get_document(self, document_id: str) -> Document:
         document = await self._repo.get(document_id)
         if document is None:
-            raise DocumentNotFound(document_id)
+            raise DocumentNotFound
         return document
 
     async def delete_document(self, document_id: str) -> None:
         """Remove the record and its object from storage."""
         document = await self._repo.get(document_id)
         if document is None:
-            raise DocumentNotFound(document_id)
+            raise DocumentNotFound
         self._storage.delete(document.storage_key)
         await self._repo.delete(document_id)
