@@ -1,0 +1,3 @@
+# Rebuilt inside the image; never copy the host's copies.
+node_modules
+dist
