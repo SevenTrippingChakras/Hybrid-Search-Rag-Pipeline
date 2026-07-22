@@ -1,6 +1,21 @@
-# Local OpenSearch for dev: single node, security off (plain http on 9200).
-# Prod parity is Amazon OpenSearch Service; the engine and queries are identical.
+# Local dev stack. MongoDB is hosted (Atlas, via MONGO_URI in .env), so it is not
+# a service here. OpenSearch runs locally; prod parity is Amazon OpenSearch Service.
 services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hybrid-rag-backend
+    env_file: .env
+    environment:
+      # Inside the compose network, reach OpenSearch by its service name, which
+      # overrides the localhost value in .env used when running on the host.
+      - OPENSEARCH_HOST=http://opensearch:9200
+    ports:
+      - "8000:8000"
+    depends_on:
+      - opensearch
+
   opensearch:
     image: opensearchproject/opensearch:3.7.0
     container_name: hybrid-rag-opensearch
