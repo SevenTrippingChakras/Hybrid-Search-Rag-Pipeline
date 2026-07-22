@@ -63,5 +63,11 @@ class Settings(BaseSettings):
     s3_secret_access_key: str | None = None
     s3_bucket: str | None = None
 
+    # Metadata store for document records (status, storage_key, chunk_count).
+    # Local dev is the Mongo container in docker-compose.yml; prod is a managed
+    # MongoDB. Embeddings never live here - those stay in OpenSearch.
+    mongo_uri: str = "mongodb://localhost:27017"
+    mongo_db: str = "hybrid_rag"
+
 
 settings = Settings()

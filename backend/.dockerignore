@@ -1,0 +1,10 @@
+# The host virtualenv is platform-specific; the image builds its own.
+.venv
+__pycache__
+*.pyc
+# Secrets are injected at runtime via env_file, never baked in.
+.env
+# Not part of the app image; keeps the build context small.
+data
+tests
+scripts
