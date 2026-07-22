@@ -5,9 +5,9 @@ service raises (``AppError`` subclasses) are turned into the standard error
 envelope by the handlers in ``core.errors`` - so no ``try/except`` here.
 """
 
-from fastapi import APIRouter, status
+from fastapi import APIRouter, BackgroundTasks, status
 
-from app.deps import DocumentServiceDep
+from app.deps import DocumentServiceDep, IngestServiceDep
 from app.models.document import (
     Document,
     InitiateUploadRequest,
@@ -33,9 +33,21 @@ async def initiate_upload(
 
 
 @router.post("/{document_id}/complete")
-async def complete_upload(document_id: str, service: DocumentServiceDep) -> Document:
-    """Confirm the upload landed in storage and mark the document uploaded."""
-    return await service.complete_upload(document_id)
+async def complete_upload(
+    document_id: str,
+    background_tasks: BackgroundTasks,
+    service: DocumentServiceDep,
+    ingest: IngestServiceDep,
+) -> Document:
+    """Confirm the upload landed, mark it uploaded, and kick off ingestion.
+
+    Ingestion runs in the background (parse -> chunk -> embed -> index); the
+    response returns immediately with the ``uploaded`` record. Poll GET
+    /documents/{id} to watch it move to ``processing`` -> ``indexed``.
+    """
+    document = await service.complete_upload(document_id)
+    background_tasks.add_task(ingest.run, document_id)
+    return document
 
 
 @router.get("")

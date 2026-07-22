@@ -24,6 +24,7 @@ class Chunk:
     char_count: int
     heading: str | None = None
     page: int | None = None
+    document_id: str | None = None
 
 
 @dataclass
