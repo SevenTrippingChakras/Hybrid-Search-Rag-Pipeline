@@ -19,30 +19,27 @@ export function Documents() {
   const [error, setError] = useState<string | null>(null)
   const fileInput = useRef<HTMLInputElement>(null)
 
-  // Load once, then keep polling while any document is still ingesting.
+  const refresh = async () => {
+    try {
+      setDocuments(await loadDocuments())
+    } catch (e) {
+      setError((e as Error).message)
+    }
+  }
+
+  // Initial load.
   useEffect(() => {
-    let timer: number | undefined
-    let cancelled = false
-
-    const tick = async () => {
-      try {
-        const docs = await loadDocuments()
-        if (cancelled) return
-        setDocuments(docs)
-        if (hasActive(docs)) timer = window.setTimeout(tick, POLL_INTERVAL_MS)
-      } catch (e) {
-        if (!cancelled) setError((e as Error).message)
-      }
-    }
-
-    tick()
-    return () => {
-      cancelled = true
-      if (timer) clearTimeout(timer)
-    }
+    refresh()
   }, [])
 
-  const refresh = async () => setDocuments(await loadDocuments())
+  // Keep polling while any document is still ingesting. This effect re-runs
+  // whenever `documents` changes, so a fresh upload (which adds an active doc)
+  // automatically restarts polling; it stops once everything is terminal.
+  useEffect(() => {
+    if (!hasActive(documents)) return
+    const t = setTimeout(refresh, POLL_INTERVAL_MS)
+    return () => clearTimeout(t)
+  }, [documents])
 
   const onPick = async (file: File | undefined) => {
     if (!file) return

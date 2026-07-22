@@ -1,0 +1,69 @@
+# Full local stack: backend + frontend + OpenSearch. MongoDB is hosted (Atlas,
+# via the backend's .env). Run from the repo root: docker compose up.
+name: hybrid-rag
+
+services:
+  backend:
+    build: ./backend
+    container_name: hybrid-rag-backend
+    env_file:
+      - ./backend/.env
+    environment:
+      # Reach OpenSearch by service name inside the compose network (overrides
+      # the localhost value in .env used when running on the host).
+      - OPENSEARCH_HOST=http://opensearch:9200
+    ports:
+      - "8000:8000"
+    volumes:
+      # Persist the HuggingFace cache so the reranker model downloads once and
+      # survives container restarts.
+      - hf-cache:/root/.cache/huggingface
+    depends_on:
+      opensearch:
+        # Don't start the backend until OpenSearch reports a searchable cluster,
+        # so a request can never hit a still-recovering index.
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # Baked into the bundle; the browser calls the published backend port.
+        VITE_API_URL: http://localhost:8000
+    container_name: hybrid-rag-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+  opensearch:
+    image: opensearchproject/opensearch:3.7.0
+    container_name: hybrid-rag-opensearch
+    environment:
+      - discovery.type=single-node
+      - DISABLE_SECURITY_PLUGIN=true
+      - bootstrap.memory_lock=true
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9200:9200"
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
+    healthcheck:
+      # Ready = the cluster answers and reaches at least yellow (index searchable).
+      test:
+        [
+          "CMD-SHELL",
+          "curl -sf 'http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=1s' >/dev/null || exit 1",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+volumes:
+  opensearch-data:
+  hf-cache:
