@@ -69,5 +69,9 @@ class Settings(BaseSettings):
     mongo_uri: str = "mongodb://localhost:27017"
     mongo_db: str = "hybrid_rag"
 
+    # Browser origins allowed to call the API (CORS). Comma-separated. The Vite
+    # dev server runs on 5173 by default.
+    cors_origins: str = "http://localhost:5173"
+
 
 settings = Settings()
