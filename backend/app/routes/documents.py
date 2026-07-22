@@ -1,11 +1,11 @@
 """Document upload endpoints (presigned flow).
 
-Thin: parse the request, call the service, shape the response, translate domain
-errors to HTTP. No business logic here. Request/response schemas live with the
-route; the persisted shape is ``models.document.Document``.
+Thin: parse the request, call the service, shape the response. Domain errors the
+service raises (``AppError`` subclasses) are turned into the standard error
+envelope by the handlers in ``core.errors`` - so no ``try/except`` here.
 """
 
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, status
 
 from app.deps import DocumentServiceDep
 from app.models.document import (
@@ -13,7 +13,6 @@ from app.models.document import (
     InitiateUploadRequest,
     InitiateUploadResponse,
 )
-from app.services.document_service import DocumentNotFound, UploadNotFound
 
 router = APIRouter(prefix="/documents", tags=["documents"])
 
@@ -36,14 +35,7 @@ async def initiate_upload(
 @router.post("/{document_id}/complete")
 async def complete_upload(document_id: str, service: DocumentServiceDep) -> Document:
     """Confirm the upload landed in storage and mark the document uploaded."""
-    try:
-        return await service.complete_upload(document_id)
-    except DocumentNotFound:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "document not found") from None
-    except UploadNotFound:
-        raise HTTPException(
-            status.HTTP_409_CONFLICT, "no uploaded object found for this document"
-        ) from None
+    return await service.complete_upload(document_id)
 
 
 @router.get("")
@@ -53,15 +45,9 @@ async def list_documents(service: DocumentServiceDep) -> list[Document]:
 
 @router.get("/{document_id}")
 async def get_document(document_id: str, service: DocumentServiceDep) -> Document:
-    try:
-        return await service.get_document(document_id)
-    except DocumentNotFound:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "document not found") from None
+    return await service.get_document(document_id)
 
 
 @router.delete("/{document_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_document(document_id: str, service: DocumentServiceDep) -> None:
-    try:
-        await service.delete_document(document_id)
-    except DocumentNotFound:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "document not found") from None
+    await service.delete_document(document_id)
