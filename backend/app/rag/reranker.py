@@ -17,6 +17,9 @@ class Reranker(Protocol):
         self, query: str, hits: list[QueryHit], top_k: int = 5
     ) -> list[QueryHit]: ...
 
+    def warmup(self) -> None:
+        """Load the model ahead of the first request (no-op if already loaded)."""
+
 
 class CrossEncoderReranker:
     """A local cross-encoder (BGE) scoring query-chunk pairs, loaded lazily."""
@@ -38,6 +41,10 @@ class CrossEncoderReranker:
         ]
         reranked.sort(key=lambda h: h.score, reverse=True)
         return reranked[:top_k]
+
+    def warmup(self) -> None:
+        """Download (first ever) and load the model so the first rerank is fast."""
+        self._load()
 
     def _load(self):
         if self._model is None:

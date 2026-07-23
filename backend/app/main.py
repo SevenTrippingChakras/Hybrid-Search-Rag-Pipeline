@@ -16,13 +16,19 @@ from fastapi.responses import JSONResponse
 from app import db
 from app.config import settings
 from app.core.errors import register_error_handlers
+from app.deps import get_pipeline
 from app.routes import ask, documents
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Open the Mongo connection on startup, close it on shutdown."""
+    """Open Mongo and pre-load the reranker on startup; close Mongo on shutdown.
+
+    Warming the cross-encoder here downloads (first ever run) and loads it into
+    memory during startup, so the first question doesn't pay that cost.
+    """
     await db.connect()
+    await asyncio.to_thread(get_pipeline().warmup)
     yield
     await db.close()
 

@@ -47,6 +47,10 @@ class Retriever:
         embedding = self._embed_fn([query])[0]
         return self._store.hybrid_query(query, embedding, k=k)
 
+    def warmup(self) -> None:
+        """Pre-load the reranker model so the first search doesn't pay for it."""
+        self._reranker.warmup()
+
     def rerank(
         self, query: str, hits: list[QueryHit], top_k: int = settings.rerank_top_k
     ) -> list[QueryHit]:
