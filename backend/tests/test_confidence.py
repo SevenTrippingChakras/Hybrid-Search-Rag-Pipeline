@@ -32,12 +32,12 @@ def _hit(score):
     return QueryHit("id", "doc", {}, score)
 
 
-def test_retrieval_confidence_is_mean_of_hit_scores():
+def test_retrieval_confidence_is_top_hit_score():
     scorer = ConfidenceScorer(llm=_FakeJudge())
 
-    conf = scorer.score(_answer("An answer."), [_hit(1.0), _hit(0.0)], [])
+    conf = scorer.score(_answer("An answer."), [_hit(0.9), _hit(0.1)], [])
 
-    assert conf.retrieval == 0.5
+    assert conf.retrieval == 0.9
 
 
 def test_no_hits_gives_zero_retrieval_confidence():

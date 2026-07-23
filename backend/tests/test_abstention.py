@@ -27,7 +27,7 @@ def test_abstains_when_confidence_below_threshold():
     result = gate.check("q", [_hit(0.1), _hit(0.3)])
 
     assert result is not None
-    assert result.retrieval_confidence == 0.2
+    assert result.retrieval_confidence == 0.3  # top hit, not mean
 
 
 def test_no_hits_abstains():

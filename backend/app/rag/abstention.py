@@ -2,7 +2,7 @@
 
 A RAG system that always answers will hallucinate when retrieval is weak. The
 ``AbstentionGate`` sits before generation: if retrieval confidence (the Phase 3.3
-signal, mean rerank score) is below a threshold, it returns a structured
+signal, top rerank score) is below a threshold, it returns a structured
 ``NoAnswer`` describing what was found, that it could not answer confidently, and
 which source documents are worth checking by hand -- more useful than a
 fabricated answer, and a signal of production maturity.
