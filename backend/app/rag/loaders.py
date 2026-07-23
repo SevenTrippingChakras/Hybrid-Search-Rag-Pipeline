@@ -26,15 +26,15 @@ def load_file(path: str | Path) -> list[Segment]:
     """Parse a file into normalized segments, dispatching on extension."""
     path = Path(path)
     suffix = path.suffix.lower()
-    if suffix == ".pdf":
-        return _load_pdf(path)
-    if suffix in {".md", ".markdown"}:
-        return _load_markdown(path)
-    if suffix in {".html", ".htm"}:
-        return _load_html(path)
-    if suffix in {".txt", ".text"}:
-        return _load_text(path)
-    raise ValueError(f"Unsupported file type: {suffix!r}")
+    loader = _LOADERS.get(suffix)
+    if loader is None:
+        raise ValueError(f"Unsupported file type: {suffix!r}")
+    return loader(path)
+
+
+def is_supported(filename: str) -> bool:
+    """True if a file with this name can be parsed by the loaders."""
+    return Path(filename).suffix.lower() in SUPPORTED_EXTENSIONS
 
 
 def load_bytes(data: bytes, filename: str) -> list[Segment]:
@@ -147,6 +147,19 @@ def _load_html(path: Path) -> list[Segment]:
                 buffer.append(text)
     flush()
     return segments
+
+
+_LOADERS = {
+    ".pdf": _load_pdf,
+    ".md": _load_markdown,
+    ".markdown": _load_markdown,
+    ".html": _load_html,
+    ".htm": _load_html,
+    ".txt": _load_text,
+    ".text": _load_text,
+}
+
+SUPPORTED_EXTENSIONS = frozenset(_LOADERS)
 
 
 def _normalize(text: str) -> str:

@@ -10,10 +10,8 @@ from pathlib import Path
 
 from app.rag.chunking import chunk
 from app.rag.index import Index
-from app.rag.loaders import load_file
+from app.rag.loaders import SUPPORTED_EXTENSIONS, load_file
 from app.rag.stores import index_for_strategy
-
-SUPPORTED_SUFFIXES = {".md", ".markdown", ".txt", ".text", ".html", ".htm", ".pdf"}
 
 
 @dataclass
@@ -31,7 +29,7 @@ def find_documents(corpus_dir: str | Path) -> list[Path]:
     files = [
         p
         for p in corpus_dir.rglob("*")
-        if p.is_file() and p.suffix.lower() in SUPPORTED_SUFFIXES
+        if p.is_file() and p.suffix.lower() in SUPPORTED_EXTENSIONS
     ]
     return sorted(files)
 
