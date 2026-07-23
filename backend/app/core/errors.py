@@ -40,6 +40,12 @@ class UploadNotFound(AppError):
     message = "No uploaded object found for this document"
 
 
+class UnsupportedFileType(AppError):
+    status_code = 415
+    code = "unsupported_file_type"
+    message = "Unsupported file type"
+
+
 def error_response(
     status_code: int,
     code: str,

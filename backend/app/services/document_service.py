@@ -9,8 +9,9 @@ service stops at "bytes are in storage" - triggering ingestion (parse -> chunk
 import asyncio
 import uuid
 
-from app.core.errors import DocumentNotFound, UploadNotFound
+from app.core.errors import DocumentNotFound, UnsupportedFileType, UploadNotFound
 from app.models.document import Document, DocumentStatus
+from app.rag.loaders import SUPPORTED_EXTENSIONS, is_supported
 from app.rag.stores import HybridStore, build_store
 from app.repositories.document_repo import DocumentRepository
 from app.storage import StorageBackend
@@ -39,9 +40,16 @@ class DocumentService:
     ) -> tuple[Document, str]:
         """Create a pending record and return it with a presigned PUT URL.
 
-        The document_id prefixes the storage key so two files with the same name
+        Rejects file types the ingestion loaders cannot parse, so an upload that
+        would only fail later during ingestion is refused up front. The
+        document_id prefixes the storage key so two files with the same name
         never collide.
         """
+        if not is_supported(filename):
+            allowed = ", ".join(sorted(SUPPORTED_EXTENSIONS))
+            raise UnsupportedFileType(
+                f"Unsupported file type for {filename!r}. Supported: {allowed}"
+            )
         document_id = uuid.uuid4().hex
         storage_key = f"documents/{document_id}/{filename}"
         document = Document(
