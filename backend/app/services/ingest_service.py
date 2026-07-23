@@ -21,7 +21,11 @@ from app.storage import StorageBackend
 
 logger = logging.getLogger("hybrid_rag")
 
-_STRATEGY = "fixed"
+# Structure-aware chunking for every format: it uses (and prepends) headings for
+# md/html, and degrades to recursive splitting that respects page/section
+# boundaries for pdf/txt. A format->strategy switch is only worth adding when a
+# format needs a different strategy (e.g. code -> AST), which no loader does yet.
+_STRATEGY = "header"
 
 
 class IngestService:

@@ -23,14 +23,18 @@ from app.rag.verification import split_claims
 
 
 def retrieval_confidence(hits: list[QueryHit]) -> float:
-    """Mean relevance of the reranked chunks (cross-encoder scores, 0-1).
+    """Relevance of the single best reranked chunk (cross-encoder score, 0-1).
 
-    The shared retrieval-confidence signal: the composite score folds it in here,
-    and the Phase 3.4 abstention gate reuses it to decide whether to answer at all.
+    The top-1, not the mean: cross-encoder rerank scores are spiky -- one strongly
+    relevant chunk scores near 1 while the rest sit near 0 -- and ``top_k`` pads
+    the list with low-relevance chunks, so a mean is dominated by how many padding
+    chunks there are (a config value) rather than by grounding. One strong chunk is
+    enough to answer, so both the abstention gate and the composite confidence read
+    the best hit.
     """
     if not hits:
         return 0.0
-    return sum(hit.score for hit in hits) / len(hits)
+    return max(hit.score for hit in hits)
 
 
 COMPLETENESS_SYSTEM = (

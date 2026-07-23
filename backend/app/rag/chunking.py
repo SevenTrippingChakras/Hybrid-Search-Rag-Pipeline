@@ -57,6 +57,12 @@ def chunk_by_header(
     Each segment already corresponds to one heading section (from the loader).
     A section that exceeds ``chunk_size`` is split recursively on natural
     boundaries (paragraph, line, word), preserving the section's heading/page.
+
+    The section heading is prepended to every piece's text so the embedding,
+    BM25 index, and reranker all see it -- a heading like "Q24. What metrics..."
+    is often a near-restatement of the query and the strongest retrieval signal
+    in the chunk. The heading is exact loader metadata, so no piece loses it when
+    a long section is split.
     """
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size, chunk_overlap=overlap
@@ -64,8 +70,9 @@ def chunk_by_header(
     chunks: list[Chunk] = []
     for seg in segments:
         for piece in splitter.split_text(seg.text):
+            text = f"{seg.heading}\n{piece}" if seg.heading else piece
             chunks.append(
-                _chunk(piece, seg.source, len(chunks), "header", seg.heading, seg.page)
+                _chunk(text, seg.source, len(chunks), "header", seg.heading, seg.page)
             )
     return chunks
 

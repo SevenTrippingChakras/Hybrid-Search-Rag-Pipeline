@@ -38,6 +38,16 @@ def test_header_preserves_heading_and_never_crosses_sections():
     assert all(c.strategy == "header" for c in chunks)
     # each short section is exactly one chunk; no merging across headings
     assert "Alpha" not in chunks[1].text and "Beta" not in chunks[0].text
+    # the heading is prepended to its own chunk's text (retrieval signal)
+    assert chunks[0].text == "Alpha\nAlpha section body."
+    assert chunks[1].text == "Beta\nBeta section body."
+
+
+def test_header_without_heading_leaves_text_unprepended():
+    chunks = chunk_by_header([_seg("Preamble before any heading.")])
+
+    assert chunks[0].heading is None
+    assert chunks[0].text == "Preamble before any heading."
 
 
 def test_semantic_cuts_at_topic_boundary_with_injected_embedder():
