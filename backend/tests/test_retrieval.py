@@ -124,6 +124,9 @@ def test_hybrid_search_empty_index_returns_nothing():
 class _FakeReranker:
     """Reranks by query-token overlap; proves Retriever depends on the port."""
 
+    def warmup(self):
+        pass
+
     def rerank(self, query, hits, top_k=5):
         q = set(query.lower().split())
         scored = sorted(

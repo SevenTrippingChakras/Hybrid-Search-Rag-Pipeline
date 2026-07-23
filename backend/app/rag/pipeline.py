@@ -50,6 +50,10 @@ class Pipeline:
         self._verifier = verifier or CitationVerifier()
         self._scorer = scorer or ConfidenceScorer()
 
+    def warmup(self) -> None:
+        """Pre-load heavy models (the cross-encoder reranker) before serving."""
+        self._retriever.warmup()
+
     def answer(self, question: str) -> PipelineResult:
         """Retrieve, then either abstain or generate a verified, scored answer."""
         hits = self._retriever.search(question)
