@@ -14,12 +14,14 @@ import re
 from collections.abc import Callable
 
 import numpy as np
+import tiktoken
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from app.rag.embeddings import embed_texts
 from app.rag.models import Chunk, Segment
 
 _SENTENCE_RE = re.compile(r"(?<=[.!?])\s+")
+_ENCODING = tiktoken.get_encoding("cl100k_base")
 
 EmbedFn = Callable[[list[str]], list[list[float]]]
 
@@ -36,12 +38,13 @@ def chunk(segments: list[Segment], strategy: str = "fixed", **params) -> list[Ch
 
 
 def chunk_fixed(
-    segments: list[Segment], *, chunk_size: int = 800, overlap: int = 150
+    segments: list[Segment], *, chunk_size: int = 200, overlap: int = 40
 ) -> list[Chunk]:
-    """Baseline: fixed-size character windows over the whole document.
+    """Baseline: fixed-size token windows over the whole document.
 
     Ignores document structure on purpose so it can serve as the control when
-    comparing against the structure-aware strategies.
+    comparing against the structure-aware strategies. ``chunk_size``/``overlap``
+    are measured in tokens (cl100k_base, the embedding model's encoding).
     """
     source = segments[0].source if segments else ""
     text = "\n\n".join(seg.text for seg in segments)
@@ -50,13 +53,15 @@ def chunk_fixed(
 
 
 def chunk_by_header(
-    segments: list[Segment], *, chunk_size: int = 800, overlap: int = 150
+    segments: list[Segment], *, chunk_size: int = 200, overlap: int = 40
 ) -> list[Chunk]:
     """Structure-aware: split within each heading section, never across.
 
     Each segment already corresponds to one heading section (from the loader).
-    A section that exceeds ``chunk_size`` is split recursively on natural
+    A section that exceeds ``chunk_size`` tokens is split recursively on natural
     boundaries (paragraph, line, word), preserving the section's heading/page.
+    ``chunk_size``/``overlap`` are measured in tokens (cl100k_base, the
+    embedding model's encoding), not characters.
 
     The section heading is prepended to every piece's text so the embedding,
     BM25 index, and reranker all see it -- a heading like "Q24. What metrics..."
@@ -64,8 +69,8 @@ def chunk_by_header(
     in the chunk. The heading is exact loader metadata, so no piece loses it when
     a long section is split.
     """
-    splitter = RecursiveCharacterTextSplitter(
-        chunk_size=chunk_size, chunk_overlap=overlap
+    splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
+        encoding_name="cl100k_base", chunk_size=chunk_size, chunk_overlap=overlap
     )
     chunks: list[Chunk] = []
     for seg in segments:
@@ -106,15 +111,17 @@ def chunk_semantic(
 
 
 def _sliding_window(text: str, size: int, overlap: int) -> list[str]:
+    """Slide a token window over the text, decoding each window back to text."""
     if overlap >= size:
         raise ValueError("overlap must be smaller than chunk_size")
+    tokens = _ENCODING.encode(text)
     step = size - overlap
     pieces = []
-    for start in range(0, len(text), step):
-        piece = text[start : start + size].strip()
+    for start in range(0, len(tokens), step):
+        piece = _ENCODING.decode(tokens[start : start + size]).strip()
         if piece:
             pieces.append(piece)
-        if start + size >= len(text):
+        if start + size >= len(tokens):
             break
     return pieces
 
