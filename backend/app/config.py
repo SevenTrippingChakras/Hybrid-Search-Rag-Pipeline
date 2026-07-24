@@ -41,6 +41,11 @@ class Settings(BaseSettings):
     llm_backend: str = "openai"
     generation_model: str = "gpt-4o-mini"
 
+    # Contextual Retrieval (Anthropic): before embedding, prepend an LLM-generated
+    # blurb that situates each chunk in its document. Off by default -- it costs
+    # one LLM call per chunk at ingest; turn on to evaluate the retrieval lift.
+    contextual_retrieval: bool = False
+
     # Confidence: weights fusing the three answer-trust signals (retrieval
     # relevance, citation coverage, question completeness) into one composite.
     # They should sum to 1.0.
