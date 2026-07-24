@@ -1,24 +1,32 @@
 """Tests for the configurable chunking strategies."""
 
 import pytest
+import tiktoken
 
 from app.rag.chunking import chunk, chunk_by_header, chunk_fixed, chunk_semantic
 from app.rag.models import Segment
+
+_ENC = tiktoken.get_encoding("cl100k_base")
 
 
 def _seg(text, heading=None, page=None, source="doc.md"):
     return Segment(text=text, source=source, heading=heading, page=page)
 
 
+def _tokens(text):
+    return len(_ENC.encode(text))
+
+
 def test_fixed_windows_overlap_and_stamp_strategy():
-    segments = [_seg("A" * 250)]
+    # Sizing is token-based: build text of exactly 250 tokens from one token id.
+    segments = [_seg(_ENC.decode([828] * 250))]
     chunks = chunk_fixed(segments, chunk_size=100, overlap=20)
 
+    # step = size - overlap = 80 tokens, so windows start at token 0, 80, 160.
     assert [c.chunk_index for c in chunks] == [0, 1, 2]
     assert all(c.strategy == "fixed" and c.heading is None for c in chunks)
     assert all(c.char_count == len(c.text) for c in chunks)
-    # step = size - overlap = 80, so chunk 1 starts 80 chars in and overlaps.
-    assert chunks[0].char_count == 100
+    assert _tokens(chunks[0].text) == 100
 
 
 def test_fixed_rejects_overlap_not_smaller_than_size():
@@ -48,6 +56,35 @@ def test_header_without_heading_leaves_text_unprepended():
 
     assert chunks[0].heading is None
     assert chunks[0].text == "Preamble before any heading."
+
+
+def test_header_keeps_atomic_elements_whole_and_tags_them():
+    code = "```python\n" + "\n".join(f"x{i} = {i}" for i in range(60)) + "\n```"
+    body = (
+        "Intro prose one. Intro prose two.\n\n"
+        f"{code}\n\n"
+        "| Col A | Col B |\n| --- | --- |\n| 1 | 2 |\n\n"
+        "- first item\n- second item\n- third item\n\n"
+        "Closing prose."
+    )
+    # tiny size forces prose to split, so an intact code block proves protection
+    chunks = chunk_by_header(
+        [_seg(body, heading="H", page=1)], chunk_size=20, overlap=5
+    )
+
+    by_type = [c.element_type for c in chunks]
+    assert "code" in by_type and "table" in by_type and "list" in by_type
+    assert any(c.element_type is None for c in chunks)  # prose still present
+
+    code_chunk = next(c for c in chunks if c.element_type == "code")
+    assert "x0 = 0" in code_chunk.text and "x59 = 59" in code_chunk.text  # whole
+    assert _tokens(code_chunk.text) > 20  # exceeds size but was never split
+    assert all(c.heading == "H" and c.page == 1 for c in chunks)
+
+
+def test_header_prose_only_section_has_no_element_type():
+    chunks = chunk_by_header([_seg("Just plain prose here.", heading="H")])
+    assert chunks[0].element_type is None
 
 
 def test_semantic_cuts_at_topic_boundary_with_injected_embedder():
