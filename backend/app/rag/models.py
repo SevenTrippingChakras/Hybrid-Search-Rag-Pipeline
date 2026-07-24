@@ -25,6 +25,7 @@ class Chunk:
     heading: str | None = None
     page: int | None = None
     document_id: str | None = None
+    element_type: str | None = None
 
 
 @dataclass

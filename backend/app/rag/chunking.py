@@ -23,6 +23,10 @@ from app.rag.models import Chunk, Segment
 _SENTENCE_RE = re.compile(r"(?<=[.!?])\s+")
 _ENCODING = tiktoken.get_encoding("cl100k_base")
 
+_FENCE_RE = re.compile(r"^\s*(```|~~~)")
+_TABLE_ROW_RE = re.compile(r"^\s*\|.*\|\s*$")
+_LIST_ITEM_RE = re.compile(r"^\s*([-*+]|\d+[.)])\s+")
+
 EmbedFn = Callable[[list[str]], list[list[float]]]
 
 
@@ -74,11 +78,23 @@ def chunk_by_header(
     )
     chunks: list[Chunk] = []
     for seg in segments:
-        for piece in splitter.split_text(seg.text):
-            text = f"{seg.heading}\n{piece}" if seg.heading else piece
-            chunks.append(
-                _chunk(text, seg.source, len(chunks), "header", seg.heading, seg.page)
-            )
+        for element_type, block in _segment_blocks(seg.text):
+            # Atomic elements (code/table/list) are emitted whole, never split;
+            # prose runs are size-split as before.
+            pieces = [block] if element_type else splitter.split_text(block)
+            for piece in pieces:
+                text = f"{seg.heading}\n{piece}" if seg.heading else piece
+                chunks.append(
+                    _chunk(
+                        text,
+                        seg.source,
+                        len(chunks),
+                        "header",
+                        seg.heading,
+                        seg.page,
+                        element_type,
+                    )
+                )
     return chunks
 
 
@@ -126,6 +142,71 @@ def _sliding_window(text: str, size: int, overlap: int) -> list[str]:
     return pieces
 
 
+def _segment_blocks(text: str) -> list[tuple[str | None, str]]:
+    """Split section text into prose runs and atomic element blocks.
+
+    Atomic elements -- fenced code, markdown tables, and lists -- are isolated
+    as ``(element_type, block)`` so the caller can emit each whole and never cut
+    it mid-element. Everything else is returned as ``(None, prose)`` runs to be
+    size-split normally. A table needs at least two pipe rows to count; a lone
+    pipe line stays prose.
+    """
+    lines = text.split("\n")
+    n = len(lines)
+    blocks: list[tuple[str | None, str]] = []
+    prose: list[str] = []
+
+    def flush_prose() -> None:
+        if prose:
+            blocks.append((None, "\n".join(prose)))
+            prose.clear()
+
+    i = 0
+    while i < n:
+        line = lines[i]
+        fence = _FENCE_RE.match(line)
+        if fence:
+            flush_prose()
+            marker = fence.group(1)
+            block = [line]
+            i += 1
+            while i < n:
+                block.append(lines[i])
+                closed = lines[i].strip().startswith(marker)
+                i += 1
+                if closed:
+                    break
+            blocks.append(("code", "\n".join(block)))
+            continue
+        if _TABLE_ROW_RE.match(line):
+            j = i
+            block = []
+            while j < n and _TABLE_ROW_RE.match(lines[j]):
+                block.append(lines[j])
+                j += 1
+            if len(block) >= 2:
+                flush_prose()
+                blocks.append(("table", "\n".join(block)))
+                i = j
+                continue
+        if _LIST_ITEM_RE.match(line):
+            flush_prose()
+            block = [line]
+            i += 1
+            while i < n and (
+                _LIST_ITEM_RE.match(lines[i])
+                or (lines[i].strip() and lines[i][:1] in (" ", "\t"))
+            ):
+                block.append(lines[i])
+                i += 1
+            blocks.append(("list", "\n".join(block)))
+            continue
+        prose.append(line)
+        i += 1
+    flush_prose()
+    return blocks
+
+
 def _split_sentences(text: str) -> list[str]:
     return [s.strip() for s in _SENTENCE_RE.split(text) if s.strip()]
 
@@ -154,12 +235,14 @@ def _chunk(
     strategy: str,
     heading: str | None = None,
     page: int | None = None,
+    element_type: str | None = None,
 ) -> Chunk:
     return Chunk(
         text=text,
         source=source,
         chunk_index=index,
         strategy=strategy,
+        element_type=element_type,
         char_count=len(text),
         heading=heading,
         page=page,
