@@ -12,8 +12,10 @@ the event loop free. A durable worker (Temporal) replaces this trigger later.
 import asyncio
 import logging
 
+from app.config import settings
 from app.models.document import DocumentStatus
 from app.rag.chunking import chunk as chunk_segments
+from app.rag.contextual import contextualize
 from app.rag.index import Index
 from app.rag.loaders import load_bytes
 from app.repositories.document_repo import DocumentRepository
@@ -75,6 +77,9 @@ class IngestService:
         data = self._storage.get(storage_key)
         segments = load_bytes(data, filename)
         chunks = chunk_segments(segments, strategy=_STRATEGY)
+        if settings.contextual_retrieval:
+            document = "\n\n".join(seg.text for seg in segments)
+            chunks = contextualize(chunks, document)
         for c in chunks:
             c.document_id = document_id
         result = self._get_index().add(chunks)
