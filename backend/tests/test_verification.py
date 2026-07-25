@@ -4,6 +4,8 @@ A fake judge is injected in place of the LLM, so the suite runs offline and
 asserts on claim/citation pairing and verdict wiring, not model quality.
 """
 
+import time
+
 from app.rag.models import Answer, Citation
 from app.rag.verification import CitationVerifier
 
@@ -38,9 +40,12 @@ def test_verify_pairs_each_claim_with_its_citation():
     assert [c.number for c in checks] == [1, 2]
     assert checks[0].claim == "Reset the pump before restart."
     assert all(c.supported for c in checks)
-    # Each pair sends its own claim and passage to the judge.
-    assert "Reset the pump before restart." in judge.prompts[0]
-    assert "Drain the tank first." in judge.prompts[1]
+    # Each pair sends its own claim and passage to the judge. Pairs run
+    # concurrently, so assert membership, not position (result order is
+    # checked above via [c.number for c in checks] == [1, 2]).
+    joined = "\n".join(judge.prompts)
+    assert "Reset the pump before restart." in joined
+    assert "Drain the tank first." in joined
 
 
 def test_unsupported_citation_is_flagged():
@@ -83,3 +88,29 @@ def test_uncited_answer_yields_no_checks():
     checks = CitationVerifier(llm=judge).verify(answer)
 
     assert checks == []
+
+
+class _SlowJudge:
+    """Sleeps on every parse, to prove the calls overlap rather than serialize."""
+
+    def __init__(self, delay=0.05):
+        self._delay = delay
+
+    def parse(self, system, user, schema):
+        time.sleep(self._delay)
+        return schema(supported=True, reason="ok")
+
+
+def test_pairs_are_judged_concurrently():
+    answer = _answer(
+        "A [1]. B [2]. C [3]. D [4]. E [5].",
+        [(n, f"passage {n}") for n in range(1, 6)],
+    )
+
+    start = time.perf_counter()
+    checks = CitationVerifier(llm=_SlowJudge(delay=0.05)).verify(answer)
+    elapsed = time.perf_counter() - start
+
+    assert [c.number for c in checks] == [1, 2, 3, 4, 5]
+    # Sequential would be 5 x 50ms = 250ms; concurrent is ~one delay plus overhead.
+    assert elapsed < 0.15

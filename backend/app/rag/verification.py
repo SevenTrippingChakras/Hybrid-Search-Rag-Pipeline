@@ -6,9 +6,11 @@ whether the cited passage actually supports the claim; unsupported ones are flag
 """
 
 import re
+from concurrent.futures import ThreadPoolExecutor
 
 from pydantic import BaseModel
 
+from app.config import settings
 from app.rag.llm import LLM, build_llm
 from app.rag.models import Answer, CitationCheck
 
@@ -54,25 +56,37 @@ class CitationVerifier:
         self._llm = llm or build_llm()
 
     def verify(self, answer: Answer) -> list[CitationCheck]:
-        """Judge every cited claim in ``answer`` against its backing passage."""
+        """Judge every cited claim in ``answer`` against its backing passage.
+
+        Each pair is an independent LLM round-trip, so they run concurrently on a
+        bounded thread pool. ``map`` yields results in input order, keeping the
+        returned checks deterministic regardless of which call finishes first.
+        """
         backing = {c.number: c.text for c in answer.citations}
-        checks = []
-        for claim, number in self._claim_citation_pairs(answer.text):
-            passage = backing.get(number)
-            if passage is None:
-                continue  # marker with no resolved citation (dropped upstream)
-            verdict = self._llm.parse(
-                JUDGE_SYSTEM, self._build_prompt(claim, passage), _Verdict
-            )
-            checks.append(
-                CitationCheck(
-                    claim=claim,
-                    number=number,
-                    supported=verdict.supported,
-                    reason=verdict.reason,
-                )
-            )
-        return checks
+        pairs = [
+            (claim, number, backing[number])
+            for claim, number in self._claim_citation_pairs(answer.text)
+            if number in backing  # skip markers with no resolved citation
+        ]
+        if not pairs:
+            return []
+
+        workers = min(settings.verification_max_workers, len(pairs)) or 1
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            return list(pool.map(self._judge_one, pairs))
+
+    def _judge_one(self, pair: tuple[str, int, str]) -> CitationCheck:
+        """Judge a single (claim, number, passage) pair."""
+        claim, number, passage = pair
+        verdict = self._llm.parse(
+            JUDGE_SYSTEM, self._build_prompt(claim, passage), _Verdict
+        )
+        return CitationCheck(
+            claim=claim,
+            number=number,
+            supported=verdict.supported,
+            reason=verdict.reason,
+        )
 
     @staticmethod
     def _claim_citation_pairs(text: str) -> list[tuple[str, int]]:
