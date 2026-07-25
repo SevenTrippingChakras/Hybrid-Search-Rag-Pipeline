@@ -3,12 +3,35 @@ import { ChevronDown, Loader2, Send, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
-import type { AskResponse, Confidence } from "../types"
-import { askQuestion, splitAnswer } from "./Ask.helper"
+import type { Citation, Confidence, Source } from "../types"
+import { askStream, splitAnswer } from "./Ask.helper"
+
+// One assistant turn as it fills in: prose streams into `answer`, while
+// `citations`/`confidence` stay empty until the final event lands. `streaming`
+// flips false when the turn is complete (answered or abstained).
+interface AssistantData {
+  answer: string
+  citations: Citation[]
+  confidence: Confidence | null
+  sources: Source[]
+  abstained: boolean
+  message: string | null
+  streaming: boolean
+}
+
+const EMPTY_ASSISTANT: AssistantData = {
+  answer: "",
+  citations: [],
+  confidence: null,
+  sources: [],
+  abstained: false,
+  message: null,
+  streaming: true,
+}
 
 type ChatMessage =
   | { id: number; role: "user"; text: string }
-  | { id: number; role: "assistant"; data: AskResponse }
+  | { id: number; role: "assistant"; data: AssistantData }
   | { id: number; role: "error"; text: string }
 
 const CONFIDENCE_DIMS: { key: keyof Confidence; label: string }[] = [
@@ -44,7 +67,7 @@ function ConfidenceBars({ confidence }: { confidence: Confidence }) {
 
 // One assistant turn: the grounded answer (or abstention), with its citations
 // and confidence tucked into a collapsed panel the reader can open on demand.
-function AssistantMessage({ data }: { data: AskResponse }) {
+function AssistantMessage({ data }: { data: AssistantData }) {
   const [open, setOpen] = useState(false)
   const [activeCite, setActiveCite] = useState<number | null>(null)
 
@@ -53,6 +76,16 @@ function AssistantMessage({ data }: { data: AskResponse }) {
       <div className="rounded-2xl rounded-bl-sm border border-amber/30 bg-amber/5 px-4 py-3">
         <p className="text-sm font-medium text-amber">No grounded answer</p>
         <p className="mt-1 text-sm text-muted">{data.message}</p>
+      </div>
+    )
+  }
+
+  // Prose is still empty on the very first frames: show the thinking state
+  // until the first token (or the sources event) arrives.
+  if (data.streaming && !data.answer) {
+    return (
+      <div className="flex items-center gap-2 rounded-2xl rounded-bl-sm border border-border bg-card px-4 py-3 text-sm text-muted">
+        <Loader2 className="size-4 animate-spin" /> Thinking…
       </div>
     )
   }
@@ -79,6 +112,9 @@ function AssistantMessage({ data }: { data: AskResponse }) {
               {part.cite}
             </button>
           ),
+        )}
+        {data.streaming && (
+          <span className="ml-0.5 inline-block h-4 w-[2px] translate-y-0.5 animate-pulse bg-primary align-middle" />
         )}
       </p>
 
@@ -139,12 +175,58 @@ export function Ask() {
     if (!q || loading) return
     setQuestion("")
     setLoading(true)
-    setMessages((m) => [...m, { id: nextId.current++, role: "user", text: q }])
+
+    const asstId = nextId.current + 1
+    nextId.current += 2
+    setMessages((m) => [
+      ...m,
+      { id: asstId - 1, role: "user", text: q },
+      { id: asstId, role: "assistant", data: EMPTY_ASSISTANT },
+    ])
+
+    // Patch the in-flight assistant turn as SSE events arrive.
+    const patch = (up: (d: AssistantData) => AssistantData) =>
+      setMessages((m) =>
+        m.map((msg) =>
+          msg.id === asstId && msg.role === "assistant"
+            ? { ...msg, data: up(msg.data) }
+            : msg,
+        ),
+      )
+
     try {
-      const data = await askQuestion(q)
-      setMessages((m) => [...m, { id: nextId.current++, role: "assistant", data }])
+      await askStream(q, {
+        onSources: (sources) => patch((d) => ({ ...d, sources })),
+        onDelta: (text) => patch((d) => ({ ...d, answer: d.answer + text })),
+        onFinal: (f) =>
+          patch((d) => ({
+            ...d,
+            answer: f.answer,
+            citations: f.citations,
+            confidence: f.confidence,
+            streaming: false,
+          })),
+        onAbstain: (a) =>
+          patch((d) => ({
+            ...d,
+            abstained: true,
+            message: a.message,
+            sources: a.sources,
+            streaming: false,
+          })),
+        onError: (msg) => {
+          throw new Error(msg)
+        },
+      })
     } catch (e) {
-      setMessages((m) => [...m, { id: nextId.current++, role: "error", text: (e as Error).message }])
+      // Replace the assistant turn with an error bubble.
+      setMessages((m) =>
+        m.map((msg) =>
+          msg.id === asstId
+            ? { id: asstId, role: "error", text: (e as Error).message }
+            : msg,
+        ),
+      )
     } finally {
       setLoading(false)
     }
@@ -186,11 +268,6 @@ export function Ask() {
           )
         })}
 
-        {loading && (
-          <div className="flex max-w-[92%] items-center gap-2 rounded-2xl rounded-bl-sm border border-border bg-card px-4 py-3 text-sm text-muted">
-            <Loader2 className="size-4 animate-spin" /> Thinking…
-          </div>
-        )}
         <div ref={bottomRef} />
       </div>
 
