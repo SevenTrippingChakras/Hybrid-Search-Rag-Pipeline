@@ -46,6 +46,10 @@ class Settings(BaseSettings):
     # one LLM call per chunk at ingest; turn on to evaluate the retrieval lift.
     contextual_retrieval: bool = False
 
+    # Verification: judge each cited claim concurrently, capped so a burst does
+    # not trip OpenAI rate limits. 1 = sequential (old behaviour).
+    verification_max_workers: int = 8
+
     # Confidence: weights fusing the three answer-trust signals (retrieval
     # relevance, citation coverage, question completeness) into one composite.
     # They should sum to 1.0.
