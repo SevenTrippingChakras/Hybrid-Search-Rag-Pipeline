@@ -5,11 +5,16 @@ bracketed ``[n]`` markers and refuses to go beyond the given context. It depends
 on the ``LLM`` port, so the provider is a config choice.
 """
 
+import re
+from collections.abc import Iterator
+
 from pydantic import BaseModel
 
 from app.rag.llm import LLM, build_llm
 from app.rag.models import Answer, Citation
 from app.rag.stores import QueryHit
+
+_MARKER = re.compile(r"\[(\d+)\]")
 
 SYSTEM_PROMPT = (
     "You answer questions using only the numbered context passages provided. "
@@ -44,6 +49,23 @@ class Generator:
             query=query,
             text=result.answer,
             citations=self._resolve_citations(result.citations, hits),
+        )
+
+    def stream(self, query: str, hits: list[QueryHit]) -> Iterator[str]:
+        """Yield the grounded answer as text deltas, markers included."""
+        yield from self._llm.stream(SYSTEM_PROMPT, self._build_prompt(query, hits))
+
+    def build_answer(self, query: str, text: str, hits: list[QueryHit]) -> Answer:
+        """Assemble the final ``Answer`` from streamed prose.
+
+        The cited passage numbers are read back from the ``[n]`` markers in the
+        text, since the streaming path has no separate structured citations field.
+        """
+        numbers = sorted({int(n) for n in _MARKER.findall(text)})
+        return Answer(
+            query=query,
+            text=text,
+            citations=self._resolve_citations(numbers, hits),
         )
 
     @staticmethod

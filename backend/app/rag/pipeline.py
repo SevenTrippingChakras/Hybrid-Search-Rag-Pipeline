@@ -5,6 +5,7 @@ retrieve, abstain, generate, verify, score. Every collaborator is injectable so
 the wiring can be tested with fakes; the defaults build the real components.
 """
 
+from collections.abc import Iterator
 from dataclasses import dataclass, field
 
 from app.rag.abstention import AbstentionGate
@@ -30,6 +31,45 @@ class PipelineResult:
     @property
     def abstained(self) -> bool:
         return self.no_answer is not None
+
+
+# --- Streaming events -------------------------------------------------------
+# ``answer_stream`` yields these in order: one ``StreamStart`` (or a terminal
+# ``StreamAbstain``), then a run of ``StreamDelta``, then one ``StreamFinal``.
+
+
+@dataclass
+class StreamStart:
+    """Answering has begun; the retrieved sources are known up front."""
+
+    hits: list[QueryHit]
+
+
+@dataclass
+class StreamDelta:
+    """A chunk of answer prose as the model produces it."""
+
+    text: str
+
+
+@dataclass
+class StreamFinal:
+    """The finished answer with citations resolved and confidence scored."""
+
+    answer: Answer
+    checks: list[CitationCheck]
+    confidence: Confidence
+
+
+@dataclass
+class StreamAbstain:
+    """Retrieval fell short; nothing was generated."""
+
+    no_answer: NoAnswer
+    hits: list[QueryHit]
+
+
+StreamEvent = StreamStart | StreamDelta | StreamFinal | StreamAbstain
 
 
 class Pipeline:
@@ -72,3 +112,28 @@ class Pipeline:
             checks=checks,
             confidence=confidence,
         )
+
+    def answer_stream(self, question: str) -> Iterator[StreamEvent]:
+        """Same pipeline as ``answer`` but yielding progress as it happens.
+
+        The answer prose streams token by token; verification and scoring run
+        once it completes and arrive in the terminal ``StreamFinal``. This is a
+        blocking generator, meant to be driven from a worker thread.
+        """
+        hits = self._retriever.search(question)
+
+        no_answer = self._gate.check(question, hits)
+        if no_answer is not None:
+            yield StreamAbstain(no_answer=no_answer, hits=hits)
+            return
+
+        yield StreamStart(hits=hits)
+        parts: list[str] = []
+        for delta in self._generator.stream(question, hits):
+            parts.append(delta)
+            yield StreamDelta(text=delta)
+
+        answer = self._generator.build_answer(question, "".join(parts), hits)
+        checks = self._verifier.verify(answer)
+        confidence = self._scorer.score(answer, hits, checks)
+        yield StreamFinal(answer=answer, checks=checks, confidence=confidence)

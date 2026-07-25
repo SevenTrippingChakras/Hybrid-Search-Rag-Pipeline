@@ -7,6 +7,7 @@ plus a config value, never a change to the RAG logic. Structured-output
 mechanics are absorbed here so provider differences never leak upward.
 """
 
+from collections.abc import Iterator
 from typing import Protocol, TypeVar, runtime_checkable
 
 from openai import OpenAI
@@ -19,9 +20,13 @@ T = TypeVar("T", bound=BaseModel)
 
 @runtime_checkable
 class LLM(Protocol):
-    """The LLM port: return an instance of ``schema`` parsed from the model."""
+    """The LLM port: structured parse plus token streaming of free-form text."""
 
     def parse(self, system: str, user: str, schema: type[T]) -> T: ...
+
+    def stream(self, system: str, user: str) -> Iterator[str]:
+        """Yield answer text in deltas as the model produces them."""
+        ...
 
 
 class OpenAILLM:
@@ -50,6 +55,28 @@ class OpenAILLM:
         if message.parsed is None:
             raise ValueError(f"model refused to answer: {message.refusal}")
         return message.parsed
+
+    def stream(self, system: str, user: str) -> Iterator[str]:
+        """Stream the model's reply as free-form text deltas.
+
+        Structured Outputs and token streaming don't compose, so the streaming
+        path takes plain text; callers recover citations from the ``[n]``
+        markers the prompt instructs the model to emit inline.
+        """
+        stream = self._get_client().chat.completions.create(
+            model=self._model,
+            messages=[
+                {"role": "system", "content": system},
+                {"role": "user", "content": user},
+            ],
+            stream=True,
+        )
+        for chunk in stream:
+            if not chunk.choices:
+                continue
+            delta = chunk.choices[0].delta.content
+            if delta:
+                yield delta
 
 
 def build_llm() -> LLM:
